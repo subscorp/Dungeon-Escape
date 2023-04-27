@@ -85,9 +85,9 @@ public class Castle : MonoBehaviour
             string timeString = string.Format("{0:00}:{1:00.00}", minutes, seconds);
 
             Debug.Log("Which is: " + timeString);
-            if (GameManager.Instance.ElapsedTime < 180f)
+            if (GameManager.Instance.ElapsedTime < 60f)
             {
-                Debug.Log("Beat the game in under 3 minutes!"); // Achievement 6
+                Debug.Log("Beat the game in under 1 minute!"); // Achievement 6
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_speed_runner, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)
