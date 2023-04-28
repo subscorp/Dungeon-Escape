@@ -33,54 +33,11 @@ public class MainMenu : MonoBehaviour
     public string UserIdentifier { get; set; }
 
 
-    private void Start()
+    private void Awake()
     {
-        _options.SetActive(false);
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
-        UserIdentifier = Social.localUser.userName;
-        if (UserIdentifier == null || UserIdentifier == "")
-        {
-            UserIdentifier = "temp";
-        }
-
-        _music.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
-        _sfx.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
-        _sfxAlternate.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
-
-        musicSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
-        SFXSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
-
-        if (PlayerPrefs.GetInt(UserIdentifier + "_" + "BeatTheGameCount", 0) >= 1)
-        {
-            Debug.Log("In beat the game >= 1");
-            int clockDisplay = PlayerPrefs.GetInt(UserIdentifier + "_" + "Clock", 0);
-            if (clockDisplay == 1)
-                _clockToggle.isOn = true;
-            else
-                _clockToggle.isOn = false;
-
-            int alternateSFX = PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0);
-            if (alternateSFX == 1)
-                _alternateSFXToggle.isOn = true;
-            else
-                _alternateSFXToggle.isOn = false;
-
-            int alternateControls = PlayerPrefs.GetInt(UserIdentifier + "_" + "Alternate_Controls", 0);
-            if (alternateControls == 1)
-                _alternateControlsToggle.isOn = true;
-            else
-                _alternateControlsToggle.isOn = false;
-        }
-        else
-        {
-            _clockText.gameObject.SetActive(false);
-            _altSFXText.gameObject.SetActive(false);
-            _altControlsText.gameObject.SetActive(false);
-            _clockToggle.gameObject.SetActive(false);
-            _alternateSFXToggle.gameObject.SetActive(false);
-            _alternateControlsToggle.gameObject.SetActive(false);
-        }
+        _options.SetActive(false);
     }
 
     private void OnSignInResult(SignInStatus signInStatus)
@@ -88,10 +45,74 @@ public class MainMenu : MonoBehaviour
         if (signInStatus == SignInStatus.Success)
         {
             Debug.Log("Authenticated. Hello, " + Social.localUser.userName + " (" + Social.localUser.id + ")");
+            UserIdentifier = Social.localUser.userName;
+            if (UserIdentifier == null || UserIdentifier == "")
+                UserIdentifier = "temp";
+            
+            Debug.Log("In MainMenu::Start, UserIdentifier: " + UserIdentifier);
+            _music.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
+            _sfx.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
+            _sfxAlternate.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
+
+            musicSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
+            SFXSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
+
+            Debug.Log("In MainMenu::Start, PlayerPrefs.GetInt(UserIdentifier + '_' + 'BeatTheGameCount', 0): " + PlayerPrefs.GetInt(UserIdentifier + "_" + "BeatTheGameCount", 0));
+
+            if (PlayerPrefs.GetInt(UserIdentifier + "_" + "BeatTheGameCount", 0) >= 1)
+            {
+                Debug.Log("In beat the game >= 1");
+                int clockDisplay = PlayerPrefs.GetInt(UserIdentifier + "_" + "Clock", 0);
+                if (clockDisplay == 1)
+                    _clockToggle.isOn = true;
+                else
+                    _clockToggle.isOn = false;
+
+                int alternateSFX = PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0);
+                if (alternateSFX == 1)
+                    _alternateSFXToggle.isOn = true;
+                else
+                    _alternateSFXToggle.isOn = false;
+
+                int alternateControls = PlayerPrefs.GetInt(UserIdentifier + "_" + "Alternate_Controls", 0);
+                if (alternateControls == 1)
+                    _alternateControlsToggle.isOn = true;
+                else
+                    _alternateControlsToggle.isOn = false;
+            }
+            else
+            {
+                _clockToggle.isOn = false;
+                _alternateSFXToggle.isOn = false;
+                _alternateControlsToggle.isOn = false;
+                _clockText.gameObject.SetActive(false);
+                _altSFXText.gameObject.SetActive(false);
+                _altControlsText.gameObject.SetActive(false);
+                _clockToggle.gameObject.SetActive(false);
+                _alternateSFXToggle.gameObject.SetActive(false);
+                _alternateControlsToggle.gameObject.SetActive(false);
+            }
+
         }
         else
         {
+            UserIdentifier = "temp";
             Debug.Log("*** Failed to authenticate with " + signInStatus);
+            _clockToggle.isOn = false;
+            _alternateSFXToggle.isOn = false;
+            _alternateControlsToggle.isOn = false;
+            _clockText.gameObject.SetActive(false);
+            _altSFXText.gameObject.SetActive(false);
+            _altControlsText.gameObject.SetActive(false);
+            _clockToggle.gameObject.SetActive(false);
+            _alternateSFXToggle.gameObject.SetActive(false);
+            _alternateControlsToggle.gameObject.SetActive(false);
+
+            _music.volume = 0.6f; 
+            _sfx.volume = 0.6f;  
+            _sfxAlternate.volume = 0.6f;
+            musicSliderVal.value = 0.6f; 
+            SFXSliderVal.value = 0.6f;
         }
     }
 

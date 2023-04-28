@@ -12,17 +12,11 @@ public class GameOver : MonoBehaviour
     private AudioSource _sfx;
     [SerializeField]
     private AudioSource _sfxAlternate;
-    public string UserIdentifier { get; set; }
 
+  
     private void Start()
     {
-        PlayGamesPlatform.Activate();
-        PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
-        UserIdentifier = Social.localUser.userName;
-        if (UserIdentifier == null || UserIdentifier == "")
-            UserIdentifier = "temp";
-
-        _sfx.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
+        _sfx.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
     }
 
     private void OnSignInResult(SignInStatus signInStatus)
@@ -39,7 +33,7 @@ public class GameOver : MonoBehaviour
 
     IEnumerator TryAgainCoRoutine()
     {
-        if (PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
             _sfxAlternate.Play();
         else
         {
@@ -49,7 +43,7 @@ public class GameOver : MonoBehaviour
 
         try
         {
-            if (PlayerPrefs.GetInt(UserIdentifier + "_" + "DeathCount", 0) >= 5)
+            if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "DeathCount", 0) >= 5)
             {
                 Debug.Log("You died more than 5 times and didn't give up!");
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_persistent, (bool achievementUnlocked) =>
@@ -75,7 +69,7 @@ public class GameOver : MonoBehaviour
 
     IEnumerator QuitCoRoutine()
     {
-        if (PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
             _sfxAlternate.Play();
         else
             _sfx.Play();

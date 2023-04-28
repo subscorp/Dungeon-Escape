@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     public bool PlayerInFrontOfDoorB { get; set; }
     public bool HintProvided { get; set; }
     public string CurrentBeatTime { get; set; }
+    public bool IsLoggedIn { get; set; }
 
     // Achivements related properties
     public bool GameComplete { get; set; } // Achievement 1 
@@ -66,7 +67,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //PlayerPrefs.DeleteAll(); // for debug only
+        //PlayerPrefs.DeleteAll(); // for debug only, don't forget to comment out
 
         _instance = this;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -86,13 +87,11 @@ public class GameManager : MonoBehaviour
         HasBootsOfFlight = false;
         DuringKonamiCode = false;
         GameComplete = false;
+        IsLoggedIn = false;
         CurrentBeatTime = "";
         DisplayTime = "";
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
-        UserIdentifier = Social.localUser.userName;
-        if (UserIdentifier == null || UserIdentifier == "")
-            UserIdentifier = "temp";
     }
 
     private void Start()
@@ -115,10 +114,18 @@ public class GameManager : MonoBehaviour
         if (signInStatus == SignInStatus.Success)
         {
             Debug.Log("Authenticated. Hello, " + Social.localUser.userName + " (" + Social.localUser.id + ")");
+            UserIdentifier = Social.localUser.userName;
+            Debug.Log("In GameManager::Start, UserIdentifier: " + UserIdentifier);
+            if (UserIdentifier == null || UserIdentifier == "")
+                UserIdentifier = "temp";
+            else
+                IsLoggedIn = true;
         }
         else
         {
-             Debug.Log("*** Failed to authenticate with " + signInStatus);
+            Debug.Log("*** Failed to authenticate with " + signInStatus);
+            UserIdentifier = "temp";
+            IsLoggedIn = false;
         }
     }
 
