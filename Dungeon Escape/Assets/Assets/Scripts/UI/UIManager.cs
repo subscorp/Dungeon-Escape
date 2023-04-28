@@ -59,8 +59,7 @@ public class UIManager : MonoBehaviour
         _enabledColor = _buyItemButton.image.color;
         _disabledColor = new Color(_enabledColor.r, _enabledColor.g, _enabledColor.b, _enabledColor.a);
         _disabledColor.a = 0.3f;
-        int clockDisplay = PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "Clock", 0);        
-        SetClockDisplay(clockDisplay);
+        
         Vector3 clockPos = _clock.gameObject.transform.position;
         clockPos.x = Screen.width / 2;
         _clock.gameObject.transform.position = clockPos;

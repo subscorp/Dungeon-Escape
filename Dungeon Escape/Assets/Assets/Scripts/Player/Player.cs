@@ -32,9 +32,7 @@ public class Player : MonoBehaviour, IDamageable
     private bool _canEnterDoor = true;
     private float arrowsHorizontal;
     private float arrowsVertical;
-    [SerializeField]
-    private Image _joystickImage;
-    [SerializeField] Button _upArrowButton, _rightArrowButton, _downArrowButton, _leftArrowButton;
+    
 
     public bool IsHit { get; set; }
     
@@ -49,18 +47,6 @@ public class Player : MonoBehaviour, IDamageable
         Health = 4;
         arrowsHorizontal = 0f;
         arrowsVertical = 0f;
-        if(PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "Alternate_Controls", 0) == 1)
-        {
-            Debug.Log("inside if at start");
-            _joystickImage.enabled = false;
-        }
-        else
-        {
-            _upArrowButton.gameObject.SetActive(false);
-            _rightArrowButton.gameObject.SetActive(false);
-            _leftArrowButton.gameObject.SetActive(false);
-            _downArrowButton.gameObject.SetActive(false);
-        }
     }
 
     // Update is called once per frame

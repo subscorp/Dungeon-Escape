@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -60,6 +61,9 @@ public class GameManager : MonoBehaviour
     private GameObject _winManager;
     [SerializeField]
     private GameObject _gameOverManager;
+    [SerializeField]
+    private Image _joystickImage;
+    [SerializeField] Button _upArrowButton, _rightArrowButton, _downArrowButton, _leftArrowButton;
 
     public bool GotKonamiCode { get; set; }
     public bool DuringKonamiCode { get; set; }
@@ -120,12 +124,31 @@ public class GameManager : MonoBehaviour
                 UserIdentifier = "temp";
             else
                 IsLoggedIn = true;
+
+            if (PlayerPrefs.GetInt(UserIdentifier + "_" + "Alternate_Controls", 0) == 1)
+            {
+                _joystickImage.enabled = false;
+            }
+            else
+            {
+                _upArrowButton.gameObject.SetActive(false);
+                _rightArrowButton.gameObject.SetActive(false);
+                _leftArrowButton.gameObject.SetActive(false);
+                _downArrowButton.gameObject.SetActive(false);
+            }
+            int clockDisplay = PlayerPrefs.GetInt(UserIdentifier + "_" + "Clock", 0);
+            UIManager.Instance.SetClockDisplay(clockDisplay);
         }
         else
         {
             Debug.Log("*** Failed to authenticate with " + signInStatus);
             UserIdentifier = "temp";
             IsLoggedIn = false;
+            _upArrowButton.gameObject.SetActive(false);
+            _rightArrowButton.gameObject.SetActive(false);
+            _leftArrowButton.gameObject.SetActive(false);
+            _downArrowButton.gameObject.SetActive(false);
+            UIManager.Instance.SetClockDisplay(0);
         }
     }
 
