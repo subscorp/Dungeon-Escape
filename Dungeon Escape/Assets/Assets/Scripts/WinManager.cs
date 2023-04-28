@@ -30,7 +30,7 @@ public class WinManager : MonoBehaviour
         else
             _unlockMessage.gameObject.SetActive(false);
 
-        _sfx.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 1f);    
+        _sfx.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 1f);
     }
 
     private void OnSignInResult(SignInStatus signInStatus)

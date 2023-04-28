@@ -37,11 +37,15 @@ public class GameManager : MonoBehaviour
     {
         get { return _elapsedTime; }
     }
+    public int ElapsedMinutes { get; set; }
+    public float ElapsedSeconds { get; set; }
+    public string DisplayTime { get; set; }
     public bool IsDead { get; set; }
     public string KonamiCodeString { get; set; }
     public bool PlayerInFrontOfDoorA { get; set; }
     public bool PlayerInFrontOfDoorB { get; set; }
     public bool HintProvided { get; set; }
+    public string CurrentBeatTime { get; set; }
 
     // Achivements related properties
     public bool GameComplete { get; set; } // Achievement 1 
@@ -81,6 +85,9 @@ public class GameManager : MonoBehaviour
         HintProvided = false;
         HasBootsOfFlight = false;
         DuringKonamiCode = false;
+        GameComplete = false;
+        CurrentBeatTime = "";
+        DisplayTime = "";
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
         UserIdentifier = Social.localUser.userName;
@@ -98,6 +105,9 @@ public class GameManager : MonoBehaviour
     public void Update()
     {
         _elapsedTime += Time.deltaTime;
+        ElapsedMinutes = (int)(_elapsedTime / 60);
+        ElapsedSeconds = _elapsedTime % 60;
+        DisplayTime = string.Format("{0:00}:{1:00.00}", ElapsedMinutes, ElapsedSeconds);
     }
 
     private void OnSignInResult(SignInStatus signInStatus)
@@ -195,6 +205,8 @@ public class GameManager : MonoBehaviour
     public void ResetTime()
     {
         _elapsedTime = 0f;
+        ElapsedMinutes = 0;
+        ElapsedSeconds = 0;
     }
 
     public void DisplayWinScreen(bool val)

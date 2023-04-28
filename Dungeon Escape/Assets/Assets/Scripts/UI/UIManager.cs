@@ -68,11 +68,14 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        int totalSeconds = Mathf.FloorToInt(GameManager.Instance.ElapsedTime);
-        int hours = Mathf.FloorToInt(totalSeconds / 3600f);
-        int minutes = Mathf.FloorToInt((totalSeconds - hours * 3600f) / 60f);
-        int seconds = Mathf.FloorToInt(totalSeconds - hours * 3600f - minutes * 60f);
-        _clock.text = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
+        if (!GameManager.Instance.GameComplete)
+        {
+            _clock.text = GameManager.Instance.DisplayTime;
+        }
+        else
+        {
+            _clock.text = GameManager.Instance.CurrentBeatTime;
+        }
     }
 
 

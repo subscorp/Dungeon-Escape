@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Castle : MonoBehaviour
 {
+    [SerializeField]
+    private Text _BeatTime;
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.name != "Player")
@@ -43,7 +47,6 @@ public class Castle : MonoBehaviour
                 });
             }
 
-            GameManager.Instance.GameComplete = true;
             if(GameManager.Instance.NoHitRun)
             {
                 Debug.Log("You beat the game without getting hit!"); // Achievement 4
@@ -71,7 +74,6 @@ public class Castle : MonoBehaviour
                 });
             }
 
-
             Debug.Log("Beat the game in: " + GameManager.Instance.ElapsedTime);
             long score = (long)Mathf.RoundToInt(GameManager.Instance.ElapsedTime * 1000f);
 
@@ -82,9 +84,11 @@ public class Castle : MonoBehaviour
             float seconds = GameManager.Instance.ElapsedTime % 60;
 
             // Format the time as a string in the format "MM:SS"
-            string timeString = string.Format("{0:00}:{1:00.00}", minutes, seconds);
+            GameManager.Instance.CurrentBeatTime = string.Format("{0:00}:{1:00.00}", minutes, seconds);
+            GameManager.Instance.GameComplete = true;
 
-            Debug.Log("Which is: " + timeString);
+            Debug.Log("Which is: " + GameManager.Instance.CurrentBeatTime);
+            _BeatTime.text = "Time: " + GameManager.Instance.CurrentBeatTime;
             if (GameManager.Instance.ElapsedTime < 60f)
             {
                 Debug.Log("Beat the game in under 1 minute!"); // Achievement 6
