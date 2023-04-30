@@ -321,7 +321,7 @@ public class GameManager : MonoBehaviour
         (KonamiCodeString != "UUDDLRLRB" && KonamiCodeString.Length == 9))
         {
 
-            if(KonamiCodeString.Length >= 3)
+            if(KonamiCodeString.Length >= 4)
             {
                 DuringKonamiCode = false;
                 AudioManager.Instance.PlayKonamiCodeWrongSFX();

@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image _homeButtonImage;
     [SerializeField]
-    private Image _aButtonImage, _bButtonImage, _JoystickImage;
+    private Image _aButtonImage, _bButtonImage, _JoystickImage, _upArrowImage, _rightArrowImage, _downArrowImage, _leftArrowImage;
     [SerializeField] Text _bootsPrice, _keyPrice;
     [SerializeField]
     private Button _buyItemButton;
@@ -48,6 +48,10 @@ public class UIManager : MonoBehaviour
     private GameObject _needKeyPanel;
     [SerializeField]
     private Text _clock;
+    [SerializeField] 
+    private Image _bootsImage;
+    [SerializeField]
+    private Image _keyImage;
 
     private void Awake()
     {
@@ -166,6 +170,7 @@ public class UIManager : MonoBehaviour
         _bootsPrice.text = "SOLD OUT";
         _buyItemButton.enabled = false;
         _buyItemButton.image.color = _disabledColor;
+        _bootsImage.enabled = true;
     }
 
     public void UpdateKeySoldOut()
@@ -173,6 +178,7 @@ public class UIManager : MonoBehaviour
         _keyPrice.text = "SOLD OUT";
         _buyItemButton.enabled = false;
         _buyItemButton.image.color = _disabledColor;
+        _keyImage.enabled = true;
     }
 
     public void UpdateGemCount(int count)
@@ -227,6 +233,10 @@ public class UIManager : MonoBehaviour
             _aButtonImage.color = color;
             _bButtonImage.color = color;
             _JoystickImage.color = color;
+            _upArrowImage.color = color;
+            _rightArrowImage.color = color;
+            _downArrowImage.color = color;
+            _leftArrowImage.color = color;
             _homeButtonImage.color = color;
             yield return null;
         }

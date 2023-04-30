@@ -39,4 +39,14 @@ public class PlayerAnimation : MonoBehaviour
     {
         _animator.SetTrigger("Hit");
     }
+
+    public void MidJumpStart()
+    {
+        _animator.SetBool("Grounded", false);
+    }
+
+    public void MidJumpEnd()
+    {
+        _animator.SetBool("Grounded", true);
+    }
 }

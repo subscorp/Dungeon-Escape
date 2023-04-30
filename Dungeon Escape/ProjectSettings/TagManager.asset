@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Chest
+  - Lamp
+  - Candle
   layers:
   - Default
   - TransparentFX

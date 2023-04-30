@@ -84,12 +84,12 @@ public class Player : MonoBehaviour, IDamageable
             GameManager.Instance.HandleKonamiCode();
         }
 
-        if(GameManager.Instance.PlayerInFrontOfDoorA && moveUpDown > 0.85f && _canEnterDoor)
+        if (GameManager.Instance.PlayerInFrontOfDoorA && moveUpDown > 0.85f && _canEnterDoor)
         {
             transform.position = _doorB.transform.position;
             StartCoroutine(EnterDoorCooldown());
         }
-        else if(GameManager.Instance.PlayerInFrontOfDoorB && moveUpDown > 0.85f && _canEnterDoor)
+        else if (GameManager.Instance.PlayerInFrontOfDoorB && moveUpDown > 0.85f && _canEnterDoor)
         {
             transform.position = _doorA.transform.position;
             StartCoroutine(EnterDoorCooldown());
@@ -111,6 +111,11 @@ public class Player : MonoBehaviour, IDamageable
         GameManager.Instance.HandleKonamiCodeDirections(move, moveUpDown);
 
         _grounded = IsGrounded();
+        if (!_grounded && _canEnterDoor)
+            _playerAnimation.MidJumpStart();
+        else
+            _playerAnimation.MidJumpEnd();
+
         SetRunningDirection(move);
         _rigidBody.velocity = new Vector2(move * _speed, _rigidBody.velocity.y);
         if ((Input.GetKeyDown(KeyCode.Space) || CrossPlatformInputManager.GetButtonDown("B_Button")) && IsGrounded())
