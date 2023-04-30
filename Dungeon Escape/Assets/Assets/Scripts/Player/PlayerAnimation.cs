@@ -40,13 +40,8 @@ public class PlayerAnimation : MonoBehaviour
         _animator.SetTrigger("Hit");
     }
 
-    public void MidJumpStart()
+    public void SetGrounded(bool val)
     {
-        _animator.SetBool("Grounded", false);
-    }
-
-    public void MidJumpEnd()
-    {
-        _animator.SetBool("Grounded", true);
+        _animator.SetBool("Grounded", val);
     }
 }

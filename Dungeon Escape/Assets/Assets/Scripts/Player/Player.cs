@@ -111,10 +111,7 @@ public class Player : MonoBehaviour, IDamageable
         GameManager.Instance.HandleKonamiCodeDirections(move, moveUpDown);
 
         _grounded = IsGrounded();
-        if (!_grounded && _canEnterDoor)
-            _playerAnimation.MidJumpStart();
-        else
-            _playerAnimation.MidJumpEnd();
+        _playerAnimation.SetGrounded(_grounded);
 
         SetRunningDirection(move);
         _rigidBody.velocity = new Vector2(move * _speed, _rigidBody.velocity.y);
