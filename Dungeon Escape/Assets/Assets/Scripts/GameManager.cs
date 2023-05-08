@@ -141,6 +141,7 @@ public class GameManager : MonoBehaviour
             }
             int clockDisplay = PlayerPrefs.GetInt(UserIdentifier + "_" + "Clock", 0);
             UIManager.Instance.SetClockDisplay(clockDisplay);
+            AudioManager.Instance.InitAudioSettings();
         }
         else
         {

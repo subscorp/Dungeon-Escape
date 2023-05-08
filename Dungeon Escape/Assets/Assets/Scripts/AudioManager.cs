@@ -114,7 +114,7 @@ public class AudioManager : MonoBehaviour
         _instance = this;
     }
 
-    public void Start()
+    public void InitAudioSettings()
     {
         _music.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "Music", 0.6f);
         _winMusic.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "Music", 0.6f);
@@ -160,13 +160,6 @@ public class AudioManager : MonoBehaviour
         _konamiCodeHint.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _fireSwordSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _fireSwordSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
-
-        Debug.Log("In AudioManager::Start");
-        Debug.Log("GameManager.Instance.UserIdentifier: " + GameManager.Instance.UserIdentifier);
-        Debug.Log("PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + '_' + 'Music', 0.6f);" + PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "Music", 0.6f));
-        Debug.Log("PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + '_' + 'SFX', 0.6f);" + PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f));
-        Debug.Log("_homeButtonSFX.volume: " + _homeButtonSFX.volume);
-        Debug.Log("music.volume: " + _music.volume);
     }
 
     public void PlayMusic()
