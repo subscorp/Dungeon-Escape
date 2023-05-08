@@ -158,6 +158,12 @@ public class AudioManager : MonoBehaviour
         _konamiWrongSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _konamiWrongSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _konamiCodeHint.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        float tempKonamiCodeVol = _konamiCodeHint.volume;
+        _konamiCodeHint.volume += 0.5f;
+        if (tempKonamiCodeVol + 0.5f > 1f)
+            _konamiCodeHint.volume = 1f;
+        else if (tempKonamiCodeVol == 0)
+            _konamiCodeHint.volume = 0;
         _fireSwordSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _fireSwordSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
     }
