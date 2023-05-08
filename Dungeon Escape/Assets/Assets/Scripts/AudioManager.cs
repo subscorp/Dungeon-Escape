@@ -104,6 +104,10 @@ public class AudioManager : MonoBehaviour
     private AudioSource _konamiWrongSFXAlternative;
     [SerializeField]
     private AudioSource _konamiCodeHint;
+    [SerializeField]
+    private AudioSource _fireSwordSFX;
+    [SerializeField]
+    private AudioSource _fireSwordSFXAlternative;
 
     private void Awake()
     {
@@ -154,6 +158,15 @@ public class AudioManager : MonoBehaviour
         _konamiWrongSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _konamiWrongSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _konamiCodeHint.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _fireSwordSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _fireSwordSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+
+        Debug.Log("In AudioManager::Start");
+        Debug.Log("GameManager.Instance.UserIdentifier: " + GameManager.Instance.UserIdentifier);
+        Debug.Log("PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + '_' + 'Music', 0.6f);" + PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "Music", 0.6f));
+        Debug.Log("PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + '_' + 'SFX', 0.6f);" + PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f));
+        Debug.Log("_homeButtonSFX.volume: " + _homeButtonSFX.volume);
+        Debug.Log("music.volume: " + _music.volume);
     }
 
     public void PlayMusic()
@@ -163,10 +176,20 @@ public class AudioManager : MonoBehaviour
 
     public void PlayAttackSound()
     {
-        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
-            _playerAttackSFXAlternate.Play();
+        if (GameManager.Instance.GotKonamiCode)
+        {
+            if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+                _fireSwordSFXAlternative.Play();
+            else
+                _fireSwordSFX.Play();
+        }
         else
-            _playerAttackSFX.Play();
+        {
+            if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+                _playerAttackSFXAlternate.Play();
+            else
+                _playerAttackSFX.Play();
+        }
     }
 
     internal void StopGameSounds()

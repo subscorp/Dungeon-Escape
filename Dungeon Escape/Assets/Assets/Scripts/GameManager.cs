@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            if(_instance == null)
+            if (_instance == null)
             {
                 Debug.LogError("GamaManager is NULL");
             }
@@ -22,17 +22,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public bool HasKeyToCastle { get; set; } 
+    public bool HasKeyToCastle { get; set; }
     public bool HasBootsOfFlight { get; set; }
     public bool PlayerHitSpike { get; set; }
     public int numDiamondsCollected { get; set; }
     public int numEnemiesKilled { get; set; }
     public int numJumps { get; set; }
     public bool boughtAppleInCurrentVisit { get; set; }
-    public bool boughtBootsInCurrentVisit{ get; set; }
+    public bool boughtBootsInCurrentVisit { get; set; }
     public bool boughtKeyInCurrentVisit { get; set; }
     public bool PlayerInShop { get; set; }
     public Player player { get; private set; }
+    public PlayerAnimation _playerAnimation { get; private set; }
+
     private float _elapsedTime;
     public float ElapsedTime 
     {
@@ -103,6 +105,7 @@ public class GameManager : MonoBehaviour
         ResetTime();
         DisplayWinScreen(false);
         DisplayGameOverScreen(false);
+        _playerAnimation = player.GetPlayerAnimation();
     }
 
     public void Update()
@@ -263,6 +266,7 @@ public class GameManager : MonoBehaviour
             player.AddGems(100, true);
             UIManager.Instance.UpdateLivesOnKonamiCode();
             player.KonamiCodeSpeed();
+            _playerAnimation.SetFireAttack();
         }
         else
             ResetKonamiCodeChecks();

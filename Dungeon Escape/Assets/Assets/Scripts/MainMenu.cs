@@ -200,6 +200,9 @@ public class MainMenu : MonoBehaviour
         _music.volume = val;
         Debug.Log("Music val: " + val);
         PlayerPrefs.SetFloat(UserIdentifier + "_" + "Music", val);
+        Debug.Log("in MainMenu::MusicSlider");
+        Debug.Log("UserIdentifier: " + UserIdentifier);
+        Debug.Log("PlayerPrefs.GetFloat(UserIdentifier + '_' + 'Music', 0.6f);" + PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f));
     }
 
     public void SFXSlider()
@@ -209,6 +212,9 @@ public class MainMenu : MonoBehaviour
         _sfxAlternate.volume = val;
         Debug.Log("SFX val: " + val);
         PlayerPrefs.SetFloat(UserIdentifier + "_" + "SFX", val);
+        Debug.Log("in MainMenu::SFXSlider");
+        Debug.Log("UserIdentifier: " + UserIdentifier);
+        Debug.Log("PlayerPrefs.GetFloat(UserIdentifier + '_' + 'SFX', 0.6f);" + PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f));
     }
 
     public void RestoreToDefaultsButton()

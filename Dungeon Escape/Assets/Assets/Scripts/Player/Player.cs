@@ -70,18 +70,23 @@ public class Player : MonoBehaviour, IDamageable
         float move;
         Movement(out move, out moveUpDown);
 
-        if (_grounded && (CrossPlatformInputManager.GetButtonDown("A_Button")))
+        //if (_grounded && (CrossPlatformInputManager.GetButtonDown("A_Button")))
+        if (CrossPlatformInputManager.GetButtonDown("A_Button") || Input.GetKeyDown(KeyCode.S))
         {
-            _playerAnimation.Attack();
+            if (_grounded)
+            {
+                _playerAnimation.Attack();
+            }
+            else
+            {
+                _playerAnimation.JumpAttack();
+            }
             AudioManager.Instance.PlayAttackSound();
 
-        }
-
-        if (CrossPlatformInputManager.GetButtonDown("A_Button"))
-        {
             // Konami Code Related
             GameManager.Instance.KonamiCodeString += "A";
             GameManager.Instance.HandleKonamiCode();
+
         }
 
         if (GameManager.Instance.PlayerInFrontOfDoorA && moveUpDown > 0.85f && _canEnterDoor)
@@ -433,5 +438,10 @@ public class Player : MonoBehaviour, IDamageable
         _canEnterDoor = false;
         yield return new WaitForSeconds(0.6f);
         _canEnterDoor = true;
+    }
+
+    public PlayerAnimation GetPlayerAnimation()
+    {
+        return _playerAnimation;
     }
 }
