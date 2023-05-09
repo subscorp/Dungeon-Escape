@@ -70,6 +70,12 @@ public class GameManager : MonoBehaviour
     public bool GotKonamiCode { get; set; }
     public bool DuringKonamiCode { get; set; }
     private bool shouldWait = false;
+    [SerializeField]
+    private int targetFPSMin;
+    [SerializeField]
+    private int targetFPSMax;
+    public float DeltaTime { get; set; }
+    public float SmoothedFPS { get; set; }
 
     private void Awake()
     {
@@ -96,6 +102,11 @@ public class GameManager : MonoBehaviour
         IsLoggedIn = false;
         CurrentBeatTime = "";
         DisplayTime = "";
+        DeltaTime = 0.0f;
+        SmoothedFPS = 0.0f;
+
+        Debug.Log("Screen.currentResolution.refreshRate: " + Screen.currentResolution.refreshRate);
+
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
     }
@@ -106,6 +117,10 @@ public class GameManager : MonoBehaviour
         DisplayWinScreen(false);
         DisplayGameOverScreen(false);
         _playerAnimation = player.GetPlayerAnimation();
+        targetFPSMin = 30;
+        targetFPSMax = 40;
+        //targetFPSMax = -1;//Screen.currentResolution.refreshRate;  // 40
+        Application.targetFrameRate = targetFPSMax;
     }
 
     public void Update()
@@ -114,6 +129,23 @@ public class GameManager : MonoBehaviour
         ElapsedMinutes = (int)(_elapsedTime / 60);
         ElapsedSeconds = _elapsedTime % 60;
         DisplayTime = string.Format("{0:00}:{1:00.00}", ElapsedMinutes, ElapsedSeconds);
+
+        // Update FPS
+        DeltaTime += (Time.deltaTime - DeltaTime) * 0.1f;
+        float fps = 1.0f / DeltaTime;
+        SmoothedFPS = Mathf.Lerp(SmoothedFPS, fps, 0.1f);
+        
+        // Check if the smoothed FPS is outside the target range
+        if (SmoothedFPS < targetFPSMin)
+        {
+            // Set the target frame rate to the minimum FPS
+            Application.targetFrameRate = targetFPSMin;
+        }
+        else if (SmoothedFPS > targetFPSMax)
+        {
+            // Set the target frame rate to the maximum FPS
+            Application.targetFrameRate = targetFPSMax;
+        }
     }
 
     private void OnSignInResult(SignInStatus signInStatus)

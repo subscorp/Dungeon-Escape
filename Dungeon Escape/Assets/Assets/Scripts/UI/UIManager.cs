@@ -48,10 +48,13 @@ public class UIManager : MonoBehaviour
     private GameObject _needKeyPanel;
     [SerializeField]
     private Text _clock;
-    [SerializeField] 
+    [SerializeField]
+    private Text _fps;
+    [SerializeField]
     private Image _bootsImage;
     [SerializeField]
     private Image _keyImage;
+
 
     private void Awake()
     {
@@ -78,6 +81,12 @@ public class UIManager : MonoBehaviour
         else
         {
             _clock.text = GameManager.Instance.CurrentBeatTime;
+        }
+
+        // Only display FPS if deltaTime is greater than zero
+        if (GameManager.Instance.DeltaTime> 0.0f)
+        {
+            _fps.text = "FPS: " + Mathf.Round(GameManager.Instance.SmoothedFPS).ToString();
         }
     }
 
