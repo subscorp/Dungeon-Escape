@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public bool HasBootsOfFlight { get; set; }
     public bool PlayerHitSpike { get; set; }
     public int numDiamondsCollected { get; set; }
+    public int NumDiamondsInGame { get; set; }
     public int numEnemiesKilled { get; set; }
     public int numJumps { get; set; }
     public bool boughtAppleInCurrentVisit { get; set; }
@@ -104,8 +105,7 @@ public class GameManager : MonoBehaviour
         DisplayTime = "";
         DeltaTime = 0.0f;
         SmoothedFPS = 0.0f;
-
-        Debug.Log("Screen.currentResolution.refreshRate: " + Screen.currentResolution.refreshRate);
+        NumDiamondsInGame = 260;
 
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(OnSignInResult);

@@ -361,7 +361,7 @@ public class Player : MonoBehaviour, IDamageable
         if (!fromShop)
         {
             GameManager.Instance.numDiamondsCollected += amount;
-            if (GameManager.Instance.numDiamondsCollected == 250)
+            if (GameManager.Instance.numDiamondsCollected == GameManager.Instance.NumDiamondsInGame) //250)
             {
                 Debug.Log("Collected all diamonds!"); // Achievement 3
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_gem_hunter, (bool achievementUnlocked) =>

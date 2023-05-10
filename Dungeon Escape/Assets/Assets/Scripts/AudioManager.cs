@@ -108,6 +108,10 @@ public class AudioManager : MonoBehaviour
     private AudioSource _fireSwordSFX;
     [SerializeField]
     private AudioSource _fireSwordSFXAlternative;
+    [SerializeField]
+    private AudioSource _BreakObjectSFX;
+    [SerializeField]
+    private AudioSource _BreakObjectSFXAlternative;
 
     private void Awake()
     {
@@ -151,6 +155,8 @@ public class AudioManager : MonoBehaviour
         _soldOutSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _selectionSwitchSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _selectionSwitchSFXAlternate.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _BreakObjectSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _BreakObjectSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
 
         // Konami Code Related
         _konamiCorrectSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
@@ -227,6 +233,8 @@ public class AudioManager : MonoBehaviour
         _konamiWrongSFX.mute = true;
         _konamiWrongSFXAlternative.mute = true;
         _konamiCodeHint.mute = true;
+        _BreakObjectSFX.mute = true;
+        _BreakObjectSFXAlternative.mute = true;
     }
 
     public void PlayGettingHitSound()
@@ -362,6 +370,14 @@ public class AudioManager : MonoBehaviour
             _spiderSpitSFXAlternate.Play();
         else
             _spiderSpitSFX.Play();
+    }
+
+    public void PlayObjectBreakSFX()
+    {
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+            _BreakObjectSFXAlternative.Play();
+        else
+            _BreakObjectSFX.Play();
     }
 
     public void PlayWinMusic()

@@ -12,6 +12,9 @@ public class ObjectsAnimations : MonoBehaviour
     [SerializeField]
     Player _player;
 
+    [SerializeField]
+    private GameObject _diamondPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +32,16 @@ public class ObjectsAnimations : MonoBehaviour
         if (gameObject.tag == "Candle" && !_candleDestroyed && other.name == "Hit_Box")
         {
             _candleAnim.SetTrigger("Break");
+            AudioManager.Instance.PlayObjectBreakSFX();
             _candleDestroyed = true;
+            Instantiate(_diamondPrefab, transform.position, Quaternion.identity);
         }
         else if (gameObject.tag == "Lamp" && !_lampDestroyed && other.name == "Hit_Box")
         {
             _lampAnim.SetTrigger("Break");
+            AudioManager.Instance.PlayObjectBreakSFX();
             _lampDestroyed = true;
+            Instantiate(_diamondPrefab, transform.position, Quaternion.identity);
         }
         else if (gameObject.tag == "Chest" && !_chestOpened && other.name == "Player")
         {

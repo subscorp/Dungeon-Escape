@@ -130,14 +130,14 @@ public class MainMenu : MonoBehaviour
             if (beatTheGameCount == 3)
             {
                 // Try to unlock the "Addicted" achievement
-                GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_addicted, (bool achievementUnlocked) =>
+                DoAchievementUnlock(SmokeTest.GPGSIds.achievement_addicted, (bool achievementUnlocked) =>
                 {
                     
                     if (achievementUnlocked)
                     {
                         // Increment the "Completionist" achievement if "Addicted" was unlocked
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                        DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
+                        DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                     }
                     
                 });
@@ -274,5 +274,62 @@ public class MainMenu : MonoBehaviour
         {
             PlayerPrefs.SetInt(UserIdentifier + "_" + "Alternate_Controls", 0);
         }
+    }
+
+    public void DoAchievementUnlock(string achievementId, System.Action<bool> onUnlock)
+    {
+        if (PlayGamesPlatform.Instance == null)
+            return;
+
+        PlayGamesPlatform.Instance.LoadAchievements((achievements) =>
+        {
+            bool alreadyUnlocked = false;
+            if (achievements == null)
+            {
+                Debug.Log("achievements is NULL");
+                return;
+            }
+
+            // Check if the achievement is already unlocked
+            foreach (var achievement in achievements)
+            {
+                if (achievement.id == achievementId && achievement.completed)
+                {
+                    alreadyUnlocked = true;
+                    break;
+                }
+            }
+
+            // If the achievement is not already unlocked, unlock it
+            if (!alreadyUnlocked)
+            {
+                Social.ReportProgress(achievementId, 100.0f, (bool success) =>
+                {
+                    onUnlock(success);
+                });
+            }
+            else
+            {
+                onUnlock(false);
+            }
+        });
+    }
+
+    public void DoAchievementIncrement(string achievementId, int steps = 1)
+    {
+        if (PlayGamesPlatform.Instance == null)
+            return;
+
+        PlayGamesPlatform.Instance.IncrementAchievement(achievementId, steps, (bool success) =>
+        {
+            if (success)
+            {
+                Debug.Log("Achievement incremented: " + achievementId);
+            }
+            else
+            {
+                Debug.LogWarning("Failed to increment achievement: " + achievementId);
+            }
+        });
     }
 }

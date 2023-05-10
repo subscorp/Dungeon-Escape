@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5749145721519615792}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.67, y: 1.24, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
@@ -152,3 +152,4 @@ MonoBehaviour:
   _lampDestroyed: 0
   _candleDestroyed: 0
   _player: {fileID: 0}
+  _diamondPrefab: {fileID: 3236511944507371319, guid: 834d94f5160f0cc409eb4e638a85d81f, type: 3}
