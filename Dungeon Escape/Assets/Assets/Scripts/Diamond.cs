@@ -23,6 +23,17 @@ public class Diamond : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.collider.name == "Player")
+        {
+            Player player = other.collider.GetComponent<Player>();
+            AudioManager.Instance.PlayGettingCollectibleSFX();
+            player.AddGems(_val);
+            Destroy(gameObject);
+        }
+    }
+
     public void SetVal(int val)
     {
         _val = val;
