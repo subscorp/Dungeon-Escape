@@ -170,6 +170,7 @@ public class MainMenu : MonoBehaviour
         finally
         {
             _anim.SetTrigger("Start");
+            StartCoroutine(FadeMusicOut());
         }
     }
 
@@ -360,5 +361,30 @@ public class MainMenu : MonoBehaviour
                 Debug.LogWarning("Failed to increment achievement: " + achievementId);
             }
         });
+    }
+
+    IEnumerator FadeMusicOut()
+    {
+        float fadeDuration = 2.5f; // Duration of the fade-out in seconds
+        float startVolume = _music.volume; // Initial volume of the music
+
+        while (_music.volume > 0)
+        {
+            // Calculate the new volume based on the elapsed time and fade duration
+            float elapsedTime = 0f;
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = elapsedTime / fadeDuration;
+                _music.volume = Mathf.Lerp(startVolume, 0f, t);
+                yield return null;
+            }
+
+            // Ensure the volume is set to 0 when the fade-out is complete
+            _music.volume = 0f;
+        }
+
+        // Optionally stop the music or perform other actions once the fade-out is complete
+        _music.Stop();
     }
 }
