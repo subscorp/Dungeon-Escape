@@ -170,6 +170,7 @@ public class AudioManager : MonoBehaviour
             _konamiCodeHint.volume = 1f;
         else if (tempKonamiCodeVol == 0)
             _konamiCodeHint.volume = 0;
+
         _fireSwordSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _fireSwordSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
     }

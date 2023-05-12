@@ -64,6 +64,13 @@ public class MainMenu : MonoBehaviour
             _startButtonSFX.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
             _startButtonSFXAlternate.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
 
+            _startButtonSFX.volume += 0.5f;
+            float tempStartButtonVol = _startButtonSFX.volume;
+            if (tempStartButtonVol + 0.5f > 1f)
+                _startButtonSFX.volume = 1f;
+            else if (tempStartButtonVol == 0)
+                _startButtonSFX.volume = 0;
+
             musicSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
             SFXSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
 
