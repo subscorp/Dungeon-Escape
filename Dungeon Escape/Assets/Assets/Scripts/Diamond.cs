@@ -16,6 +16,7 @@ public class Diamond : MonoBehaviour
     {
         if(other.name == "Player")
         {
+            Debug.Log("Player Collected diamond using OnTriggerEnter2D");
             Player player = other.GetComponent<Player>();
             AudioManager.Instance.PlayGettingCollectibleSFX();
             player.AddGems(_val);
@@ -23,16 +24,17 @@ public class Diamond : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    /*private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.collider.name == "Player")
         {
+            Debug.Log("Player Collected diamond using OnColissionEnter2D");
             Player player = other.collider.GetComponent<Player>();
             AudioManager.Instance.PlayGettingCollectibleSFX();
             player.AddGems(_val);
             Destroy(gameObject);
         }
-    }
+    }*/
 
     public void SetVal(int val)
     {

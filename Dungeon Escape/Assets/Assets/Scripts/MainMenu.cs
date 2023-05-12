@@ -14,6 +14,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private AudioSource _sfx;
     [SerializeField]
+    private AudioSource _startButtonSFX;
+    [SerializeField]
+    private AudioSource _startButtonSFXAlternate;
+    [SerializeField]
     private AudioSource _sfxAlternate;
     [SerializeField]
     private GameObject _options;
@@ -29,6 +33,10 @@ public class MainMenu : MonoBehaviour
     private Toggle _alternateSFXToggle;
     [SerializeField]
     private Toggle _alternateControlsToggle;
+    [SerializeField]
+    private Animator _anim;
+    [SerializeField]
+    private Image _blackScreen;
 
     public string UserIdentifier { get; set; }
 
@@ -53,6 +61,8 @@ public class MainMenu : MonoBehaviour
             _music.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
             _sfx.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
             _sfxAlternate.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
+            _startButtonSFX.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
+            _startButtonSFXAlternate.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
 
             musicSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
             SFXSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
@@ -111,6 +121,8 @@ public class MainMenu : MonoBehaviour
             _music.volume = 0.6f; 
             _sfx.volume = 0.6f;  
             _sfxAlternate.volume = 0.6f;
+            _startButtonSFX.volume = 0.6f;
+            _startButtonSFXAlternate.volume = 0.6f;
             musicSliderVal.value = 0.6f; 
             SFXSliderVal.value = 0.6f;
         }
@@ -118,10 +130,10 @@ public class MainMenu : MonoBehaviour
 
     public void StartButton()
     {
-        if (PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
-            _sfxAlternate.Play();
-        else
-            _sfx.Play();
+        //if (PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+        //    _startButtonSFXAlternate.Play();
+        //else
+        _startButtonSFX.Play();
 
         try
         {
@@ -143,14 +155,20 @@ public class MainMenu : MonoBehaviour
                 });
             }
         }
+        
         catch (Exception)
         {
             Debug.LogError("There was an error regarding checking for number of times the player beat the game");
         }
         finally
         {
-            SceneManager.LoadScene("Game");
+            _anim.SetTrigger("Start");
         }
+    }
+
+    public void LoadGame()
+    {
+        SceneManager.LoadScene("Game");
     }
 
     public void QuitButton()
@@ -210,6 +228,8 @@ public class MainMenu : MonoBehaviour
         float val = SFXSliderVal.value;
         _sfx.volume = val;
         _sfxAlternate.volume = val;
+        _startButtonSFX.volume = val;
+        _startButtonSFXAlternate.volume = val;
         Debug.Log("SFX val: " + val);
         PlayerPrefs.SetFloat(UserIdentifier + "_" + "SFX", val);
         Debug.Log("in MainMenu::SFXSlider");
@@ -229,6 +249,8 @@ public class MainMenu : MonoBehaviour
         _music.volume = 0.6f;
         _sfx.volume = 0.6f;
         _sfxAlternate.volume = 0.6f;
+        _startButtonSFX.volume = 0.6f;
+        _startButtonSFXAlternate.volume = 0.6f;
         int beatTheGameCount = PlayerPrefs.GetInt(UserIdentifier + "_" + "BeatTheGameCount", 0);
         int deathCount = PlayerPrefs.GetInt(UserIdentifier + "_" + "DeathCount", 0);
         PlayerPrefs.DeleteAll();

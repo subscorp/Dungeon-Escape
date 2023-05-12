@@ -54,7 +54,8 @@ public class UIManager : MonoBehaviour
     private Image _bootsImage;
     [SerializeField]
     private Image _keyImage;
-
+    [SerializeField]
+    private Animator _anim;
 
     private void Awake()
     {
@@ -70,6 +71,7 @@ public class UIManager : MonoBehaviour
         Vector3 clockPos = _clock.gameObject.transform.position;
         clockPos.x = Screen.width / 2;
         _clock.gameObject.transform.position = clockPos;
+        _anim.SetTrigger("Start");
     }
 
     private void Update()
