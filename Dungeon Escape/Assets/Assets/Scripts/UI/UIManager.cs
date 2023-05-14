@@ -56,6 +56,7 @@ public class UIManager : MonoBehaviour
     private Image _keyImage;
     [SerializeField]
     private Animator _anim;
+    private int _lifeBarSpeed = 5;
 
     private void Awake()
     {
@@ -280,5 +281,11 @@ public class UIManager : MonoBehaviour
             _clock.enabled = true;
         else
             _clock.enabled = false;
+    }
+
+    public void UpdateEnemyLifeBar(Slider _slider, float targetHealth, float currentVelocity)
+    {
+        float currentHealthBarVal = Mathf.SmoothDamp(_slider.value, targetHealth, ref currentVelocity, _lifeBarSpeed * Time.deltaTime);
+        _slider.value = currentHealthBarVal;
     }
 }

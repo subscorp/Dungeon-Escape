@@ -112,6 +112,11 @@ public class AudioManager : MonoBehaviour
     private AudioSource _BreakObjectSFX;
     [SerializeField]
     private AudioSource _BreakObjectSFXAlternative;
+    [SerializeField]
+    private AudioSource _treasureChestSFX;
+    [SerializeField]
+    private AudioSource _treasureChestSFXAlternative;
+
 
     private void Awake()
     {
@@ -157,6 +162,9 @@ public class AudioManager : MonoBehaviour
         _selectionSwitchSFXAlternate.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _BreakObjectSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _BreakObjectSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _treasureChestSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _treasureChestSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+
 
         // Konami Code Related
         _konamiCorrectSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
@@ -379,6 +387,14 @@ public class AudioManager : MonoBehaviour
             _BreakObjectSFXAlternative.Play();
         else
             _BreakObjectSFX.Play();
+    }
+
+    public void PlayTreasureChestSFX()
+    {
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+            _treasureChestSFXAlternative.Play();
+        else
+            _treasureChestSFX.Play();
     }
 
     public void PlayWinMusic()

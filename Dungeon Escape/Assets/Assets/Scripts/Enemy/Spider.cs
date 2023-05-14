@@ -21,6 +21,8 @@ public class Spider : Enemy, IDamageable
 
         if (Health == 0)
         {
+            if (Slider != null)
+                Slider.gameObject.SetActive(false);
             isDead = true;
             animator.SetTrigger("Death");
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
@@ -53,6 +55,8 @@ public class Spider : Enemy, IDamageable
 
     public override void Update()
     {
+        base.Update();
+        UIManager.Instance.UpdateEnemyLifeBar(Slider, (float)Health / (float)maxHealth, _currentVelocity);
     }
 
     public override void Movement()

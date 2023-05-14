@@ -25,7 +25,6 @@ public class ObjectsAnimations : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("other.name: " + other.name);
         if (other.name != "Player" && other.name != "Hit_Box")
             return;
 
@@ -48,7 +47,7 @@ public class ObjectsAnimations : MonoBehaviour
             _chestAnim.SetTrigger("Open");
             _chestOpened = true;
             _player.AddGems(25);
-            AudioManager.Instance.PlayGettingCollectibleSFX();
+            AudioManager.Instance.PlayTreasureChestSFX();
         }
     }
 

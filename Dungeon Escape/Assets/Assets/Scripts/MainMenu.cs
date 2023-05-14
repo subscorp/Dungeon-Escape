@@ -36,7 +36,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private Animator _anim;
     [SerializeField]
-    private Image _blackScreen;
+    private Toggle _healthBarsToggle;
 
     public string UserIdentifier { get; set; }
 
@@ -73,8 +73,6 @@ public class MainMenu : MonoBehaviour
 
             musicSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
             SFXSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
-
-            Debug.Log("In MainMenu::Start, PlayerPrefs.GetInt(UserIdentifier + '_' + 'BeatTheGameCount', 0): " + PlayerPrefs.GetInt(UserIdentifier + "_" + "BeatTheGameCount", 0));
 
             if (PlayerPrefs.GetInt(UserIdentifier + "_" + "BeatTheGameCount", 0) >= 1)
             {
@@ -133,6 +131,12 @@ public class MainMenu : MonoBehaviour
             musicSliderVal.value = 0.6f; 
             SFXSliderVal.value = 0.6f;
         }
+
+        int healthBars = PlayerPrefs.GetInt(UserIdentifier + "_" + "Health Bars", 1);
+        if (healthBars == 1)
+            _healthBarsToggle.isOn = true;
+        else
+            _healthBarsToggle.isOn = false;
     }
 
     public void StartButton()
@@ -211,7 +215,6 @@ public class MainMenu : MonoBehaviour
 
     public void BackButton()
     {
-        Debug.Log("BackButton");
         if (PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
             _sfxAlternate.Play();
         else
@@ -224,11 +227,7 @@ public class MainMenu : MonoBehaviour
     {
         float val = musicSliderVal.value;
         _music.volume = val;
-        Debug.Log("Music val: " + val);
         PlayerPrefs.SetFloat(UserIdentifier + "_" + "Music", val);
-        Debug.Log("in MainMenu::MusicSlider");
-        Debug.Log("UserIdentifier: " + UserIdentifier);
-        Debug.Log("PlayerPrefs.GetFloat(UserIdentifier + '_' + 'Music', 0.6f);" + PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f));
     }
 
     public void SFXSlider()
@@ -238,11 +237,7 @@ public class MainMenu : MonoBehaviour
         _sfxAlternate.volume = val;
         _startButtonSFX.volume = val;
         _startButtonSFXAlternate.volume = val;
-        Debug.Log("SFX val: " + val);
         PlayerPrefs.SetFloat(UserIdentifier + "_" + "SFX", val);
-        Debug.Log("in MainMenu::SFXSlider");
-        Debug.Log("UserIdentifier: " + UserIdentifier);
-        Debug.Log("PlayerPrefs.GetFloat(UserIdentifier + '_' + 'SFX', 0.6f);" + PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f));
     }
 
     public void RestoreToDefaultsButton()
@@ -265,6 +260,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt(UserIdentifier + "_" + "BeatTheGameCount", beatTheGameCount);
         PlayerPrefs.SetInt(UserIdentifier + "_" + "DeathCount", deathCount);
         PlayerPrefs.SetInt(UserIdentifier + "_" + "Clock", 0);
+        _healthBarsToggle.isOn = true;
         _clockToggle.isOn = false;
         _alternateSFXToggle.isOn = false;
         _alternateControlsToggle.isOn = false;
@@ -279,6 +275,18 @@ public class MainMenu : MonoBehaviour
         else
         {
             PlayerPrefs.SetInt(UserIdentifier + "_" + "Clock", 0);
+        }
+    }
+
+    public void HealthBarsToggle()
+    {
+        if (_healthBarsToggle.isOn)
+        {
+            PlayerPrefs.SetInt(UserIdentifier + "_" + "Health Bars", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt(UserIdentifier + "_" + "Health Bars", 0);
         }
     }
 

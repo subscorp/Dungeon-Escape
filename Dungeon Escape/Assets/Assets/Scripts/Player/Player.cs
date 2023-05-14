@@ -89,14 +89,18 @@ public class Player : MonoBehaviour, IDamageable
 
         }
 
-        if (GameManager.Instance.PlayerInFrontOfDoorA && moveUpDown > 0.85f && _canEnterDoor)
+        if (GameManager.Instance.PlayerInFrontOfDoorA && moveUpDown > 0.85f && Mathf.Abs(move) < 0.4 && _canEnterDoor)
         {
             transform.position = _doorB.transform.position;
+            GameManager.Instance.PlayerInFrontOfDoorA = false;
+            GameManager.Instance.PlayerInFrontOfDoorB = true;
             StartCoroutine(EnterDoorCooldown());
         }
-        else if (GameManager.Instance.PlayerInFrontOfDoorB && moveUpDown > 0.85f && _canEnterDoor)
+        else if (GameManager.Instance.PlayerInFrontOfDoorB && moveUpDown > 0.85f  && Mathf.Abs(move) < 0.4 && _canEnterDoor)
         {
             transform.position = _doorA.transform.position;
+            GameManager.Instance.PlayerInFrontOfDoorB = false;
+            GameManager.Instance.PlayerInFrontOfDoorA = true;
             StartCoroutine(EnterDoorCooldown());
         }
     }

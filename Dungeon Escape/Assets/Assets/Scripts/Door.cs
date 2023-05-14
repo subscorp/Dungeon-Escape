@@ -26,7 +26,9 @@ public class Door : MonoBehaviour
         if (collider.name != "Player")
             return;
 
-        GameManager.Instance.PlayerInFrontOfDoorA = false;
-        GameManager.Instance.PlayerInFrontOfDoorB = false;
+        if (gameObject.name == "Door_A")
+            GameManager.Instance.PlayerInFrontOfDoorA = false;
+        else if(gameObject.name == "Door_B")
+            GameManager.Instance.PlayerInFrontOfDoorB = false;
     }
 }

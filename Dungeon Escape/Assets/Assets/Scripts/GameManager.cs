@@ -3,6 +3,7 @@ using GooglePlayGames.BasicApi;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -106,9 +107,6 @@ public class GameManager : MonoBehaviour
         DeltaTime = 0.0f;
         SmoothedFPS = 0.0f;
         NumDiamondsInGame = 260;
-
-        PlayGamesPlatform.Activate();
-        PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
     }
 
     private void Start()
@@ -121,6 +119,8 @@ public class GameManager : MonoBehaviour
         targetFPSMax = 40;
         //targetFPSMax = -1;//Screen.currentResolution.refreshRate;  // 40
         Application.targetFrameRate = targetFPSMax;
+        PlayGamesPlatform.Activate();
+        PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
     }
 
     public void Update()
@@ -186,6 +186,24 @@ public class GameManager : MonoBehaviour
             _downArrowButton.gameObject.SetActive(false);
             UIManager.Instance.SetClockDisplay(0);
         }
+
+        // Handle enemies life bars
+        Skeleton[] skeletons = GameObject.FindGameObjectsWithTag("Skeleton")
+            .Select(go => go.GetComponent<Skeleton>())
+            .Where(skeleton => skeleton != null)
+            .ToArray();
+        Spider[] spiders = GameObject.FindGameObjectsWithTag("Spider")
+            .Select(go => go.GetComponent<Spider>())
+            .Where(skeleton => skeleton != null)
+            .ToArray();
+        Moss_Giant[] mossGiants = GameObject.FindGameObjectsWithTag("Moss Giant")
+         .Select(go => go.GetComponent<Moss_Giant>())
+         .Where(skeleton => skeleton != null)
+         .ToArray();
+
+        HandleLifeBarsDisplay(skeletons);
+        HandleLifeBarsDisplay(spiders);
+        HandleLifeBarsDisplay(mossGiants);
     }
 
     public void HomeButton()
@@ -373,5 +391,16 @@ public class GameManager : MonoBehaviour
         shouldWait = true;
         yield return new WaitForSeconds(0.2f);
         shouldWait = false;
+    }
+
+    private void HandleLifeBarsDisplay(Enemy[] enemies)
+    {
+        foreach (var enemy in enemies)
+        {
+            if (PlayerPrefs.GetInt(UserIdentifier + "_" + "Health Bars", 1) == 1)
+                enemy.Slider.gameObject.SetActive(true);
+            else
+                enemy.Slider.gameObject.SetActive(false);
+        }
     }
 }

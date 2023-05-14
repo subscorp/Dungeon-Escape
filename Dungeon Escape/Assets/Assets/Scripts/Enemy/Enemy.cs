@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Enemy : MonoBehaviour
 {
     [SerializeField]
     protected int health;
+    [SerializeField]
+    protected int maxHealth;
     [SerializeField]
     protected float speed;
     [SerializeField]
@@ -21,9 +24,30 @@ public abstract class Enemy : MonoBehaviour
     protected bool isHit = false;
     protected Player player;
     protected bool isDead = false;
+    public Slider Slider { get; set; }
+    [SerializeField]
+    protected BoxCollider2D _collider;
+    protected float _currentVelocity = 0;
+
+    private void Awake()
+    {
+        Slider = GetComponentInChildren<Slider>();
+    }
 
     private void Start()
     {
+        maxHealth = health;
+        _collider = GetComponent<BoxCollider2D>();
+        Vector3 sliderPos = transform.position;
+        sliderPos.y = _collider.bounds.max.y + 0.5f;
+        if (gameObject.tag != "Moss Giant")
+            sliderPos.x -= 1;
+        else
+            sliderPos.x -= 0.3f;
+        if (gameObject.tag == "Spider")
+            sliderPos.y += 0.5f;
+        Slider.transform.position = sliderPos;
+       
         player = GameObject.Find("Player").GetComponent<Player>();
         Init();
     }
