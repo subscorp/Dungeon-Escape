@@ -305,7 +305,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator DisplaySubtitlesRoutine()
     {
-        _subtitles.lineSpacing = 1.5f;
+        _subtitles.lineSpacing = 1.2f;
         _subtitlesPanel.gameObject.SetActive(true);
         if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
         {

@@ -42,12 +42,12 @@ public class MainMenu : MonoBehaviour
 
     public string UserIdentifier { get; set; }
 
+    const bool QA = true; // TODO change to false before launch
 
     private void Awake()
     {
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
-        _options.SetActive(false);
     }
 
     private void OnSignInResult(SignInStatus signInStatus)
@@ -97,7 +97,7 @@ public class MainMenu : MonoBehaviour
                 else
                     _alternateControlsToggle.isOn = false;
             }
-            else
+            else if(!QA)
             {
                 _clockToggle.isOn = false;
                 _alternateSFXToggle.isOn = false;
@@ -115,15 +115,18 @@ public class MainMenu : MonoBehaviour
         {
             UserIdentifier = "temp";
             Debug.Log("*** Failed to authenticate with " + signInStatus);
-            _clockToggle.isOn = false;
-            _alternateSFXToggle.isOn = false;
-            _alternateControlsToggle.isOn = false;
-            _clockText.gameObject.SetActive(false);
-            _altSFXText.gameObject.SetActive(false);
-            _altControlsText.gameObject.SetActive(false);
-            _clockToggle.gameObject.SetActive(false);
-            _alternateSFXToggle.gameObject.SetActive(false);
-            _alternateControlsToggle.gameObject.SetActive(false);
+            if (!QA)
+            {
+                _clockToggle.isOn = false;
+                _alternateSFXToggle.isOn = false;
+                _alternateControlsToggle.isOn = false;
+                _clockText.gameObject.SetActive(false);
+                _altSFXText.gameObject.SetActive(false);
+                _altControlsText.gameObject.SetActive(false);
+                _clockToggle.gameObject.SetActive(false);
+                _alternateSFXToggle.gameObject.SetActive(false);
+                _alternateControlsToggle.gameObject.SetActive(false);
+            }
 
             _music.volume = 0.6f; 
             _sfx.volume = 0.6f;  

@@ -1112,7 +1112,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 805103839}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: HealthBarsToggle
+        m_MethodName: SubtitlesToggle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5659,7 +5659,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Version 0.92
+  m_Text: Version 0.921
 --- !u!222 &1797962903
 CanvasRenderer:
   m_ObjectHideFlags: 0
