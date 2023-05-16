@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -56,7 +57,13 @@ public class UIManager : MonoBehaviour
     private Image _keyImage;
     [SerializeField]
     private Animator _anim;
+
+
     private int _lifeBarSpeed = 5;
+    [SerializeField]
+    private GameObject _subtitlesPanel;
+    [SerializeField]
+    private Text _subtitles;
 
     private void Awake()
     {
@@ -73,6 +80,8 @@ public class UIManager : MonoBehaviour
         clockPos.x = Screen.width / 2;
         _clock.gameObject.transform.position = clockPos;
         _anim.SetTrigger("Start");
+        _subtitlesPanel.gameObject.SetActive(false);
+        _subtitles.text = "";
     }
 
     private void Update()
@@ -287,5 +296,65 @@ public class UIManager : MonoBehaviour
     {
         float currentHealthBarVal = Mathf.SmoothDamp(_slider.value, targetHealth, ref currentVelocity, _lifeBarSpeed * Time.deltaTime);
         _slider.value = currentHealthBarVal;
+    }
+
+    public void DisplaySubtitles()
+    {
+        StartCoroutine(DisplaySubtitlesRoutine());
+    }
+
+    IEnumerator DisplaySubtitlesRoutine()
+    {
+        _subtitles.lineSpacing = 1.5f;
+        _subtitlesPanel.gameObject.SetActive(true);
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+        {
+            if (!GameManager.Instance.HintProvided)
+            {
+                _subtitles.text = "Be careful around here, stranger.\n";
+                yield return new WaitForSeconds(3f);
+                _subtitles.text = "I've seen some strange folk talking about\nsome old cheat code or something";
+                yield return new WaitForSeconds(6f);
+                _subtitles.text = "that can make 'em real powerful.";
+                yield return new WaitForSeconds(2f);
+                _subtitles.text = "I don't know all the details, " +
+                                  "but it's\nprobably best to steer clear of them.";
+                yield return new WaitForSeconds(5f);
+            }
+            else
+            {
+                _subtitles.text = "What're ya buyin'?";
+                yield return new WaitForSeconds(2f);
+            }
+        }
+        else
+        {
+            _subtitles.text = "Welcome!";
+            yield return new WaitForSeconds(1f);
+        }
+
+
+
+
+        _subtitles.text = "";
+        _subtitlesPanel.gameObject.SetActive(false);
+    }
+
+    public void DisableSubtitles()
+    {
+        _subtitles.text = "";
+        _subtitlesPanel.gameObject.SetActive(false);
+    }
+
+    public void HideButtons()
+    {
+        _aButtonImage.enabled = false;
+        _bButtonImage.enabled = false;
+    }
+
+    public void ShowButtons()
+    {
+        _aButtonImage.enabled = true;
+        _bButtonImage.enabled = true;
     }
 }

@@ -37,6 +37,8 @@ public class MainMenu : MonoBehaviour
     private Animator _anim;
     [SerializeField]
     private Toggle _healthBarsToggle;
+    [SerializeField]
+    private Toggle _subtitlesToggle;
 
     public string UserIdentifier { get; set; }
 
@@ -137,6 +139,12 @@ public class MainMenu : MonoBehaviour
             _healthBarsToggle.isOn = true;
         else
             _healthBarsToggle.isOn = false;
+
+        int subtitles = PlayerPrefs.GetInt(UserIdentifier + "_" + "Subtitles", 1);
+        if (subtitles == 1)
+            _subtitlesToggle.isOn = true;
+        else
+            _subtitlesToggle.isOn = false;
     }
 
     public void StartButton()
@@ -261,6 +269,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt(UserIdentifier + "_" + "DeathCount", deathCount);
         PlayerPrefs.SetInt(UserIdentifier + "_" + "Clock", 0);
         _healthBarsToggle.isOn = true;
+        _subtitlesToggle.isOn = true;
         _clockToggle.isOn = false;
         _alternateSFXToggle.isOn = false;
         _alternateControlsToggle.isOn = false;
@@ -312,6 +321,50 @@ public class MainMenu : MonoBehaviour
         {
             PlayerPrefs.SetInt(UserIdentifier + "_" + "Alternate_Controls", 0);
         }
+    }
+
+    public void SubtitlesToggle()
+    {
+        if (_subtitlesToggle.isOn)
+        {
+            PlayerPrefs.SetInt(UserIdentifier + "_" + "Subtitles", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt(UserIdentifier + "_" + "Subtitles", 0);
+        }
+    }
+
+    public void HealthBarsDisplayButton()
+    {
+        ToggleButton(_healthBarsToggle);
+    }
+
+    public void AltControlsButton()
+    {
+        ToggleButton(_alternateControlsToggle);
+    }
+
+    public void ClockButton()
+    {
+        ToggleButton(_clockToggle);
+    }
+
+    public void AltSFXButton()
+    {
+        ToggleButton(_alternateSFXToggle);
+    }
+
+
+    public void SubtitlesButton()
+    {
+        ToggleButton(_subtitlesToggle);
+    }
+
+    private void ToggleButton(Toggle toggle)
+    {
+        bool newToggleVal = toggle.isOn ? false : true;
+        toggle.isOn = newToggleVal;
     }
 
     public void DoAchievementUnlock(string achievementId, System.Action<bool> onUnlock)
