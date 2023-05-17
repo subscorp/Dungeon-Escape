@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public bool PlayerHitSpike { get; set; }
     public int numDiamondsCollected { get; set; }
     public int NumDiamondsInGame { get; set; }
+    public int NumEnemiesInGAme { get; set; }
     public int numEnemiesKilled { get; set; }
     public int numJumps { get; set; }
     public bool boughtAppleInCurrentVisit { get; set; }
@@ -36,6 +37,10 @@ public class GameManager : MonoBehaviour
     public bool PlayerInShop { get; set; }
     public Player player { get; private set; }
     public PlayerAnimation _playerAnimation { get; private set; }
+    public bool FirstCaveSpiderDead { get; set; }
+    public bool SecondCaveSpiderDead { get; set; }
+    public bool InstantiatedChest { get; set; }
+
 
     private float _elapsedTime;
     public float ElapsedTime 
@@ -107,6 +112,10 @@ public class GameManager : MonoBehaviour
         DeltaTime = 0.0f;
         SmoothedFPS = 0.0f;
         NumDiamondsInGame = 260;
+        NumEnemiesInGAme = 8;
+        FirstCaveSpiderDead = false;
+        SecondCaveSpiderDead = false;
+        InstantiatedChest = false;
     }
 
     private void Start()

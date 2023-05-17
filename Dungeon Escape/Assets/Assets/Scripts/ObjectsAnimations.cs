@@ -18,6 +18,7 @@ public class ObjectsAnimations : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _player = GameObject.Find("Player").GetComponent<Player>();
         _chestOpened = false;
         _candleDestroyed = false;
         _lampDestroyed = false;

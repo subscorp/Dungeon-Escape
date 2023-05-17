@@ -32,7 +32,7 @@ public class Moss_Giant : Enemy, IDamageable
         Health--;
         isHit = true;
         
-        animator.SetBool("InCombat", true);
+        //animator.SetBool("InCombat", true);
         animator.SetTrigger("Hit");
 
 
@@ -48,7 +48,7 @@ public class Moss_Giant : Enemy, IDamageable
             diamond.SetVal(gems);
             diamond.SetScale(2f);
             GameManager.Instance.numEnemiesKilled += 1;
-            if (GameManager.Instance.numEnemiesKilled == 6)
+            if (GameManager.Instance.numEnemiesKilled == GameManager.Instance.NumEnemiesInGAme)
             {
                 Debug.Log("Killed all enemies!"); // Achivement 2
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_fighter, (bool achievementUnlocked) =>

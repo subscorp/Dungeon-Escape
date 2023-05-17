@@ -321,6 +321,15 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Damage()
     {
+        System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
+        System.Diagnostics.StackFrame[] stackFrames = stackTrace.GetFrames();
+
+        if (stackFrames.Length >= 2)
+        {
+            System.Diagnostics.StackFrame callingFrame = stackFrames[1];
+            string callingMethodName = callingFrame.GetMethod().Name;
+            UnityEngine.Debug.Log("Called by: " + callingMethodName);
+        }
         //if (IsHit)
         //  return;
         if (Health < 0 || GameManager.Instance.GotKonamiCode)

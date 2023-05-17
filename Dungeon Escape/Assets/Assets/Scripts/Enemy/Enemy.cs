@@ -38,16 +38,8 @@ public abstract class Enemy : MonoBehaviour
     {
         maxHealth = health;
         _collider = GetComponent<BoxCollider2D>();
-        Vector3 sliderPos = transform.position;
-        sliderPos.y = _collider.bounds.max.y + 0.5f;
-        if (gameObject.tag != "Moss Giant")
-            sliderPos.x -= 1;
-        else
-            sliderPos.x -= 0.3f;
-        if (gameObject.tag == "Spider")
-            sliderPos.y += 0.5f;
-        Slider.transform.position = sliderPos;
-       
+        SetHealthBarPosition();
+
         player = GameObject.Find("Player").GetComponent<Player>();
         Init();
     }
@@ -56,7 +48,8 @@ public abstract class Enemy : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         sprtieRenderer = GetComponentInChildren<SpriteRenderer>();
-        currentDest = pointB.position;
+        if(pointB != null)
+            currentDest = pointB.position;
     }
 
     public virtual void Update()
@@ -89,13 +82,27 @@ public abstract class Enemy : MonoBehaviour
             currentDest = pointA.position;
         }
 
-        if (!isHit)
+        float clostDist = gameObject.tag == "Moss Giant" ? 1.7f : 1.1f;
+        float dist = Vector3.Distance(transform.position, player.transform.position);
+        bool playerClose = dist <= clostDist;
+        if(playerClose)
         {
-            transform.position = Vector3.MoveTowards(transform.position, currentDest, speed * Time.deltaTime);
+            animator.SetBool("Player_Close", true);
+            animator.SetBool("InCombat", true);
+        }
+        else
+        {
+            animator.SetBool("Player_Close", false);
         }
 
-        float dist = Vector3.Distance(transform.position, player.transform.position);
-        if (dist > 2)
+        float playerDistFromPointA = Vector3.Distance(player.transform.position, pointA.position);
+        float playerDistFromPointB = Vector3.Distance(player.transform.position, pointB.position);
+
+        if ((player.transform.position.x >= pointA.position.x || playerDistFromPointA < 1) && (player.transform.position.x <= pointB.position.x || playerDistFromPointB < 1) || playerClose)
+        {
+            animator.SetBool("InCombat", true);
+        }
+        else
         {
             isHit = false;
             animator.SetBool("InCombat", false);
@@ -106,5 +113,35 @@ public abstract class Enemy : MonoBehaviour
             sprtieRenderer.flipX = true;
         else if (direction.x > 0 && animator.GetBool("InCombat"))
             sprtieRenderer.flipX = false;
+
+        bool isIdleAnimationPlaying = animator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+        if (!isIdleAnimationPlaying)
+        {
+            if (!animator.GetBool("InCombat"))
+            {
+                transform.position = Vector3.MoveTowards(transform.position, currentDest, speed * Time.deltaTime);
+            }
+            else if (!playerClose)
+            {
+                Vector3 playerPos = player.transform.position;
+                playerPos.y = transform.position.y;
+                transform.position = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
+            }
+        }
+    }
+
+    private void SetHealthBarPosition()
+    {
+        if (gameObject.tag == "Spider")
+            return;
+
+        Vector3 sliderPos = transform.position;
+        sliderPos.y = _collider.bounds.max.y + 0.5f;
+        if (gameObject.tag != "Moss Giant")
+            sliderPos.x -= 1;
+        else
+            sliderPos.x -= 0.3f;
+       
+        Slider.transform.position = sliderPos;
     }
 }

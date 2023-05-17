@@ -27,9 +27,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474883364617753608}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.52, y: 0.45, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -145,10 +145,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f0c0f489c4de14d926f42afc115734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _candleAnim: {fileID: 0}
-  _lampAnim: {fileID: 0}
+  _candleAnim: {fileID: 2979804388175620878, guid: 0a291e2f5fa8d55459821900c9f12900, type: 3}
+  _lampAnim: {fileID: 5749145721519615791, guid: 423248af011d63946b18117f46a46b25, type: 3}
   _chestAnim: {fileID: 474883364617753611}
   _chestOpened: 0
   _lampDestroyed: 0
   _candleDestroyed: 0
   _player: {fileID: 0}
+  _diamondPrefab: {fileID: 0}

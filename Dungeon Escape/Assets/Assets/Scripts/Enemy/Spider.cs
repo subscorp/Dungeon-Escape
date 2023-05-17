@@ -6,7 +6,11 @@ public class Spider : Enemy, IDamageable
 {
     [SerializeField]
     private AcidEffect _acidEffectPrefab;
-
+    [SerializeField]
+    private GameObject _diamondPrefabUnderground;
+    [SerializeField]
+    private GameObject _chestPrefab;
+    private Vector3 _chestPosition = new Vector3(-14.136f, -22.291f, 0); // Scale = (3, 3, 1)
     public int Health { get; set; }
 
     public void Damage()
@@ -26,12 +30,17 @@ public class Spider : Enemy, IDamageable
             isDead = true;
             animator.SetTrigger("Death");
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            GameObject diamondGameObject = Instantiate(_diamondPrefab, transform.position, Quaternion.identity);
+
+            GameObject diamondGameObject;
+            if (_diamondPrefabUnderground != null)
+                diamondGameObject = Instantiate(_diamondPrefabUnderground, transform.position, Quaternion.identity);
+            else
+                diamondGameObject = Instantiate(_diamondPrefab, transform.position, Quaternion.identity);
             Diamond diamond = diamondGameObject.GetComponent<Diamond>();
             diamond.SetVal(gems);
-            diamond.SetScale(1.75f);
+            diamond.SetScale(1.45f);
             GameManager.Instance.numEnemiesKilled += 1;
-            if (GameManager.Instance.numEnemiesKilled == 6)
+            if (GameManager.Instance.numEnemiesKilled == GameManager.Instance.NumEnemiesInGAme)
             {
                 Debug.Log("Killed all enemies!"); // Achivement 2
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_fighter, (bool achievementUnlocked) =>
@@ -43,6 +52,16 @@ public class Spider : Enemy, IDamageable
                         GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                     }
                 });
+            }
+
+            if(transform.name == "Spider_Enemy_2")
+                GameManager.Instance.FirstCaveSpiderDead = true;
+            else if(transform.name == "Spider_Enemy_3")
+                GameManager.Instance.SecondCaveSpiderDead = true;
+
+            if(GameManager.Instance.FirstCaveSpiderDead && GameManager.Instance.SecondCaveSpiderDead && !GameManager.Instance.InstantiatedChest)
+            {
+                StartCoroutine(SpawnChestAfterDelay());
             }
         }
     }
@@ -67,5 +86,13 @@ public class Spider : Enemy, IDamageable
     public void Attack()
     {
         Instantiate(_acidEffectPrefab, transform.position, Quaternion.identity);
+    }
+
+    IEnumerator SpawnChestAfterDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(_chestPrefab, _chestPosition, Quaternion.identity);
+        AudioManager.Instance.PlayChestAppearsSFX();
+        GameManager.Instance.InstantiatedChest = true;
     }
 }

@@ -4,23 +4,45 @@ using UnityEngine;
 
 public class SpiderAnimationEvent : MonoBehaviour
 {
-    private Spider _spider;
+    [SerializeField]
+    private Spider _spider1, _spider2, _spider3;
     private Player _player;
 
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-        _spider = GameObject.Find("Spider_Enemy").GetComponent<Spider>();
     }
 
     public void Fire()
     {
-        _spider.Attack();
+        Debug.Log("_spider1: " + _spider1);
+        Debug.Log("_spider2: " + _spider2);
+        Debug.Log("_spider3: " + _spider3);
+
+        if (_spider1 != null)
+            _spider1.Attack();
+        else if(_spider2 != null)
+            _spider2.Attack();
+        else if(_spider3 != null)
+            _spider3.Attack();
     }
 
     public void StartAttackSFX()
     {
-        if (Vector3.Distance(_spider.transform.position, _player.transform.position) < 7f)
-            AudioManager.Instance.PlaySpiderSpit();
+        if (_spider1 != null)
+        {
+            if (Vector3.Distance(_spider1.transform.position, _player.transform.position) < 7f)
+                AudioManager.Instance.PlaySpiderSpit();
+        }
+        if (_spider2 != null)
+        {
+            if (Vector3.Distance(_spider2.transform.position, _player.transform.position) < 7f)
+                AudioManager.Instance.PlaySpiderSpit();
+        }
+        if (_spider3 != null)
+        {
+            if (Vector3.Distance(_spider3.transform.position, _player.transform.position) < 7f)
+                AudioManager.Instance.PlaySpiderSpit();
+        }
     }
 }

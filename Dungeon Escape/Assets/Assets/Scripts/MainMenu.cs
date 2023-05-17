@@ -39,7 +39,7 @@ public class MainMenu : MonoBehaviour
     private Toggle _healthBarsToggle;
     [SerializeField]
     private Toggle _subtitlesToggle;
-
+    private bool _pressedStart = false;
     public string UserIdentifier { get; set; }
 
     const bool QA = true; // TODO change to false before launch
@@ -155,6 +155,10 @@ public class MainMenu : MonoBehaviour
         //if (PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
         //    _startButtonSFXAlternate.Play();
         //else
+        if (_pressedStart)
+            return;
+
+        _pressedStart = true;
         _startButtonSFX.Play();
 
         try
