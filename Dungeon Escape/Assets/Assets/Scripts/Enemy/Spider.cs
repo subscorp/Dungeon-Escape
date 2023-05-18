@@ -10,7 +10,7 @@ public class Spider : Enemy, IDamageable
     private GameObject _diamondPrefabUnderground;
     [SerializeField]
     private GameObject _chestPrefab;
-    private Vector3 _chestPosition = new Vector3(-14.136f, -22.291f, 0); // Scale = (3, 3, 1)
+    private Vector3 _chestPosition = new Vector3(-15.3f, -22.291f, 0); // Scale = (3, 3, 1)
     public int Health { get; set; }
 
     public void Damage()

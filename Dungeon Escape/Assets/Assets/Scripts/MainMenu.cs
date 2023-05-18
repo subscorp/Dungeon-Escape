@@ -200,6 +200,9 @@ public class MainMenu : MonoBehaviour
 
     public void QuitButton()
     {
+        if (_pressedStart)
+            return;
+
         if (PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
             _sfxAlternate.Play();
         else
@@ -210,6 +213,9 @@ public class MainMenu : MonoBehaviour
 
     public void MenuButton()
     {
+        if (_pressedStart)
+            return;
+
         _options.SetActive(true);
         if (PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
             _sfxAlternate.Play();

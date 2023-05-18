@@ -7,7 +7,7 @@ public class AcidEffect : MonoBehaviour
     private Player _player;
     private Spider _spider1, _spider2, _spider3;
     private float _speed = 3.0f;
-    private float _caveGroundY = -23.2f;
+    private float _caveGroundY = -23f;
     private Vector3 _direction;
 
     private void Start()
