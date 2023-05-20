@@ -107,7 +107,11 @@ public class Castle : MonoBehaviour
         }
         else
         {
-            UIManager.Instance.EnableNeedKeyPanel();
+            bool needKeyToChest = false;
+            if (GameManager.Instance.HasKeyToChest)
+                UIManager.Instance.EnableWrongKeyPanel();
+            else
+                UIManager.Instance.EnableNeedKeyToCastlePanel();
         }
     }
 
@@ -116,6 +120,7 @@ public class Castle : MonoBehaviour
         if (collider.name != "Player")
             return;
 
-        UIManager.Instance.DisableNeedKeyPanel();
+        UIManager.Instance.DisableNeedKeyToCastlePanel();
+        UIManager.Instance.DisableWrongKeyPanel();
     }
 }

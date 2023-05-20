@@ -156,7 +156,7 @@ public class Shop : MonoBehaviour
         {
             UIManager.Instance.UpdateKeySoldOut();
             AudioManager.Instance.PlaySoldOutSFX();
-            GameManager.Instance.HasKeyToCastle = true;
+            GameManager.Instance.HasKeyToChest = true;
             GameManager.Instance.boughtKeyInCurrentVisit = true;
         }
         _player.setNumDiamonds(_player.getNumDiamonds() - _currentItemCost);

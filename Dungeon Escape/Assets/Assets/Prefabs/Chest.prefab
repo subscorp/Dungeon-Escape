@@ -153,3 +153,5 @@ MonoBehaviour:
   _candleDestroyed: 0
   _player: {fileID: 0}
   _diamondPrefab: {fileID: 0}
+  _flyingDiamondPrefab: {fileID: 3236511944507371319, guid: e884f59134d4bc444904af1afc685c88, type: 3}
+  _keyToTheCastlePrefab: {fileID: 4527105144820168557, guid: 9c23414a603689049b81869dc4750d25, type: 3}

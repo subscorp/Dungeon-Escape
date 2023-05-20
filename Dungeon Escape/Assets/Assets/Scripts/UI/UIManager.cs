@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
     private Color _enabledColor;
     private Color _disabledColor;
     [SerializeField]
-    private GameObject _needKeyPanel;
+    private GameObject _needKeyToChestPanel, _needKeyToCastlePanel, _wrongKeyPanel;
     [SerializeField]
     private Text _clock;
     [SerializeField]
@@ -54,7 +54,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image _bootsImage;
     [SerializeField]
-    private Image _keyImage;
+    private Image _keyToCastleImage, _keyToChestImage;
     [SerializeField]
     private Animator _anim;
 
@@ -199,7 +199,17 @@ public class UIManager : MonoBehaviour
         _keyPrice.text = "SOLD OUT";
         _buyItemButton.enabled = false;
         _buyItemButton.image.color = _disabledColor;
-        _keyImage.enabled = true;
+        _keyToChestImage.enabled = true;
+    }
+
+    public void UpdateKeyToCastleObtained()
+    {
+        _keyToCastleImage.enabled = true;
+    }
+
+    public void UpdateKeyToChestUsed()
+    {
+        _keyToChestImage.enabled = false;
     }
 
     public void UpdateGemCount(int count)
@@ -274,14 +284,34 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void EnableNeedKeyPanel()
+    public void EnableNeedKeyToCastlePanel()
     {
-        _needKeyPanel.SetActive(true);
+        _needKeyToCastlePanel.SetActive(true);
     }
 
-    public void DisableNeedKeyPanel()
+    public void DisableNeedKeyToCastlePanel()
     {
-        _needKeyPanel.SetActive(false);
+        _needKeyToCastlePanel.SetActive(false);
+    }
+
+    public void EnableWrongKeyPanel()
+    {       
+        _wrongKeyPanel.SetActive(true);
+    }
+
+    public void DisableWrongKeyPanel()
+    {
+        _wrongKeyPanel.SetActive(false);
+    }
+
+    public void EnableNeedKeyToChestPanel()
+    {
+        _needKeyToChestPanel.SetActive(true);
+    }
+
+    public void DisableNeedKeyToChestPanel()
+    {
+        _needKeyToChestPanel.SetActive(false);
     }
 
     public void SetClockDisplay(int val)

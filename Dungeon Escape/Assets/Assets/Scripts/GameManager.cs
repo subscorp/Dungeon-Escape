@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool HasKeyToCastle { get; set; }
+    public bool HasKeyToChest { get; set; }
     public bool HasBootsOfFlight { get; set; }
     public bool PlayerHitSpike { get; set; }
     public int numDiamondsCollected { get; set; }

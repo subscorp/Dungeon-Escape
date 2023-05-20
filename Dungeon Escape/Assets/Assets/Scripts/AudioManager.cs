@@ -120,6 +120,14 @@ public class AudioManager : MonoBehaviour
     private AudioSource _treasureChestSFX;
     [SerializeField]
     private AudioSource _treasureChestSFXAlternative;
+    [SerializeField]
+    private AudioSource _obtainedKeySFX;
+    [SerializeField]
+    private AudioSource _obtainedKeySFXAlternative;
+    [SerializeField]
+    private AudioSource _keyAppearsSFX;
+    [SerializeField]
+    private AudioSource _keyAppearsSFXAlternative;
 
 
     private void Awake()
@@ -170,6 +178,10 @@ public class AudioManager : MonoBehaviour
         _treasureChestSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _chestAppearsSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _chestApeearsSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _obtainedKeySFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _obtainedKeySFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _keyAppearsSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _keyAppearsSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
 
 
 
@@ -253,6 +265,10 @@ public class AudioManager : MonoBehaviour
         _BreakObjectSFXAlternative.mute = true;
         _treasureChestSFX.mute = true;
         _treasureChestSFXAlternative.mute = true;
+        _obtainedKeySFX.mute = true;
+        _obtainedKeySFXAlternative.mute = true;
+        _keyAppearsSFX.mute = true;
+        _keyAppearsSFXAlternative.mute = true;
     }
 
     public void PlayGettingHitSound()
@@ -414,6 +430,14 @@ public class AudioManager : MonoBehaviour
             _chestAppearsSFX.Play();
     }
 
+    internal void PlayKeyObtainedSFX()
+    {
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+            _obtainedKeySFXAlternative.Play();
+        else
+            _obtainedKeySFX.Play();
+    }
+
     public void PlayWinMusic()
     {
         _winMusic.Play();
@@ -431,6 +455,14 @@ public class AudioManager : MonoBehaviour
             _konamiCorrectSFXAlternative.Play();
         else
             _konamiCorrectSFX.Play();
+    }
+
+    public void PlayKeyAppearsSFX()
+    {
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+            _keyAppearsSFXAlternative.Play();
+        else
+            _keyAppearsSFX.Play();
     }
 
     public void PlayKonamiCodeWrongSFX()

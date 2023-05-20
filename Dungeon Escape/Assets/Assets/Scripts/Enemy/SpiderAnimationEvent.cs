@@ -15,10 +15,6 @@ public class SpiderAnimationEvent : MonoBehaviour
 
     public void Fire()
     {
-        Debug.Log("_spider1: " + _spider1);
-        Debug.Log("_spider2: " + _spider2);
-        Debug.Log("_spider3: " + _spider3);
-
         if (_spider1 != null)
             _spider1.Attack();
         else if(_spider2 != null)
