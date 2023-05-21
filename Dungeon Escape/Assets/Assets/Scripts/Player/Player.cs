@@ -218,7 +218,7 @@ public class Player : MonoBehaviour, IDamageable
         _resetAttack = false;
     }
 
-    public void onupbuttondown()
+    public void OnUpButtonDown()
     {
         arrowsHorizontal = 0;
         arrowsVertical = 1;
