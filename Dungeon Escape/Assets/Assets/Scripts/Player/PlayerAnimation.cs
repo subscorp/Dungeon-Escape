@@ -57,4 +57,17 @@ public class PlayerAnimation : MonoBehaviour
     {
         _animator.SetBool("Grounded", val);
     }
+
+    public float GetCurrentAnimationLength()
+    {
+        // Get the current Animator state
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+        // Get the current clip associated with the state
+        AnimationClip clip = stateInfo.shortNameHash != 0 ? _animator.GetCurrentAnimatorClipInfo(0)[0].clip : null;
+        Debug.Log("clip.name: " + clip.name);
+
+        // Return the length of the current clip
+        return clip != null ? clip.length : 0f;
+    }
 }

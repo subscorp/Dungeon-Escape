@@ -16,6 +16,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField]
     private LayerMask _groundLayer;
     private bool _resetJump = false;
+    private bool _resetAttack = false;
     private bool _grounded = false;
     private PlayerAnimation _playerAnimation;
     private SpriteRenderer _spriteRenderer;
@@ -71,16 +72,22 @@ public class Player : MonoBehaviour, IDamageable
         Movement(out move, out moveUpDown);
 
         //if (_grounded && (CrossPlatformInputManager.GetButtonDown("A_Button")))
-        if (CrossPlatformInputManager.GetButtonDown("A_Button") || Input.GetKeyDown(KeyCode.S))
+        if ((CrossPlatformInputManager.GetButtonDown("A_Button") || Input.GetKeyDown(KeyCode.S)) && !_resetAttack)
         {
+            float attackDuration;
+            bool isFireAttack = GameManager.Instance.GotKonamiCode;
             if (_grounded)
             {
+                //attackDuration = isFireAttack ? 0.8f : 0.84f;
+                attackDuration = 0.6f;
                 _playerAnimation.Attack();
             }
             else
             {
+                attackDuration = isFireAttack ? 0.36f : 0.32f;
                 _playerAnimation.JumpAttack();
             }
+            StartCoroutine(ResetAttackRoutine(attackDuration));
             AudioManager.Instance.PlayAttackSound();
 
             // Konami Code Related
@@ -203,19 +210,19 @@ public class Player : MonoBehaviour, IDamageable
         _resetJump = false;
     }
 
-    public void OnUpButtonDown()
+    private IEnumerator ResetAttackRoutine(float attackDuration)
     {
-        arrowsHorizontal = 0;
-        arrowsVertical = 1;
+        _resetAttack = true;
+        //yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(attackDuration);
+        _resetAttack = false;
     }
 
-    /*
-    public void OnUpButtonEnter()
+    public void onupbuttondown()
     {
         arrowsHorizontal = 0;
         arrowsVertical = 1;
     }
-    */
 
     public void OnUpButtonUp()
     {
@@ -244,17 +251,6 @@ public class Player : MonoBehaviour, IDamageable
         arrowsVertical = 0f;
     }
 
-    /*
-    public void OnRightButtonUp()
-    {
-        
-        // Stop moving the player
-        arrowsHorizontal = 0f;
-        arrowsVertical = 0f;
-        
-    }
-    */
-
     public void OnRightButtonExit()
     {
 
@@ -269,14 +265,6 @@ public class Player : MonoBehaviour, IDamageable
         arrowsHorizontal = 0f;
         arrowsVertical = -1f;
     }
-
-    /*
-    public void OnDownButtonEnter()
-    {
-        arrowsHorizontal = 0f;
-        arrowsVertical = -1f;
-    }
-    */
 
     public void OnDownButtonUp()
     {
@@ -304,14 +292,6 @@ public class Player : MonoBehaviour, IDamageable
         arrowsHorizontal = -1f;
         arrowsVertical = 0f;
     }
-
-    /*
-    public void OnLeftButtonUp()
-    {
-        arrowsHorizontal = 0f;
-        arrowsVertical = 0f;
-    }
-    */
 
     public void OnLeftButtonExit()
     {
