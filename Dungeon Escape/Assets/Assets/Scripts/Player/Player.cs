@@ -54,19 +54,8 @@ public class Player : MonoBehaviour, IDamageable
     void Update()
     {
         if (IsHit)
-        {
-            // Disable movement and collision detection
-            GetComponent<Rigidbody2D>().isKinematic = true;
-            GetComponent<Collider2D>().enabled = false;
             return;
-        }
-        else
-        {
-            // Enable movement and collision detection
-            GetComponent<Rigidbody2D>().isKinematic = false;
-            GetComponent<Collider2D>().enabled = true;
-        }
-
+        
         float moveUpDown;
         float move;
         Movement(out move, out moveUpDown);
@@ -301,17 +290,9 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Damage()
     {
-        System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
-        System.Diagnostics.StackFrame[] stackFrames = stackTrace.GetFrames();
+        if (IsHit)
+          return;
 
-        if (stackFrames.Length >= 2)
-        {
-            System.Diagnostics.StackFrame callingFrame = stackFrames[1];
-            string callingMethodName = callingFrame.GetMethod().Name;
-            UnityEngine.Debug.Log("Called by: " + callingMethodName);
-        }
-        //if (IsHit)
-        //  return;
         if (Health < 0 || GameManager.Instance.GotKonamiCode)
         {
             return;
@@ -319,8 +300,11 @@ public class Player : MonoBehaviour, IDamageable
         else if (Health > 1)
         {
             AudioManager.Instance.PlayGettingHitSound();
-            //StartCoroutine(PlayerHitCoolDown());
             _playerAnimation.Hit();
+            Vector2 newVelocity = _rigidBody.velocity;
+            newVelocity.x = 0;
+            _rigidBody.velocity = newVelocity;
+            StartCoroutine(PlayerHitCoolDown());
         }
 
         Health--;
@@ -403,26 +387,11 @@ public class Player : MonoBehaviour, IDamageable
             _speed += 3f;
     }
 
-    /*
+    
     IEnumerator PlayerHitCoolDown()
     {
         IsHit = true;
         yield return new WaitForSeconds(1f);
-        IsHit = false;
-    }
-    */
-
-    public void AnimationStart()
-    {
-        // Called by the animation event when it starts
-        Debug.Log("AnimationStart in Player");
-        IsHit = true;
-    }
-
-    public void AnimationEnd()
-    {
-        // Called by the animation event when it ends
-        Debug.Log("AnimationEnd in Player");
         IsHit = false;
     }
 
