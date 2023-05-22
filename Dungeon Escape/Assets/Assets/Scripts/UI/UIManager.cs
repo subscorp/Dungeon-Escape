@@ -57,6 +57,8 @@ public class UIManager : MonoBehaviour
     private Image _keyToCastleImage, _keyToChestImage;
     [SerializeField]
     private Animator _anim;
+    [SerializeField]
+    private GameObject _objectivePanel;
 
 
     private int _lifeBarSpeed = 5;
@@ -77,7 +79,11 @@ public class UIManager : MonoBehaviour
         _disabledColor.a = 0.3f;
         
         Vector3 clockPos = _clock.gameObject.transform.position;
-        clockPos.x = Screen.width / 2;
+        clockPos.x = (float)Screen.width / 2;
+        Vector3 objectivePanelPos = _objectivePanel.gameObject.transform.position;
+        objectivePanelPos.x = (float)Screen.width / 2;
+        Debug.Log("objectivePanelPos.x: " + objectivePanelPos.x);
+        _objectivePanel.gameObject.transform.position = objectivePanelPos;
         _clock.gameObject.transform.position = clockPos;
         _anim.SetTrigger("Start");
         _subtitlesPanel.gameObject.SetActive(false);

@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
         DeltaTime = 0.0f;
         SmoothedFPS = 0.0f;
         NumDiamondsInGame = 260;
-        NumEnemiesInGAme = 8;
+        NumEnemiesInGAme = 9;
         FirstCaveSpiderDead = false;
         SecondCaveSpiderDead = false;
         InstantiatedChest = false;

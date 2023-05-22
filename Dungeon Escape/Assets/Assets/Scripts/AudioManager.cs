@@ -96,6 +96,14 @@ public class AudioManager : MonoBehaviour
     private AudioSource _chestAppearsSFX;
     [SerializeField]
     private AudioSource _chestApeearsSFXAlternative;
+    [SerializeField]
+    private AudioSource _kingHitSFX;
+    [SerializeField]
+    private AudioSource _kingHitSFXAlternative;
+    [SerializeField]
+    private AudioSource _kingDeathSFX;
+    [SerializeField]
+    private AudioSource _kingDeathSFXAlternative;
 
     // Konami Code related
     [SerializeField]
@@ -128,6 +136,8 @@ public class AudioManager : MonoBehaviour
     private AudioSource _keyAppearsSFX;
     [SerializeField]
     private AudioSource _keyAppearsSFXAlternative;
+    [SerializeField]
+    private AudioSource _kingEvilLaugh;
 
 
     private void Awake()
@@ -183,6 +193,11 @@ public class AudioManager : MonoBehaviour
         _keyAppearsSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _keyAppearsSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
 
+        _kingHitSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _kingHitSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _kingDeathSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _kingDeathSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _kingEvilLaugh.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
 
 
         // Konami Code Related
@@ -269,6 +284,11 @@ public class AudioManager : MonoBehaviour
         _obtainedKeySFXAlternative.mute = true;
         _keyAppearsSFX.mute = true;
         _keyAppearsSFXAlternative.mute = true;
+        _kingHitSFX.mute = true;
+        _kingHitSFXAlternative.mute = true;
+        _kingDeathSFX.mute = true;
+        _kingDeathSFXAlternative.mute = true;
+        _kingEvilLaugh.mute = true;
     }
 
     public void PlayGettingHitSound()
@@ -277,6 +297,27 @@ public class AudioManager : MonoBehaviour
             _playerHitSFXAlternate.Play();
         else
             _playerHitSFX.Play();
+    }
+
+    public void PlayKingHitSound()
+    {
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+            _kingHitSFXAlternative.Play();
+        else
+            _kingHitSFX.Play();
+    }
+
+    public void PlayKingLaughSound()
+    {
+        _kingEvilLaugh.Play();
+    }
+
+    public void PlayKingDeathSound()
+    {
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+            _kingDeathSFXAlternative.Play();
+        else
+            _kingDeathSFX.Play();
     }
 
     public void PlayGettingCollectibleSFX()
