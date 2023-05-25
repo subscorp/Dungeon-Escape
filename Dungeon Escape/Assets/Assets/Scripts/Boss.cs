@@ -42,7 +42,7 @@ public class Boss : MonoBehaviour, IDamageable
         _player = GameObject.Find("Player").GetComponent<Player>();
         _rigidBody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        Health = 5;
+        Health = 15;
         CurrentTarget = _pointB;
 
         // Initialize the elapsed time to the current time
@@ -52,6 +52,12 @@ public class Boss : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+        if (Health == 10)
+        {
+            Debug.Log("Starting phase 2!");
+            _anim.SetBool("Phase1", false);
+            _anim.SetBool("Phase2", true);
+        }
         /*
         if (_rigidBody.velocity.y < _prevVelocityY && !IsGrounded())
             _anim.SetBool("Fall", true);
