@@ -313,6 +313,7 @@ public class Player : MonoBehaviour, IDamageable
         UIManager.Instance.UpdateLives(Health);
         if (Health == 0)
         {
+            _rigidBody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
             GameManager.Instance.IsDead = true;
             AudioManager.Instance.PlayPlayerDeathSFX();
             OnDeath();
@@ -358,6 +359,7 @@ public class Player : MonoBehaviour, IDamageable
     public void HitSpike()
     {
         Health = 0;
+        _rigidBody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         AudioManager.Instance.PlayImpaleSound();
         UIManager.Instance.UpdateLivesOnSuddenDeath();
         OnDeath();

@@ -104,6 +104,8 @@ public class AudioManager : MonoBehaviour
     private AudioSource _kingDeathSFX;
     [SerializeField]
     private AudioSource _kingDeathSFXAlternative;
+    [SerializeField]
+    private AudioSource _bossMusic;
 
     // Konami Code related
     [SerializeField]
@@ -138,6 +140,8 @@ public class AudioManager : MonoBehaviour
     private AudioSource _keyAppearsSFXAlternative;
     [SerializeField]
     private AudioSource _kingEvilLaugh;
+    private float _musicVol;
+    private float _bossMusicVol;
 
 
     private void Awake()
@@ -150,6 +154,7 @@ public class AudioManager : MonoBehaviour
         _music.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "Music", 0.6f);
         _winMusic.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "Music", 0.6f);
         _gameOverMusic.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "Music", 0.6f);
+        _bossMusic.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "Music", 0.6f);
         _playerAttackSFXAlternate.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _playerAttackSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _playerHitSFXAlternate.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
@@ -192,7 +197,6 @@ public class AudioManager : MonoBehaviour
         _obtainedKeySFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _keyAppearsSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _keyAppearsSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
-
         _kingHitSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _kingHitSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _kingDeathSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
@@ -215,6 +219,8 @@ public class AudioManager : MonoBehaviour
 
         _fireSwordSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _fireSwordSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _musicVol = _music.volume;
+        _bossMusicVol = _bossMusic.volume;
     }
 
     public void PlayMusic()
@@ -243,6 +249,7 @@ public class AudioManager : MonoBehaviour
     internal void StopGameSounds()
     {
         _music.mute = true;
+        _bossMusic.mute = true;
         _playerAttackSFX.mute = true;
         _playerAttackSFXAlternate.mute = true;
         _playerHitSFX.mute = true;
@@ -529,6 +536,23 @@ public class AudioManager : MonoBehaviour
         _konamiCodeHint.Stop();
     }
 
+    public void PlayBossMusic()
+    {
+        _bossMusic.volume = 0;
+        _bossMusic.Play();
+        StartCoroutine(StartFade(_music, 1.5f, 0));
+        StartCoroutine(StartFade(_bossMusic, 1.5f, _bossMusicVol));
+
+        //_music.Stop();
+        //_bossMusic.Play();
+    }
+
+    public void FadeOutBossMusic()
+    {
+        StartCoroutine(StartFade(_bossMusic, 3.5f, 0));
+        StartCoroutine(StartFade(_music, 3.5f, _musicVol));
+    }
+
     public static IEnumerator StartFade(AudioSource audioSource, float duration, float targetVolume)
     {
         float currentTime = 0;
@@ -541,4 +565,5 @@ public class AudioManager : MonoBehaviour
         }
         yield break;
     }
+
 }

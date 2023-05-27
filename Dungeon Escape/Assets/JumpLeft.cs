@@ -10,13 +10,20 @@ public class JumpLeft : StateMachineBehaviour
     [SerializeField]
     private Rigidbody2D _rigidBody;
     private Boss _boss;
+    [SerializeField]
+    private SpriteRenderer _shield;
+
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _rigidBody = animator.GetComponentInParent<Rigidbody2D>();
-        _boss = GameObject.Find("Boss").GetComponent<Boss>();
+        _boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
         _rigidBody.velocity = new Vector2(-1 * _speed, _jumpForce);
+
+        _shield = GameObject.Find("Shields").GetComponent<SpriteRenderer>();
+        _boss.ShieldOn = true;
+        _shield.enabled = true;
         //animator.SetBool("Grounded", false);
     }
 

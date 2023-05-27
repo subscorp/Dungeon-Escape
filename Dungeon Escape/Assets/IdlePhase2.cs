@@ -15,13 +15,15 @@ public class IdlePhase2 : StateMachineBehaviour
     private Rigidbody2D _rigidBody;
     private SpriteRenderer _spriteRenderer;
     private BoxCollider2D _hitBox;
+    [SerializeField]
+    private SpriteRenderer _shield;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("GoingRight", false);
         animator.SetBool("GoingLeft", false);
-        _boss = GameObject.Find("Boss").GetComponent<Boss>();
+        _boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
         _pointA = GameObject.Find("Boss_Point_A").GetComponent<Transform>();
         _pointB = GameObject.Find("Boss_Point_B").GetComponent<Transform>();
         _rigidBody = animator.GetComponentInParent<Rigidbody2D>();
@@ -43,6 +45,10 @@ public class IdlePhase2 : StateMachineBehaviour
             _spriteRenderer.flipX = true;
             animator.SetBool("GoingLeft", true);
         }
+
+        _shield = GameObject.Find("Shields").GetComponent<SpriteRenderer>();
+        _boss.ShieldOn = false;
+        _shield.enabled = false;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

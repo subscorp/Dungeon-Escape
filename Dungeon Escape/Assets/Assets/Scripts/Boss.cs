@@ -27,13 +27,13 @@ public class Boss : MonoBehaviour, IDamageable
     private bool _resetJump = false;
     private bool _move = false;
     private int reachPointCount = 0;
-
+    public bool ShieldOn { get; set; }
 
     private List<string> attackTriggers = new List<string> { "Attack1", "Attack2", "Attack3" };
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("collider.name: " + collider.name);
+        Debug.Log("In Boss::OnTriggerEnter2. Dcollider.name: " + collider.name);
     }
 
     // Start is called before the first frame update
@@ -42,8 +42,9 @@ public class Boss : MonoBehaviour, IDamageable
         _player = GameObject.Find("Player").GetComponent<Player>();
         _rigidBody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        Health = 15;
+        Health = 9;
         CurrentTarget = _pointB;
+        ShieldOn = false;
 
         // Initialize the elapsed time to the current time
         elapsedTime = Time.time;
@@ -52,12 +53,19 @@ public class Boss : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        if (Health == 10)
+        if (Health == 6)
         {
-            Debug.Log("Starting phase 2!");
             _anim.SetBool("Phase1", false);
             _anim.SetBool("Phase2", true);
         }
+        else if(Health == 3)
+        {
+            _anim.SetBool("Phase2", false);
+            _anim.SetBool("Phase3", true);
+            _spriteRenderer.color = Color.red;
+        }
+
+
         /*
         if (_rigidBody.velocity.y < _prevVelocityY && !IsGrounded())
             _anim.SetBool("Fall", true);
@@ -158,7 +166,7 @@ public class Boss : MonoBehaviour, IDamageable
 
     public void Damage()
     {
-        if (Health <= 0)
+        if (Health <= 0 || ShieldOn)
             return;
 
         //if (Health > 1 && !GameManager.Instance.GotKonamiCode)
@@ -197,6 +205,8 @@ public class Boss : MonoBehaviour, IDamageable
                     }
                 });
             }
+
+            AudioManager.Instance.FadeOutBossMusic();
         }
     }
 

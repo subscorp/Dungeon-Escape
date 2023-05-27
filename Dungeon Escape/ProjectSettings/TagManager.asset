@@ -12,6 +12,7 @@ TagManager:
   - Moss Giant
   - Skeleton
   - Key
+  - Boss
   layers:
   - Default
   - TransparentFX

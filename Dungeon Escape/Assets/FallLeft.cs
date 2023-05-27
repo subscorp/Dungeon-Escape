@@ -15,7 +15,7 @@ public class FallLeft : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _rigidBody = animator.GetComponentInParent<Rigidbody2D>();
-        _boss = GameObject.Find("Boss").GetComponent<Boss>();
+        _boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

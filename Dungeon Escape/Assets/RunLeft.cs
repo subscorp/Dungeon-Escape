@@ -12,17 +12,21 @@ public class RunLeft : StateMachineBehaviour
     private Transform _pointA;
     private Transform _pointB;
     private Transform _pointM;
-
+    [SerializeField]
+    private SpriteRenderer _shield;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _rigidBody = animator.GetComponentInParent<Rigidbody2D>();
-        _boss = GameObject.Find("Boss").GetComponent<Boss>();
+        _boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
         _pointA = GameObject.Find("Boss_Point_A").GetComponent<Transform>();
         _pointB = GameObject.Find("Boss_Point_B").GetComponent<Transform>();
         _pointM = GameObject.Find("Boss_Point_M").GetComponent<Transform>();
 
+        _shield = GameObject.Find("Shields").GetComponent<SpriteRenderer>();
+        _boss.ShieldOn = true;
+        _shield.enabled = true;
         //animator.SetBool("Grounded", false);
     }
 

@@ -84,6 +84,13 @@ public class GameManager : MonoBehaviour
     private int targetFPSMax;
     public float DeltaTime { get; set; }
     public float SmoothedFPS { get; set; }
+    [SerializeField]
+    private Boss _bossPrefab;
+    [SerializeField]
+    private Vector3 _pointC, _pointD;
+    public bool SpawnedBoss { get; set; }
+    public bool StartedBossFight { get; set; }
+    private bool QABoss = true;
 
     private void Awake()
     {
@@ -117,6 +124,8 @@ public class GameManager : MonoBehaviour
         FirstCaveSpiderDead = false;
         SecondCaveSpiderDead = false;
         InstantiatedChest = false;
+        SpawnedBoss = false;
+        StartedBossFight = false;
     }
 
     private void Start()
@@ -131,6 +140,13 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = targetFPSMax;
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
+
+        if (QABoss) // TODO remove before launch 
+        {
+            player.transform.position = new Vector3(110.040001f, -8.35999966f, 0);
+            player.WearBootsOfFlight();
+            //GameManager.Instance.HasKeyToCastle = true;
+        }
     }
 
     public void Update()
@@ -155,6 +171,12 @@ public class GameManager : MonoBehaviour
         {
             // Set the target frame rate to the maximum FPS
             Application.targetFrameRate = targetFPSMax;
+        }
+
+        if(Vector3.Distance(_pointD, player.transform.position) < 8.5f && !SpawnedBoss) // && GameManager.Instance.HasKeyToCastle) // TODO remove comment and delete ')'
+        {
+            Instantiate(_bossPrefab, _pointC, Quaternion.identity);
+            SpawnedBoss = true;
         }
     }
 
@@ -183,7 +205,6 @@ public class GameManager : MonoBehaviour
             }
             int clockDisplay = PlayerPrefs.GetInt(UserIdentifier + "_" + "Clock", 0);
             UIManager.Instance.SetClockDisplay(clockDisplay);
-            AudioManager.Instance.InitAudioSettings();
         }
         else
         {
@@ -196,6 +217,8 @@ public class GameManager : MonoBehaviour
             _downArrowButton.gameObject.SetActive(false);
             UIManager.Instance.SetClockDisplay(0);
         }
+
+        AudioManager.Instance.InitAudioSettings();
 
         // Handle enemies life bars
         Skeleton[] skeletons = GameObject.FindGameObjectsWithTag("Skeleton")
