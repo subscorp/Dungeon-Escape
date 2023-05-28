@@ -65,7 +65,6 @@ public class PlayerAnimation : MonoBehaviour
 
         // Get the current clip associated with the state
         AnimationClip clip = stateInfo.shortNameHash != 0 ? _animator.GetCurrentAnimatorClipInfo(0)[0].clip : null;
-        Debug.Log("clip.name: " + clip.name);
 
         // Return the length of the current clip
         return clip != null ? clip.length : 0f;

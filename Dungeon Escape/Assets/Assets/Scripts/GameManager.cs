@@ -155,7 +155,6 @@ public class GameManager : MonoBehaviour
             player.WearBootsOfFlight();
             GameManager.Instance.HasKeyToCastle = true;
         }
-        Debug.Log("Screen width: " + Screen.width);
     }
 
     public void Update()

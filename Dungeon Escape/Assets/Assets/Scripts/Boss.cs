@@ -15,6 +15,8 @@ public class Boss : MonoBehaviour, IDamageable
     public Transform CurrentTarget { get; set; }
     public Slider Slider { get; set; }
     public int Health { get; set; }
+    [SerializeField]
+    protected int maxHealth;
     public bool ShieldOn { get; set; }
     private Animator _gateAnim;
 
@@ -26,6 +28,8 @@ public class Boss : MonoBehaviour, IDamageable
 
     private float originalTimeScale;
     private Color _originalColor;
+    protected float _currentVelocity = 0;
+
 
 
     // Start is called before the first frame update
@@ -35,16 +39,24 @@ public class Boss : MonoBehaviour, IDamageable
         _rigidBody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _gateAnim = GameObject.Find("Gate").GetComponent<Animator>();
+        Slider = GetComponentInChildren<Slider>();
         Health = 9;
         CurrentTarget = _pointB;
         ShieldOn = false;
         _originalColor = _spriteRenderer.color;
+        maxHealth = 9;
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "Health Bars", 1) == 1)
+            Slider.gameObject.SetActive(true);
+        else
+            Slider.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Health == 9)
+        UIManager.Instance.UpdateEnemyLifeBar(Slider, (float)Health / (float)maxHealth, _currentVelocity);
+
+        if (Health == 9)
         {
             _spriteRenderer.color = _originalColor;
         }
