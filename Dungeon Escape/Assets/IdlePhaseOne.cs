@@ -67,6 +67,7 @@ public class IdlePhaseOne : StateMachineBehaviour
             // Transition to another state or perform actions
             // when the loop duration is reached
             animator.SetTrigger("Attack1");
+            AudioManager.Instance.PlayKingAttack1SFX();
         }
     }
 

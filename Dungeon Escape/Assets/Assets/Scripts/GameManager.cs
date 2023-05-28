@@ -89,8 +89,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Vector3 _pointC, _pointD;
     public bool SpawnedBoss { get; set; }
+    public bool ClosedGate { get; set; }
     public bool StartedBossFight { get; set; }
     private bool QABoss = true;
+    private Animator _gateAnim;
+
+
 
     private void Awake()
     {
@@ -98,6 +102,7 @@ public class GameManager : MonoBehaviour
 
         _instance = this;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _gateAnim = GameObject.Find("Gate").GetComponent<Animator>();
         AudioManager.Instance.PlayMusic();
         numJumps = 0;
         NoHitRun = true;
@@ -125,6 +130,7 @@ public class GameManager : MonoBehaviour
         SecondCaveSpiderDead = false;
         InstantiatedChest = false;
         SpawnedBoss = false;
+        ClosedGate = false;
         StartedBossFight = false;
     }
 
@@ -145,7 +151,7 @@ public class GameManager : MonoBehaviour
         {
             player.transform.position = new Vector3(110.040001f, -8.35999966f, 0);
             player.WearBootsOfFlight();
-            //GameManager.Instance.HasKeyToCastle = true;
+            GameManager.Instance.HasKeyToCastle = true;
         }
     }
 
@@ -173,7 +179,14 @@ public class GameManager : MonoBehaviour
             Application.targetFrameRate = targetFPSMax;
         }
 
-        if(Vector3.Distance(_pointD, player.transform.position) < 8.5f && !SpawnedBoss) // && GameManager.Instance.HasKeyToCastle) // TODO remove comment and delete ')'
+        if (Vector3.Distance(_pointD, player.transform.position) < 3.5f && !ClosedGate)
+        {
+            _gateAnim.SetTrigger("Gate_Close");
+            ClosedGate = true;
+            AudioManager.Instance.PlayCastleGateClose();
+        }
+
+        if (Vector3.Distance(_pointD, player.transform.position) < 8.5f && !SpawnedBoss && GameManager.Instance.HasKeyToCastle)
         {
             Instantiate(_bossPrefab, _pointC, Quaternion.identity);
             SpawnedBoss = true;

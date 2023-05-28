@@ -9,6 +9,13 @@ public class BossEnter : StateMachineBehaviour
     private Player _player;
     [SerializeField]
     private SpriteRenderer _shield;
+    private Animator _gateAnim;
+    private float timer = 0f;
+    private float loopDuration = 0.8f;
+    [SerializeField]
+    private Vector3 _pointD;
+
+
 
     private void Awake()
     {
@@ -20,8 +27,10 @@ public class BossEnter : StateMachineBehaviour
         _boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _shield = GameObject.Find("Shields").GetComponent<SpriteRenderer>();
+        _gateAnim = GameObject.Find("Gate").GetComponent<Animator>();
         _boss.ShieldOn = true;
         _shield.enabled = true;
+        // AudioManager.Instance.PlayGateCloseSFX();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

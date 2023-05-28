@@ -5,7 +5,7 @@ using UnityEngine;
 public class IdlePhase2 : StateMachineBehaviour
 {
     private float timer = 0f;
-    private float loopDuration = 1.2f;
+    private float loopDuration = 0.8f;
     [SerializeField]
     private Boss _boss;
     [SerializeField]
@@ -67,7 +67,6 @@ public class IdlePhase2 : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.ResetTrigger("Attack2");
         animator.ResetTrigger("Run");
     }
 }

@@ -34,7 +34,9 @@ public class RunLeft : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (Vector3.Distance(_boss.transform.position, _pointM.position) < 2)
+        {
             animator.SetTrigger("Attack2");
+        }
         else if (Vector3.Distance(_boss.transform.position, _pointA.position) < 2)
             animator.SetTrigger("Idle");
 

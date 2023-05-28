@@ -105,7 +105,15 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioSource _kingDeathSFXAlternative;
     [SerializeField]
+    private AudioSource _kingRageSFX;
+    [SerializeField]
     private AudioSource _bossMusic;
+    [SerializeField]
+    private AudioSource _kingAttack1SFX;
+    [SerializeField]
+    private AudioSource _kingAttack2SFX;
+    [SerializeField]
+    private AudioSource _kingAttack3SFX;
 
     // Konami Code related
     [SerializeField]
@@ -138,8 +146,16 @@ public class AudioManager : MonoBehaviour
     private AudioSource _keyAppearsSFX;
     [SerializeField]
     private AudioSource _keyAppearsSFXAlternative;
+
+    [SerializeField]
+    private AudioSource _castleGateCloseSFX;
+    [SerializeField]
+    private AudioSource _castleGateOpenSFX;
+
     [SerializeField]
     private AudioSource _kingEvilLaugh;
+    [SerializeField]
+    private AudioSource _kingTeleport;
     private float _musicVol;
     private float _bossMusicVol;
 
@@ -202,7 +218,13 @@ public class AudioManager : MonoBehaviour
         _kingDeathSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _kingDeathSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _kingEvilLaugh.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
-
+        _castleGateCloseSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _castleGateOpenSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _kingRageSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _kingTeleport.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _kingAttack1SFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _kingAttack2SFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _kingAttack3SFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
 
         // Konami Code Related
         _konamiCorrectSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
@@ -210,15 +232,16 @@ public class AudioManager : MonoBehaviour
         _konamiWrongSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _konamiWrongSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _konamiCodeHint.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
-        float tempKonamiCodeVol = _konamiCodeHint.volume;
-        _konamiCodeHint.volume += 0.5f;
-        if (tempKonamiCodeVol + 0.5f > 1f)
-            _konamiCodeHint.volume = 1f;
-        else if (tempKonamiCodeVol == 0)
-            _konamiCodeHint.volume = 0;
-
         _fireSwordSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _fireSwordSFXAlternative.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+
+        IncreaseVol(_konamiCodeHint);
+        IncreaseVol(_kingDeathSFX);
+        IncreaseVol(_kingRageSFX);
+        IncreaseVol(_kingAttack1SFX);
+        IncreaseVol(_kingAttack2SFX);
+        IncreaseVol(_kingAttack3SFX);
+
         _musicVol = _music.volume;
         _bossMusicVol = _bossMusic.volume;
     }
@@ -296,6 +319,13 @@ public class AudioManager : MonoBehaviour
         _kingDeathSFX.mute = true;
         _kingDeathSFXAlternative.mute = true;
         _kingEvilLaugh.mute = true;
+        _castleGateOpenSFX.mute = true;
+        _castleGateCloseSFX.mute = true;
+        _kingRageSFX.mute = true;
+        _kingTeleport.mute = true;
+        _kingAttack1SFX.mute = true;
+        _kingAttack2SFX.mute = true;
+        _kingAttack3SFX.mute = true;
     }
 
     public void PlayGettingHitSound()
@@ -321,10 +351,12 @@ public class AudioManager : MonoBehaviour
 
     public void PlayKingDeathSound()
     {
+        /*
         if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
             _kingDeathSFXAlternative.Play();
         else
-            _kingDeathSFX.Play();
+        */
+        _kingDeathSFX.Play();
     }
 
     public void PlayGettingCollectibleSFX()
@@ -521,6 +553,41 @@ public class AudioManager : MonoBehaviour
             _konamiWrongSFX.Play();
     }
 
+    public void PlayTeleportSFX()
+    {
+        _kingTeleport.Play();
+    }
+
+    public void PlayKingRageSFX()
+    {
+        _kingRageSFX.Play();
+    }
+
+    public void PlayCastleGateClose()
+    {
+        _castleGateCloseSFX.Play();
+    }
+
+    public void PlayCastleGateOpen()
+    {
+        _castleGateOpenSFX.Play();
+    }
+
+    public void PlayKingAttack1SFX()
+    {
+        _kingAttack1SFX.Play();
+    }
+
+    public void PlayKingAttack2SFX()
+    {
+        _kingAttack2SFX.Play();
+    }
+
+    public void PlayKingAttack3SFX()
+    {
+        _kingAttack3SFX.Play();
+    }
+
     public void FadeStopKonamiCodeHint()
     {
         StartCoroutine(StartFade(_konamiCodeHint, 3f, 0));
@@ -536,15 +603,13 @@ public class AudioManager : MonoBehaviour
         _konamiCodeHint.Stop();
     }
 
+
     public void PlayBossMusic()
     {
         _bossMusic.volume = 0;
         _bossMusic.Play();
         StartCoroutine(StartFade(_music, 1.5f, 0));
         StartCoroutine(StartFade(_bossMusic, 1.5f, _bossMusicVol));
-
-        //_music.Stop();
-        //_bossMusic.Play();
     }
 
     public void FadeOutBossMusic()
@@ -564,6 +629,16 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
         yield break;
+    }
+
+    private void IncreaseVol(AudioSource audioSource)
+    {
+        float tempVol = audioSource.volume;
+        audioSource.volume += 0.5f;
+        if (tempVol + 0.5f > 1f)
+            audioSource.volume = 1f;
+        else if (tempVol == 0)
+            audioSource.volume = 0;
     }
 
 }
