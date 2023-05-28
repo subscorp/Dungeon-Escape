@@ -25,6 +25,7 @@ public class Boss : MonoBehaviour, IDamageable
     private float _endTimeScaleValue = 1f;
 
     private float originalTimeScale;
+    private Color _originalColor;
 
 
     // Start is called before the first frame update
@@ -37,12 +38,17 @@ public class Boss : MonoBehaviour, IDamageable
         Health = 9;
         CurrentTarget = _pointB;
         ShieldOn = false;
+        _originalColor = _spriteRenderer.color;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Health == 6)
+        if(Health == 9)
+        {
+            _spriteRenderer.color = _originalColor;
+        }
+        else if (Health == 6)
         {
             _anim.SetBool("Phase1", false);
             _anim.SetBool("Phase2", true);
@@ -73,6 +79,8 @@ public class Boss : MonoBehaviour, IDamageable
 
         if (Health == 0)
         {
+            GameManager.Instance.BossDead = true;
+
             if (Slider != null)
                 Slider.gameObject.SetActive(false);
 
@@ -82,6 +90,8 @@ public class Boss : MonoBehaviour, IDamageable
             StartSlowMotion();
             //StartCoroutine(SlowMotionOnKingDeathRoutine());
 
+            if (_rigidBody == null)
+                _rigidBody = GetComponent<Rigidbody2D>();
             _rigidBody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
             // Kill all enemeis achivement

@@ -9,10 +9,4 @@ public class AttackLeft2 : StateMachineBehaviour
     {
         AudioManager.Instance.PlayKingAttack2SFX();
     }
-
-    //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
 }

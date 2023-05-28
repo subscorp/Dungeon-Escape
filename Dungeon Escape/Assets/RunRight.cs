@@ -27,7 +27,6 @@ public class RunRight : StateMachineBehaviour
         _shield = GameObject.Find("Shields").GetComponent<SpriteRenderer>();
         _boss.ShieldOn = true;
         _shield.enabled = true;
-        //animator.SetBool("Grounded", false);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

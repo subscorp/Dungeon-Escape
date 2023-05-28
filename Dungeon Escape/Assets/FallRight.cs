@@ -5,8 +5,6 @@ using UnityEngine;
 public class FallRight : StateMachineBehaviour
 {
     private float _speed = 6f;
-    private float _jumpForce = 10f;
-    private float _prevVelocityY;
     [SerializeField]
     private Rigidbody2D _rigidBody;
     private Boss _boss;
@@ -32,16 +30,9 @@ public class FallRight : StateMachineBehaviour
         }
     }
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
-
     private bool IsGrounded()
     {
         Vector3 pos = _boss.transform.position;
-        //pos.y -= 5;
         Debug.DrawRay(pos, Vector2.down * 0.25f, Color.red);
         RaycastHit2D hitInfo = Physics2D.Raycast(pos, Vector2.down, 0.25f, 1 << 8);
         if (hitInfo.collider != null)

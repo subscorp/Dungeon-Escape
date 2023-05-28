@@ -32,12 +32,6 @@ public class FallLeft : StateMachineBehaviour
         }
     }
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
-
     private bool IsGrounded()
     {
         Vector3 pos = _boss.transform.position;

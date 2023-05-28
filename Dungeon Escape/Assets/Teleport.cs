@@ -5,7 +5,7 @@ using UnityEngine;
 public class Teleport : StateMachineBehaviour
 {
     private float timer = 0f;
-    private float loopDuration = 0.5f;
+    private float loopDuration = 0.6f;
     [SerializeField]
     private Boss _boss;
     private Player _player;
@@ -57,9 +57,6 @@ public class Teleport : StateMachineBehaviour
         _boss.transform.position = _randomPoint;
         Destroy(teleportEffect.gameObject, 0.417f);
 
-        //teleportEffect = Instantiate(_TeleportEffectPrefab, teleportTo, Quaternion.identity);
-        //Destroy(teleportEffect.gameObject, 0.417f);
-
         UpdateFlip();
 
         if (_spriteRenderer.flipX)
@@ -87,8 +84,6 @@ public class Teleport : StateMachineBehaviour
         {
             animator.SetTrigger("Attack1");
             AudioManager.Instance.PlayKingAttack1SFX();
-            // Transition to another state or perform actions
-            // when the loop duration is reached
         }
     }
 

@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
     public bool SpawnedBoss { get; set; }
     public bool ClosedGate { get; set; }
     public bool StartedBossFight { get; set; }
+    public bool BossDead { get; set; }
     private bool QABoss = true;
     private Animator _gateAnim;
 
@@ -132,6 +133,7 @@ public class GameManager : MonoBehaviour
         SpawnedBoss = false;
         ClosedGate = false;
         StartedBossFight = false;
+        BossDead = false;
     }
 
     private void Start()

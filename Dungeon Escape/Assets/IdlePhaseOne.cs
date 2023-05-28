@@ -27,6 +27,12 @@ public class IdlePhaseOne : StateMachineBehaviour
         _pointA = GameObject.Find("Boss_Point_A").GetComponent<Transform>();
         _pointB = GameObject.Find("Boss_Point_B").GetComponent<Transform>();
         _rigidBody = animator.GetComponentInParent<Rigidbody2D>();
+        if (_rigidBody == null)
+        {
+            _boss.gameObject.AddComponent<Rigidbody2D>();
+            _rigidBody = animator.GetComponentInParent<Rigidbody2D>();
+        }
+
         _spriteRenderer = animator.GetComponent<SpriteRenderer>();
         _hitBox = animator.GetComponentInChildren<BoxCollider2D>();
 

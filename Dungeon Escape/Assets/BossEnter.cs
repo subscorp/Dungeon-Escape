@@ -14,23 +14,24 @@ public class BossEnter : StateMachineBehaviour
     private float loopDuration = 0.8f;
     [SerializeField]
     private Vector3 _pointD;
-
-
-
-    private void Awake()
-    {
-    }
+    private Rigidbody2D _rigidBody;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
+        animator.ResetTrigger("Player_Escapes");
         _player = GameObject.Find("Player").GetComponent<Player>();
         _shield = GameObject.Find("Shields").GetComponent<SpriteRenderer>();
         _gateAnim = GameObject.Find("Gate").GetComponent<Animator>();
         _boss.ShieldOn = true;
         _shield.enabled = true;
-        // AudioManager.Instance.PlayGateCloseSFX();
+        _rigidBody = animator.GetComponentInParent<Rigidbody2D>();
+        if (_rigidBody == null)
+        {
+            _boss.gameObject.AddComponent<Rigidbody2D>();
+            _rigidBody = animator.GetComponentInParent<Rigidbody2D>();
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -40,12 +41,6 @@ public class BossEnter : StateMachineBehaviour
         {
             animator.SetBool("Phase1", true);
         }
-    }
-
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
     }
 
     private bool IsGrounded()
