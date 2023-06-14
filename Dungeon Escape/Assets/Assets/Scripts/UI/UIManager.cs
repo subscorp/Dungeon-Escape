@@ -66,7 +66,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _subtitles;
     [SerializeField]
-    private Text _winText;
+    private Text _winText, _beatTimeText;
 
     private void Awake()
     {
@@ -103,7 +103,7 @@ public class UIManager : MonoBehaviour
         }
 
         // Only display FPS if deltaTime is greater than zero
-        if (GameManager.Instance.DeltaTime> 0.0f)
+        if (GameManager.Instance.DeltaTime > 0.0f)
         {
             _fps.text = "FPS: " + Mathf.Round(GameManager.Instance.SmoothedFPS).ToString();
         }
@@ -403,5 +403,10 @@ public class UIManager : MonoBehaviour
         _winText.text = "You defeated the king!";
         _bootsImage.enabled = true;
         _keyToCastleImage.enabled = true;
+    }
+
+    internal void SetBeatTimeText(string beatTimeText)
+    {
+        _beatTimeText.text = beatTimeText;
     }
 }

@@ -63,6 +63,8 @@ public class GameOver : MonoBehaviour
         }
         finally
         {
+            if (GameManager.Instance.BossMode)
+                PlayerPrefs.SetInt("Boss Mode", 1);
             SceneManager.LoadScene("Game");
         }
     }

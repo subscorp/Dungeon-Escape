@@ -510,6 +510,12 @@ public class GameManager : MonoBehaviour
 
     IEnumerator HandleWinOnBossModeRoutine()
     {
+        int minutes = (int)(GameManager.Instance.ElapsedTime / 60);
+        float seconds = GameManager.Instance.ElapsedTime % 60;
+        CurrentBeatTime = string.Format("{0:00}:{1:00.00}", minutes, seconds);
+        GameComplete = true;
+        string beatTimeText = "Time: " + CurrentBeatTime;
+        UIManager.Instance.SetBeatTimeText(beatTimeText);
         yield return new WaitForSeconds(1.5f);
         AudioManager.Instance.PlayWinMusic();
         UIManager.Instance.StartFadeOut("Win");

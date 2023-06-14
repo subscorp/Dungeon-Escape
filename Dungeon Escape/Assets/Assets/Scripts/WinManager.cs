@@ -50,6 +50,10 @@ public class WinManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.4f);
+
+        if(GameManager.Instance.BossMode)
+            PlayerPrefs.SetInt("Boss Mode", 1);
+
         SceneManager.LoadScene("Game");
     }
 
