@@ -43,7 +43,7 @@ public class GameOver : MonoBehaviour
 
         try
         {
-            if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "DeathCount", 0) >= 5)
+            if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "DeathCount", 0) >= 5 && !GameManager.Instance.BossMode)
             {
                 Debug.Log("You died more than 5 times and didn't give up!");
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_persistent, (bool achievementUnlocked) =>

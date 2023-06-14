@@ -122,7 +122,12 @@ public class Boss : MonoBehaviour, IDamageable
                 });
             }
 
-            AudioManager.Instance.FadeOutBossMusic();
+            if(GameManager.Instance.BossMode)
+            {
+                GameManager.Instance.HandleWinOnBossMode();
+            }
+            else
+                AudioManager.Instance.FadeOutBossMusic();
         }
     }
 

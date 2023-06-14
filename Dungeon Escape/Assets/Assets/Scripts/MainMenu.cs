@@ -42,7 +42,7 @@ public class MainMenu : MonoBehaviour
     private bool _pressedStart = false;
     public string UserIdentifier { get; set; }
 
-    const bool QA = true; // TODO change to false before launch
+    const bool QA = false; // TODO change to false before launch
 
     private void Awake()
     {
@@ -160,6 +160,8 @@ public class MainMenu : MonoBehaviour
 
         _pressedStart = true;
         _startButtonSFX.Play();
+        PlayerPrefs.SetInt("Boss Mode", 0);
+
 
         try
         {
@@ -460,5 +462,18 @@ public class MainMenu : MonoBehaviour
 
         // Optionally stop the music or perform other actions once the fade-out is complete
         _music.Stop();
+    }
+
+    public void BossMode()
+    {
+        PlayerPrefs.SetInt("Boss Mode", 1);
+        if (_pressedStart)
+            return;
+
+        _pressedStart = true;
+        _options.SetActive(false);
+        _startButtonSFX.Play();
+        _anim.SetTrigger("Start");
+        StartCoroutine(FadeMusicOut());
     }
 }

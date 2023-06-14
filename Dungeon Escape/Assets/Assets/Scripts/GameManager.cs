@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -92,9 +93,16 @@ public class GameManager : MonoBehaviour
     public bool ClosedGate { get; set; }
     public bool StartedBossFight { get; set; }
     public bool BossDead { get; set; }
-    private bool QABoss = true;
+    public bool BossMode { get; set; }
     private Animator _gateAnim;
 
+
+    [SerializeField]
+    private Tilemap _floorTilemap;
+    [SerializeField]
+    private Tile _leftWall1, _leftWall2;
+    [SerializeField]
+    private SpriteRenderer _darkenBossMode1, _darkenBossMode2, _darkenBossMode3;
 
 
     private void Awake()
@@ -148,12 +156,31 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = targetFPSMax;
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
+        BossMode = PlayerPrefs.GetInt("Boss Mode", 0) == 1 ? true : false;
+        PlayerPrefs.SetInt("Boss Mode", 0);
 
-        if (QABoss) // TODO remove before launch 
+
+        if (BossMode)
         {
-            player.transform.position = new Vector3(110.040001f, -8.35999966f, 0);
+            UIManager.Instance.HandleBossMode();
             player.WearBootsOfFlight();
             GameManager.Instance.HasKeyToCastle = true;
+            player.transform.position = new Vector3(110.040001f, -8.35999966f, 0);
+            DisableOrEnableTiles(_floorTilemap, _leftWall1, false);
+            DisableOrEnableTiles(_floorTilemap, _leftWall2, false);
+            _darkenBossMode1.gameObject.SetActive(true);
+            _darkenBossMode2.gameObject.SetActive(true);
+            _darkenBossMode3.gameObject.SetActive(true);
+            
+
+        }
+        else // Normal play mode
+        {
+            DisableOrEnableTiles(_floorTilemap, _leftWall1, true);
+            DisableOrEnableTiles(_floorTilemap, _leftWall2, true);
+            _darkenBossMode1.gameObject.SetActive(false);
+            _darkenBossMode2.gameObject.SetActive(false);
+            _darkenBossMode3.gameObject.SetActive(false);
         }
     }
 
@@ -168,9 +195,10 @@ public class GameManager : MonoBehaviour
         DeltaTime += (Time.deltaTime - DeltaTime) * 0.1f;
         float fps = 1.0f / DeltaTime;
         SmoothedFPS = Mathf.Lerp(SmoothedFPS, fps, 0.1f);
-        
+
         // Check if the smoothed FPS is outside the target range
-        if (SmoothedFPS < targetFPSMin)
+        Application.targetFrameRate = targetFPSMax;
+       /* if (SmoothedFPS < targetFPSMin)
         {
             // Set the target frame rate to the minimum FPS
             Application.targetFrameRate = targetFPSMin;
@@ -179,7 +207,7 @@ public class GameManager : MonoBehaviour
         {
             // Set the target frame rate to the maximum FPS
             Application.targetFrameRate = targetFPSMax;
-        }
+        }*/
 
         if (Vector3.Distance(_pointD, player.transform.position) < 3.5f && !ClosedGate)
         {
@@ -450,5 +478,40 @@ public class GameManager : MonoBehaviour
             else
                 enemy.Slider.gameObject.SetActive(false);
         }
+    }
+
+    private void DisableOrEnableTiles(Tilemap floorTilemap, Tile targetTile, bool disable=true)
+    {
+        BoundsInt bounds = floorTilemap.cellBounds;
+        TileBase[] allTiles = floorTilemap.GetTilesBlock(bounds);
+
+        for (int y = bounds.yMin; y < bounds.yMax; y++)
+        {
+            for (int x = bounds.xMin; x < bounds.xMax; x++)
+            {
+                Vector3Int cellPosition = new Vector3Int(x, y, 0);
+                TileBase tile = allTiles[(x - bounds.xMin) + (y - bounds.yMin) * bounds.size.x];
+
+                if (tile == targetTile)
+                {
+                    if (disable)
+                        _floorTilemap.SetTile(cellPosition, null);
+                    else
+                        _floorTilemap.SetTile(cellPosition, targetTile);
+                }
+            }
+        }
+    }
+
+    public void HandleWinOnBossMode()
+    {
+        StartCoroutine(HandleWinOnBossModeRoutine());
+    }
+
+    IEnumerator HandleWinOnBossModeRoutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+        AudioManager.Instance.PlayWinMusic();
+        UIManager.Instance.StartFadeOut("Win");
     }
 }

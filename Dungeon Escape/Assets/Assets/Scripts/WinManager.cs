@@ -18,7 +18,7 @@ public class WinManager : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "BeatTheGameCount", 0) == 1 && GameManager.Instance.IsLoggedIn)
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "BeatTheGameCount", 0) == 1 && GameManager.Instance.IsLoggedIn && !GameManager.Instance.BossMode)
             _unlockMessage.gameObject.SetActive(true);
         else
             _unlockMessage.gameObject.SetActive(false);
@@ -35,7 +35,7 @@ public class WinManager : MonoBehaviour
 
         // Check if the player has beaten the game three times
         int beatTheGameCount = PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "BeatTheGameCount", 0);
-        if (beatTheGameCount == 3)
+        if (beatTheGameCount == 3 && !GameManager.Instance.BossMode)
         {
             // Try to unlock the "Addicted" achievement
             GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_addicted, (bool achievementUnlocked) =>

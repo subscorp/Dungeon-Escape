@@ -37,8 +37,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image _homeButtonImage;
     [SerializeField]
-    private Image _aButtonImage, _bButtonImage, _JoystickImage, _upArrowImage, _rightArrowImage, _downArrowImage, _leftArrowImage;
-    [SerializeField] Text _bootsPrice, _keyPrice;
+    private Image _aButtonImage, _bButtonImage, _JoystickImage, _upArrowImage, _rightArrowImage, _downArrowImage, _leftArrowImage, _objectiveImage;
+    [SerializeField] Text _bootsPrice, _keyPrice, _objectiveText;
     [SerializeField]
     private Button _buyItemButton;
     [SerializeField]
@@ -60,12 +60,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _objectivePanel;
 
-
     private int _lifeBarSpeed = 5;
     [SerializeField]
     private GameObject _subtitlesPanel;
     [SerializeField]
     private Text _subtitles;
+    [SerializeField]
+    private Text _winText;
 
     private void Awake()
     {
@@ -275,6 +276,8 @@ public class UIManager : MonoBehaviour
             _downArrowImage.color = color;
             _leftArrowImage.color = color;
             _homeButtonImage.color = color;
+            _objectiveImage.color = color;
+            _objectiveText.color = color;
             yield return null;
         }
 
@@ -392,5 +395,13 @@ public class UIManager : MonoBehaviour
     {
         _aButtonImage.enabled = true;
         _bButtonImage.enabled = true;
+    }
+
+    public void HandleBossMode()
+    {
+        _objectiveText.text = "Objective: defeat the king";
+        _winText.text = "You defeated the king!";
+        _bootsImage.enabled = true;
+        _keyToCastleImage.enabled = true;
     }
 }
