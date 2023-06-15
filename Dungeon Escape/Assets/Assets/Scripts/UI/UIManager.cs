@@ -352,7 +352,7 @@ public class UIManager : MonoBehaviour
             {
                 _subtitles.text = "Be careful around here, stranger.\n";
                 yield return new WaitForSeconds(3f);
-                _subtitles.text = "I've seen some strange folk talking about\nsome old cheat code or something";
+                _subtitles.text = "I've seen some strange folk talking about\nsome <color=red>old cheat code</color> or something";
                 yield return new WaitForSeconds(6f);
                 _subtitles.text = "that can make 'em real powerful.";
                 yield return new WaitForSeconds(2f);

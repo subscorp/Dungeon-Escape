@@ -406,6 +406,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public bool IsHintStillPlaying()
+    {
+        return _konamiCodeHint.isPlaying;
+    }
+
     public void PlayBiteSound()
     {
         if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)

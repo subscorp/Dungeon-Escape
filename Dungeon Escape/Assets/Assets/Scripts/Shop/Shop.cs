@@ -80,8 +80,24 @@ public class Shop : MonoBehaviour
                     GameManager.Instance.boughtKeyInCurrentVisit = false;
                 }
 
-                if(justPlayedHint)
+                if (justPlayedHint)
+                {
+                    if(!AudioManager.Instance.IsHintStillPlaying())
+                    {
+                        Debug.Log("Its Dangerous Out There achievement");
+                        GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_its_dangerous_out_there, (bool achievementUnlocked) =>
+                        {
+                            if (achievementUnlocked)
+                            {
+                                // The achievement was unlocked, so increment the Completionist achievement
+                                GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                                GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
+                                GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                            }
+                        });
+                    }
                     AudioManager.Instance.FadeStopKonamiCodeHint();
+                }
             }
         }
     }
@@ -175,18 +191,6 @@ public class Shop : MonoBehaviour
                 AudioManager.Instance.AbruptStopMerchantDialog();
                 AudioManager.Instance.PlayMerchentGreeting(true, true);
                 justPlayedHint = true;
-
-                // It's Dangerous Out There
-                GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_its_dangerous_out_there, (bool achievementUnlocked) =>
-                {
-                    if (achievementUnlocked)
-                    {
-                        // The achievement was unlocked, so increment the Completionist achievement
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
-                    }
-                });
             }
             else
             {
