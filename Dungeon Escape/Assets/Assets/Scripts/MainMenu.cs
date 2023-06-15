@@ -39,6 +39,8 @@ public class MainMenu : MonoBehaviour
     private Toggle _healthBarsToggle;
     [SerializeField]
     private Toggle _subtitlesToggle;
+    [SerializeField]
+    Button _bossModeButton;
     private bool _pressedStart = false;
     public string UserIdentifier { get; set; }
 
@@ -108,6 +110,7 @@ public class MainMenu : MonoBehaviour
                 _clockToggle.gameObject.SetActive(false);
                 _alternateSFXToggle.gameObject.SetActive(false);
                 _alternateControlsToggle.gameObject.SetActive(false);
+                _bossModeButton.gameObject.SetActive(false);
             }
 
         }
@@ -126,6 +129,7 @@ public class MainMenu : MonoBehaviour
                 _clockToggle.gameObject.SetActive(false);
                 _alternateSFXToggle.gameObject.SetActive(false);
                 _alternateControlsToggle.gameObject.SetActive(false);
+                _bossModeButton.gameObject.SetActive(false);
             }
 
             _music.volume = 0.6f; 
@@ -167,7 +171,7 @@ public class MainMenu : MonoBehaviour
         {
             // Check if the player has beaten the game three times
             int beatTheGameCount = PlayerPrefs.GetInt(UserIdentifier + "_" + "BeatTheGameCount", 0);
-            if (beatTheGameCount == 3)
+            if (beatTheGameCount == 2)
             {
                 // Try to unlock the "Addicted" achievement
                 DoAchievementUnlock(SmokeTest.GPGSIds.achievement_addicted, (bool achievementUnlocked) =>
@@ -176,8 +180,9 @@ public class MainMenu : MonoBehaviour
                     if (achievementUnlocked)
                     {
                         // Increment the "Completionist" achievement if "Addicted" was unlocked
-                        DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
-                        DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                     }
                     
                 });

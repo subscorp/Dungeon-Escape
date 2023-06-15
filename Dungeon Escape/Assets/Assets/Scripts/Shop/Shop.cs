@@ -67,7 +67,8 @@ public class Shop : MonoBehaviour
                         if (achievementUnlocked)
                         {
                             // The achievement was unlocked, so increment the Completionist achievement
-                            GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
+                            GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                            GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
                             GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                         }
                     });
@@ -103,7 +104,7 @@ public class Shop : MonoBehaviour
                 break;
             case 1:
                 UIManager.Instance.UpdateShopSelection(208);
-                _currentItemCost = 150;
+                _currentItemCost = 175;
 
                 if (!(_player.getNumDiamonds() >= _currentItemCost))
                     UIManager.Instance.UpdateBuyItem(1, false);
@@ -135,7 +136,8 @@ public class Shop : MonoBehaviour
                 if (achievementUnlocked)
                 {
                     // The achievement was unlocked, so increment the Completionist achievement
-                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
+                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
                     GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                 }
             });
@@ -173,6 +175,18 @@ public class Shop : MonoBehaviour
                 AudioManager.Instance.AbruptStopMerchantDialog();
                 AudioManager.Instance.PlayMerchentGreeting(true, true);
                 justPlayedHint = true;
+
+                // It's Dangerous Out There
+                GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_its_dangerous_out_there, (bool achievementUnlocked) =>
+                {
+                    if (achievementUnlocked)
+                    {
+                        // The achievement was unlocked, so increment the Completionist achievement
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                    }
+                });
             }
             else
             {

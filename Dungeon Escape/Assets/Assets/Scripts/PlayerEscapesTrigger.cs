@@ -15,6 +15,18 @@ public class PlayerEscapesTrigger : MonoBehaviour
             {
                 _bossAnimator = _bossObject.GetComponentInChildren<Animator>();
                 _bossAnimator.SetTrigger("Player_Escapes");
+
+                // Nope
+                GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_nope, (bool achievementUnlocked) =>
+                {
+                    if (achievementUnlocked)
+                    {
+                        // The achievement was unlocked, so increment the Completionist achievement
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                    }
+                });
             }
             GameManager.Instance.StartedBossFight = false;
         }

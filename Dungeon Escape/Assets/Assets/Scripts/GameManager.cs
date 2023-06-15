@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public bool FirstCaveSpiderDead { get; set; }
     public bool SecondCaveSpiderDead { get; set; }
     public bool InstantiatedChest { get; set; }
+    public bool DidBigJump { get; set; }
 
 
     private float _elapsedTime;
@@ -133,13 +134,14 @@ public class GameManager : MonoBehaviour
         DisplayTime = "";
         DeltaTime = 0.0f;
         SmoothedFPS = 0.0f;
-        NumDiamondsInGame = 260;
+        NumDiamondsInGame = 310;
         NumEnemiesInGAme = 9;
         FirstCaveSpiderDead = false;
         SecondCaveSpiderDead = false;
         InstantiatedChest = false;
         SpawnedBoss = false;
         ClosedGate = false;
+        DidBigJump = false;
         StartedBossFight = false;
         BossDead = false;
     }
@@ -209,7 +211,7 @@ public class GameManager : MonoBehaviour
             Application.targetFrameRate = targetFPSMax;
         }*/
 
-        if (Vector3.Distance(_pointD, player.transform.position) < 3.5f && !ClosedGate)
+        if (Vector3.Distance(_pointD, player.transform.position) < 3.5f && !ClosedGate && GameManager.Instance.HasKeyToCastle)
         {
             _gateAnim.SetTrigger("Gate_Close");
             ClosedGate = true;
@@ -394,6 +396,18 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.UpdateLivesOnKonamiCode();
             player.KonamiCodeSpeed();
             _playerAnimation.SetFireAttack();
+
+            // It's a secret to everybody
+            GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_its_a_secret_to_everybody, (bool achievementUnlocked) =>
+            {
+                if (achievementUnlocked)
+                {
+                    // The achievement was unlocked, so increment the Completionist achievement
+                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
+                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                }
+            });
         }
         else
             ResetKonamiCodeChecks();
@@ -519,5 +533,20 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         AudioManager.Instance.PlayWinMusic();
         UIManager.Instance.StartFadeOut("Win");
+
+        if (GameManager.Instance.ElapsedTime < 30f)
+        {
+            // speed fighter
+            GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_speed_fighter, (bool achievementUnlocked) =>
+            {
+                if (achievementUnlocked)
+                {
+                    // The achievement was unlocked, so increment the Completionist achievement
+                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
+                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                }
+            });
+        }
     }
 }

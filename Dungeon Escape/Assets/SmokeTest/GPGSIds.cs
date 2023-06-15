@@ -34,14 +34,21 @@ public static class GPGSIds
         public const string achievement_an_apple_a_day_keeps_the_doctor_away = "CgkInu2_zfgMEAIQDQ"; // <GPGSID>
         public const string achievement_no_hit_run = "CgkInu2_zfgMEAIQCw"; // <GPGSID>
         public const string achievement_persistent = "CgkInu2_zfgMEAIQEA";
-        public const string achievement_half_way_there = "CgkInu2_zfgMEAIQDw"; // <GPGSID>
+        public const string achievement_on_track_to_completion = "CgkInu2_zfgMEAIQDw"; // <GPGSID>
         public const string achievement_addicted = "CgkInu2_zfgMEAIQEQ"; // <GPGSID>
         public const string leaderboard_hall_of_fame = "CgkInu2_zfgMEAIQEw"; // <GPGSID>
         public const string achievement_shopaholic = "CgkInu2_zfgMEAIQFA"; // <GPGSID>
-        public const string achievement_hyperactive = "CgkInu2_zfgMEAIQFQ"; // <GPGSID>
-        public const string achievement_efficient = "CgkInu2_zfgMEAIQFg"; // <GPGSID>
-        public const string achievement_completionist = "CgkInu2_zfgMEAIQFw"; // <GPGSID>
+        public const string achievement_i_told_you_not_to_do_this = "CgkInu2_zfgMEAIQFQ"; // <GPGSID>
+        public const string achievement_but_it_is_possible = "CgkInu2_zfgMEAIQFg"; // <GPGSID>
+        public const string achievement_still_on_track_to_completion = "CgkInu2_zfgMEAIQFw"; // <GPGSID>
 
+        public const string achievement_nope = "CgkInu2_zfgMEAIQGA"; // <GPGSID>
+        public const string achievement_its_dangerous_out_there = "CgkInu2_zfgMEAIQGw"; // <GPGSID>
+        public const string achievement_its_a_secret_to_everybody = "CgkInu2_zfgMEAIQGQ"; // <GPGSID>
+        public const string achievement_speed_fighter = "CgkInu2_zfgMEAIQGg"; // <GPGSID>
+        public const string achievement_completionist = "CgkInu2_zfgMEAIQHA"; // <GPGSID>
+
+        
 
         /*
         public const string event_smokingevent = "CgkInu2_zfgMEAIQBg"; // <GPGSID>

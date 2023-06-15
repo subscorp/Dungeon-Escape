@@ -27,27 +27,13 @@ public class Castle : MonoBehaviour
                 if (achievementUnlocked)
                 {
                     // The achievement was unlocked, so increment the Completionist achievement
-                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
+                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
                     GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                 }
             });
 
-            Debug.Log("GameManager.Instance.numJumps: " + GameManager.Instance.numJumps);
-            if (GameManager.Instance.numJumps <= 20)
-            {
-                Debug.Log("Efficient!");
-                GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_efficient, (bool achievementUnlocked) =>
-                {
-                    if (achievementUnlocked)
-                    {
-                        // The achievement was unlocked, so increment the Completionist achievement
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
-                    }
-                });
-            }
-
-            if(GameManager.Instance.NoHitRun)
+            if(GameManager.Instance.NoHitRun && !GameManager.Instance.GotKonamiCode)
             {
                 Debug.Log("You beat the game without getting hit!"); // Achievement 4
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_no_hit_run, (bool achievementUnlocked) =>
@@ -55,7 +41,8 @@ public class Castle : MonoBehaviour
                     if (achievementUnlocked)
                     {
                         // The achievement was unlocked, so increment the Completionist achievement
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
                         GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                     }
                 });
@@ -68,7 +55,8 @@ public class Castle : MonoBehaviour
                     if (achievementUnlocked)
                     {
                         // The achievement was unlocked, so increment the Completionist achievement
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
                         GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                     }
                 });
@@ -89,15 +77,16 @@ public class Castle : MonoBehaviour
 
             Debug.Log("Which is: " + GameManager.Instance.CurrentBeatTime);
             _BeatTime.text = "Time: " + GameManager.Instance.CurrentBeatTime;
-            if (GameManager.Instance.ElapsedTime < 60f)
+            if (GameManager.Instance.ElapsedTime < 100f)
             {
-                Debug.Log("Beat the game in under 1 minute!"); // Achievement 6
+                Debug.Log("Beat the game in under 1:40"); // Achievement 6
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_speed_runner, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)
                     {
                         // The achievement was unlocked, so increment the Completionist achievement
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
                         GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                     }
                 });

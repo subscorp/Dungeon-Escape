@@ -48,7 +48,8 @@ public class Spider : Enemy, IDamageable
                     if (achievementUnlocked)
                     {
                         // The achievement was unlocked, so increment the Completionist achievement
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
                         GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                     }
                 });

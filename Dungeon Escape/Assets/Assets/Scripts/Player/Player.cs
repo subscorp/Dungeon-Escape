@@ -127,21 +127,6 @@ public class Player : MonoBehaviour, IDamageable
             _playerAnimation.Jump(true);
             AudioManager.Instance.PlayJumpSound();
             GameManager.Instance.numJumps++;
-
-            if (GameManager.Instance.numJumps == 35)
-            {
-                Debug.Log("HyperActive!");
-                GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_hyperactive, (bool achievementUnlocked) =>
-                {
-                    if (achievementUnlocked)
-                    {
-                        // The achievement was unlocked, so increment the Completionist achievement
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
-                    }
-                });
-            }
-
         }
         _playerAnimation.Move(move);
 
@@ -339,15 +324,16 @@ public class Player : MonoBehaviour, IDamageable
         if (!fromShop)
         {
             GameManager.Instance.numDiamondsCollected += amount;
-            if (GameManager.Instance.numDiamondsCollected == GameManager.Instance.NumDiamondsInGame) //250)
+            if (GameManager.Instance.numDiamondsCollected == GameManager.Instance.NumDiamondsInGame) //310)
             {
                 Debug.Log("Collected all diamonds!"); // Achievement 3
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_gem_hunter, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)
                     {
-                    // The achievement was unlocked, so increment the Completionist achievement
-                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_half_way_there);
+                        // The achievement was unlocked, so increment the Completionist achievement
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
                         GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                     }
                 });

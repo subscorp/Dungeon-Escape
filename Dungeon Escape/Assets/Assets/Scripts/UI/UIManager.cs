@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
     private Color _enabledColor;
     private Color _disabledColor;
     [SerializeField]
-    private GameObject _needKeyToChestPanel, _needKeyToCastlePanel, _wrongKeyPanel;
+    private GameObject _needKeyToChestPanel, _needKeyToCastlePanel, _wrongKeyPanel, _bigJumpPanel;
     [SerializeField]
     private Text _clock;
     [SerializeField]
@@ -408,5 +408,10 @@ public class UIManager : MonoBehaviour
     internal void SetBeatTimeText(string beatTimeText)
     {
         _beatTimeText.text = beatTimeText;
+    }
+
+    public void EnableOrDisableBigJumpPanel(bool val)
+    {
+        _bigJumpPanel.SetActive(val);
     }
 }
