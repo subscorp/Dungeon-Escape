@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //PlayerPrefs.DeleteAll(); // for debug only, don't forget to comment out
+        //PlayerPrefs.DeleteAll(); // TODO: for debug only, don't forget to comment out
 
         _instance = this;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -211,7 +211,7 @@ public class GameManager : MonoBehaviour
             Application.targetFrameRate = targetFPSMax;
         }*/
 
-        if (Vector3.Distance(_pointD, player.transform.position) < 3.5f && !ClosedGate && GameManager.Instance.HasKeyToCastle)
+        if (Vector3.Distance(_pointD, player.transform.position) < 4.5f && !ClosedGate && GameManager.Instance.HasKeyToCastle)
         {
             _gateAnim.SetTrigger("Gate_Close");
             ClosedGate = true;
@@ -494,7 +494,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void DisableOrEnableTiles(Tilemap floorTilemap, Tile targetTile, bool disable=true)
+    public void DisableOrEnableTiles(Tilemap floorTilemap, Tile targetTile, bool disable=true)
     {
         BoundsInt bounds = floorTilemap.cellBounds;
         TileBase[] allTiles = floorTilemap.GetTilesBlock(bounds);
@@ -515,6 +515,30 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public Vector3Int GetCellPosition(Tilemap tilemap, Tile targetTile)
+    {
+        BoundsInt bounds = tilemap.cellBounds;
+        TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
+
+        for (int y = bounds.yMin; y < bounds.yMax; y++)
+        {
+            for (int x = bounds.xMin; x < bounds.xMax; x++)
+            {
+                Vector3Int cellPosition = new Vector3Int(x, y, 0);
+                TileBase tile = allTiles[(x - bounds.xMin) + (y - bounds.yMin) * bounds.size.x];
+
+                if (tile == targetTile)
+                    return cellPosition;
+            }
+        }
+        return Vector3Int.zero;
+    }
+
+    public void SetCellAtPosition(Tilemap tilemap, Tile tile, Vector3Int cellPosition)
+    {
+        tilemap.SetTile(cellPosition, tile);
     }
 
     public void HandleWinOnBossMode()

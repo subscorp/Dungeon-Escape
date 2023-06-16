@@ -47,7 +47,7 @@ public class Castle : MonoBehaviour
                     }
                 });
             }
-            if(GameManager.Instance.DidNotWatchAd)
+           /* if(GameManager.Instance.DidNotWatchAd)
             {
                 Debug.Log("Consumer friendly"); // Achievement 5
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_consumer_friendly, (bool achievementUnlocked) =>
@@ -60,7 +60,7 @@ public class Castle : MonoBehaviour
                         GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
                     }
                 });
-            }
+            }*/
 
             Debug.Log("Beat the game in: " + GameManager.Instance.ElapsedTime);
             long score = (long)Mathf.RoundToInt(GameManager.Instance.ElapsedTime * 1000f);

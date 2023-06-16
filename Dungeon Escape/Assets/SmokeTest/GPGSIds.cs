@@ -27,7 +27,7 @@ namespace SmokeTest
 public static class GPGSIds
 {
         public const string achievement_fighter = "CgkInu2_zfgMEAIQCQ"; // <GPGSID>
-        public const string achievement_consumer_friendly = "CgkInu2_zfgMEAIQDA"; // <GPGSID>
+        public const string achievement_moon_cutter = "CgkInu2_zfgMEAIQDA"; // <GPGSID>
         public const string achievement_gem_hunter = "CgkInu2_zfgMEAIQCg"; // <GPGSID>
         public const string achievement_escaped_the_dungeon = "CgkInu2_zfgMEAIQCA"; // <GPGSID>
         public const string achievement_speed_runner = "CgkInu2_zfgMEAIQDg"; // <GPGSID>
