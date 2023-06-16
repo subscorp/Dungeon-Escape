@@ -17,7 +17,8 @@ public class Shop : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            UIManager.Instance.HideButtons();
+            GameManager.Instance.PlayerAtShop = true;
+            UIManager.Instance.DisableButtons();
             // Display subtitles
             if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "Subtitles", 1) == 1)
             {
@@ -50,7 +51,8 @@ public class Shop : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            UIManager.Instance.ShowButtons();
+            GameManager.Instance.PlayerAtShop = false;
+            UIManager.Instance.EnableButtons();
             UIManager.Instance.DisableSubtitles();
             if(_shopPanel != null)
             {

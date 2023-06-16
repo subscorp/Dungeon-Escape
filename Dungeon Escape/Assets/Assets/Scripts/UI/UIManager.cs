@@ -385,13 +385,13 @@ public class UIManager : MonoBehaviour
         _subtitlesPanel.gameObject.SetActive(false);
     }
 
-    public void HideButtons()
+    public void DisableButtons()
     {
         _aButtonImage.enabled = false;
         _bButtonImage.enabled = false;
     }
 
-    public void ShowButtons()
+    public void EnableButtons()
     {
         _aButtonImage.enabled = true;
         _bButtonImage.enabled = true;
@@ -413,5 +413,10 @@ public class UIManager : MonoBehaviour
     public void EnableOrDisableBigJumpPanel(bool val)
     {
         _bigJumpPanel.SetActive(val);
+    }
+
+    public void DestroyObjectivePanel()
+    {
+        Destroy(_objectivePanel.gameObject);
     }
 }

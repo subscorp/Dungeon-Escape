@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     public bool SecondCaveSpiderDead { get; set; }
     public bool InstantiatedChest { get; set; }
     public bool DidBigJump { get; set; }
+    public bool PlayerAtShop { get; set; }
 
 
     private float _elapsedTime;
@@ -144,6 +145,7 @@ public class GameManager : MonoBehaviour
         DidBigJump = false;
         StartedBossFight = false;
         BossDead = false;
+        PlayerAtShop = false;
     }
 
     private void Start()

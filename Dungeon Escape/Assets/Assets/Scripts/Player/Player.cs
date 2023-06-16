@@ -61,7 +61,7 @@ public class Player : MonoBehaviour, IDamageable
         Movement(out move, out moveUpDown);
 
         //if (_grounded && (CrossPlatformInputManager.GetButtonDown("A_Button")))
-        if ((CrossPlatformInputManager.GetButtonDown("A_Button") || Input.GetKeyDown(KeyCode.S)) && !_resetAttack)
+        if ((CrossPlatformInputManager.GetButtonDown("A_Button") || Input.GetKeyDown(KeyCode.S)) && !_resetAttack && !GameManager.Instance.PlayerAtShop)
         {
             float attackDuration;
             bool isFireAttack = GameManager.Instance.GotKonamiCode;
@@ -120,7 +120,7 @@ public class Player : MonoBehaviour, IDamageable
 
         SetRunningDirection(move);
         _rigidBody.velocity = new Vector2(move * _speed, _rigidBody.velocity.y);
-        if ((Input.GetKeyDown(KeyCode.Space) || CrossPlatformInputManager.GetButtonDown("B_Button")) && IsGrounded())
+        if ((Input.GetKeyDown(KeyCode.Space) || CrossPlatformInputManager.GetButtonDown("B_Button")) && IsGrounded() && !GameManager.Instance.PlayerAtShop)
         {
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
             StartCoroutine(ResetJumpRoutine());
