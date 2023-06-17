@@ -44,8 +44,6 @@ public class MainMenu : MonoBehaviour
     private bool _pressedStart = false;
     public string UserIdentifier { get; set; }
 
-    const bool QA = false; // TODO change to false before launch
-
     private void Awake()
     {
         PlayGamesPlatform.Activate();
@@ -60,74 +58,53 @@ public class MainMenu : MonoBehaviour
             UserIdentifier = Social.localUser.userName;
             if (UserIdentifier == null || UserIdentifier == "")
                 UserIdentifier = "temp";
-            
-            Debug.Log("In MainMenu::Start, UserIdentifier: " + UserIdentifier);
-            _music.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
-            _sfx.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
-            _sfxAlternate.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
-            _startButtonSFX.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
-            _startButtonSFXAlternate.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
-
-            _startButtonSFX.volume += 0.5f;
-            float tempStartButtonVol = _startButtonSFX.volume;
-            if (tempStartButtonVol + 0.5f > 1f)
-                _startButtonSFX.volume = 1f;
-            else if (tempStartButtonVol == 0)
-                _startButtonSFX.volume = 0;
-
-            musicSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
-            SFXSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
-
-            if (PlayerPrefs.GetInt(UserIdentifier + "_" + "BeatTheGameCount", 0) >= 1)
-            {
-                Debug.Log("In beat the game >= 1");
-                int clockDisplay = PlayerPrefs.GetInt(UserIdentifier + "_" + "Clock", 0);
-                if (clockDisplay == 1)
-                    _clockToggle.isOn = true;
-                else
-                    _clockToggle.isOn = false;
-
-                int alternateSFX = PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0);
-                if (alternateSFX == 1)
-                    _alternateSFXToggle.isOn = true;
-                else
-                    _alternateSFXToggle.isOn = false;
-
-                int alternateControls = PlayerPrefs.GetInt(UserIdentifier + "_" + "Alternate_Controls", 0);
-                if (alternateControls == 1)
-                    _alternateControlsToggle.isOn = true;
-                else
-                    _alternateControlsToggle.isOn = false;
-            }
-            else if(!QA)
-            {
-                _clockToggle.isOn = false;
-                _alternateSFXToggle.isOn = false;
-                _alternateControlsToggle.isOn = false;
-                _bossModeButton.gameObject.SetActive(false);
-            }
-
         }
         else
         {
             UserIdentifier = "temp";
             Debug.Log("*** Failed to authenticate with " + signInStatus);
-            if (!QA)
-            {
-                _clockToggle.isOn = false;
-                _alternateSFXToggle.isOn = false;
-                _alternateControlsToggle.isOn = false;
-                _bossModeButton.gameObject.SetActive(false);
-            }
-
-            _music.volume = 0.6f; 
-            _sfx.volume = 0.6f;  
-            _sfxAlternate.volume = 0.6f;
-            _startButtonSFX.volume = 0.6f;
-            _startButtonSFXAlternate.volume = 0.6f;
-            musicSliderVal.value = 0.6f; 
-            SFXSliderVal.value = 0.6f;
         }
+
+        // Set up volume
+        Debug.Log("In MainMenu::Start, UserIdentifier: " + UserIdentifier);
+        _music.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
+        _sfx.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
+        _sfxAlternate.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
+        _startButtonSFX.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
+        _startButtonSFXAlternate.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
+        _startButtonSFX.volume += 0.5f;
+        float tempStartButtonVol = _startButtonSFX.volume;
+        if (tempStartButtonVol + 0.5f > 1f)
+            _startButtonSFX.volume = 1f;
+        else if (tempStartButtonVol == 0)
+            _startButtonSFX.volume = 0;
+        musicSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
+        SFXSliderVal.value = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
+
+        // Enable Boss Mode if the player already beat the game, disable it otherwise
+        if (PlayerPrefs.GetInt(UserIdentifier + "_" + "BeatTheGameCount", 0) >= 1)
+            _bossModeButton.gameObject.SetActive(true);
+        else
+            _bossModeButton.gameObject.SetActive(false);
+
+        // Set toggles
+        int clockDisplay = PlayerPrefs.GetInt(UserIdentifier + "_" + "Clock", 0);
+        if (clockDisplay == 1)
+            _clockToggle.isOn = true;
+        else
+            _clockToggle.isOn = false;
+
+        int alternateSFX = PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0);
+        if (alternateSFX == 1)
+            _alternateSFXToggle.isOn = true;
+        else
+            _alternateSFXToggle.isOn = false;
+
+        int alternateControls = PlayerPrefs.GetInt(UserIdentifier + "_" + "Alternate_Controls", 0);
+        if (alternateControls == 1)
+            _alternateControlsToggle.isOn = true;
+        else
+            _alternateControlsToggle.isOn = false;
 
         int healthBars = PlayerPrefs.GetInt(UserIdentifier + "_" + "Health Bars", 0);
         if (healthBars == 1)
@@ -259,6 +236,7 @@ public class MainMenu : MonoBehaviour
         else
             _sfx.Play();
 
+        // Set the defaults
         musicSliderVal.value = 0.6f;
         SFXSliderVal.value = 0.6f;
         _music.volume = 0.6f;
@@ -266,17 +244,19 @@ public class MainMenu : MonoBehaviour
         _sfxAlternate.volume = 0.6f;
         _startButtonSFX.volume = 0.6f;
         _startButtonSFXAlternate.volume = 0.6f;
-        int beatTheGameCount = PlayerPrefs.GetInt(UserIdentifier + "_" + "BeatTheGameCount", 0);
-        int deathCount = PlayerPrefs.GetInt(UserIdentifier + "_" + "DeathCount", 0);
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.SetInt(UserIdentifier + "_" + "BeatTheGameCount", beatTheGameCount);
-        PlayerPrefs.SetInt(UserIdentifier + "_" + "DeathCount", deathCount);
-        PlayerPrefs.SetInt(UserIdentifier + "_" + "Clock", 0);
         _healthBarsToggle.isOn = false;
         _subtitlesToggle.isOn = true;
         _clockToggle.isOn = false;
         _alternateSFXToggle.isOn = false;
         _alternateControlsToggle.isOn = false;
+
+        int beatTheGameCount = PlayerPrefs.GetInt(UserIdentifier + "_" + "BeatTheGameCount", 0);
+        int deathCount = PlayerPrefs.GetInt(UserIdentifier + "_" + "DeathCount", 0);
+        PlayerPrefs.DeleteAll();
+
+        // Restore BeatTheGameCount and DeathCount
+        PlayerPrefs.SetInt(UserIdentifier + "_" + "BeatTheGameCount", beatTheGameCount);
+        PlayerPrefs.SetInt(UserIdentifier + "_" + "DeathCount", deathCount);
     }
 
     public void ClockToggle()

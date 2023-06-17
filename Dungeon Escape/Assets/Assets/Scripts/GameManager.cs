@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
     public bool PlayerInFrontOfDoorB { get; set; }
     public bool HintProvided { get; set; }
     public string CurrentBeatTime { get; set; }
-    public bool IsLoggedIn { get; set; }
 
     // Achivements related properties
     public bool GameComplete { get; set; } // Achievement 1 
@@ -130,7 +129,6 @@ public class GameManager : MonoBehaviour
         HasBootsOfFlight = false;
         DuringKonamiCode = false;
         GameComplete = false;
-        IsLoggedIn = false;
         CurrentBeatTime = "";
         DisplayTime = "";
         DeltaTime = 0.0f;
@@ -175,8 +173,6 @@ public class GameManager : MonoBehaviour
             _darkenBossMode1.gameObject.SetActive(true);
             _darkenBossMode2.gameObject.SetActive(true);
             _darkenBossMode3.gameObject.SetActive(true);
-            
-
         }
         else // Normal play mode
         {
@@ -236,34 +232,26 @@ public class GameManager : MonoBehaviour
             Debug.Log("In GameManager::Start, UserIdentifier: " + UserIdentifier);
             if (UserIdentifier == null || UserIdentifier == "")
                 UserIdentifier = "temp";
-            else
-                IsLoggedIn = true;
-
-            if (PlayerPrefs.GetInt(UserIdentifier + "_" + "Alternate_Controls", 0) == 1)
-            {
-                _joystickImage.enabled = false;
-            }
-            else
-            {
-                _upArrowButton.gameObject.SetActive(false);
-                _rightArrowButton.gameObject.SetActive(false);
-                _leftArrowButton.gameObject.SetActive(false);
-                _downArrowButton.gameObject.SetActive(false);
-            }
-            int clockDisplay = PlayerPrefs.GetInt(UserIdentifier + "_" + "Clock", 0);
-            UIManager.Instance.SetClockDisplay(clockDisplay);
         }
         else
         {
             Debug.Log("*** Failed to authenticate with " + signInStatus);
             UserIdentifier = "temp";
-            IsLoggedIn = false;
+        }
+
+        if (PlayerPrefs.GetInt(UserIdentifier + "_" + "Alternate_Controls", 0) == 1)
+        {
+            _joystickImage.enabled = false;
+        }
+        else
+        {
             _upArrowButton.gameObject.SetActive(false);
             _rightArrowButton.gameObject.SetActive(false);
             _leftArrowButton.gameObject.SetActive(false);
             _downArrowButton.gameObject.SetActive(false);
-            UIManager.Instance.SetClockDisplay(0);
         }
+        int clockDisplay = PlayerPrefs.GetInt(UserIdentifier + "_" + "Clock", 0);
+        UIManager.Instance.SetClockDisplay(clockDisplay);
 
         AudioManager.Instance.InitAudioSettings();
 

@@ -18,7 +18,7 @@ public class WinManager : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "BeatTheGameCount", 0) == 1 && GameManager.Instance.IsLoggedIn && !GameManager.Instance.BossMode)
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "BeatTheGameCount", 0) == 1 && !GameManager.Instance.BossMode)
             _unlockMessage.gameObject.SetActive(true);
         else
             _unlockMessage.gameObject.SetActive(false);
