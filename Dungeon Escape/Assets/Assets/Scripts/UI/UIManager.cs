@@ -276,8 +276,6 @@ public class UIManager : MonoBehaviour
             _downArrowImage.color = color;
             _leftArrowImage.color = color;
             _homeButtonImage.color = color;
-            _objectiveImage.color = color;
-            _objectiveText.color = color;
             yield return null;
         }
 

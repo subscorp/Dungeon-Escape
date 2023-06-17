@@ -85,14 +85,14 @@ public class Player : MonoBehaviour, IDamageable
 
         }
 
-        if (GameManager.Instance.PlayerInFrontOfDoorA && moveUpDown > 0.85f && Mathf.Abs(move) < 0.4 && _canEnterDoor)
+        if (GameManager.Instance.PlayerInFrontOfDoorA && moveUpDown > 0.60f && Mathf.Abs(move) < 0.55 && _canEnterDoor)
         {
             transform.position = _doorB.transform.position;
             GameManager.Instance.PlayerInFrontOfDoorA = false;
             GameManager.Instance.PlayerInFrontOfDoorB = true;
             StartCoroutine(EnterDoorCooldown());
         }
-        else if (GameManager.Instance.PlayerInFrontOfDoorB && moveUpDown > 0.85f  && Mathf.Abs(move) < 0.4 && _canEnterDoor)
+        else if (GameManager.Instance.PlayerInFrontOfDoorB && moveUpDown > 0.60f  && Mathf.Abs(move) < 0.55 && _canEnterDoor)
         {
             transform.position = _doorA.transform.position;
             GameManager.Instance.PlayerInFrontOfDoorB = false;
@@ -386,7 +386,7 @@ public class Player : MonoBehaviour, IDamageable
     private IEnumerator EnterDoorCooldown()
     {
         _canEnterDoor = false;
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.75f);
         _canEnterDoor = true;
     }
 

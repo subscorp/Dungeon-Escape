@@ -104,12 +104,6 @@ public class MainMenu : MonoBehaviour
                 _clockToggle.isOn = false;
                 _alternateSFXToggle.isOn = false;
                 _alternateControlsToggle.isOn = false;
-                _clockText.gameObject.SetActive(false);
-                _altSFXText.gameObject.SetActive(false);
-                _altControlsText.gameObject.SetActive(false);
-                _clockToggle.gameObject.SetActive(false);
-                _alternateSFXToggle.gameObject.SetActive(false);
-                _alternateControlsToggle.gameObject.SetActive(false);
                 _bossModeButton.gameObject.SetActive(false);
             }
 
@@ -123,12 +117,6 @@ public class MainMenu : MonoBehaviour
                 _clockToggle.isOn = false;
                 _alternateSFXToggle.isOn = false;
                 _alternateControlsToggle.isOn = false;
-                _clockText.gameObject.SetActive(false);
-                _altSFXText.gameObject.SetActive(false);
-                _altControlsText.gameObject.SetActive(false);
-                _clockToggle.gameObject.SetActive(false);
-                _alternateSFXToggle.gameObject.SetActive(false);
-                _alternateControlsToggle.gameObject.SetActive(false);
                 _bossModeButton.gameObject.SetActive(false);
             }
 
@@ -141,7 +129,7 @@ public class MainMenu : MonoBehaviour
             SFXSliderVal.value = 0.6f;
         }
 
-        int healthBars = PlayerPrefs.GetInt(UserIdentifier + "_" + "Health Bars", 1);
+        int healthBars = PlayerPrefs.GetInt(UserIdentifier + "_" + "Health Bars", 0);
         if (healthBars == 1)
             _healthBarsToggle.isOn = true;
         else
@@ -156,16 +144,12 @@ public class MainMenu : MonoBehaviour
 
     public void StartButton()
     {
-        //if (PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
-        //    _startButtonSFXAlternate.Play();
-        //else
         if (_pressedStart)
             return;
 
         _pressedStart = true;
         _startButtonSFX.Play();
         PlayerPrefs.SetInt("Boss Mode", 0);
-
 
         try
         {
@@ -288,7 +272,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt(UserIdentifier + "_" + "BeatTheGameCount", beatTheGameCount);
         PlayerPrefs.SetInt(UserIdentifier + "_" + "DeathCount", deathCount);
         PlayerPrefs.SetInt(UserIdentifier + "_" + "Clock", 0);
-        _healthBarsToggle.isOn = true;
+        _healthBarsToggle.isOn = false;
         _subtitlesToggle.isOn = true;
         _clockToggle.isOn = false;
         _alternateSFXToggle.isOn = false;
