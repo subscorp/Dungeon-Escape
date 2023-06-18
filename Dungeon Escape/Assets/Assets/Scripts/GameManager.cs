@@ -477,7 +477,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (var enemy in enemies)
         {
-            if (PlayerPrefs.GetInt(UserIdentifier + "_" + "Health Bars", 1) == 1)
+            if (PlayerPrefs.GetInt(UserIdentifier + "_" + "Health Bars", 0) == 1)
                 enemy.Slider.gameObject.SetActive(true);
             else
                 enemy.Slider.gameObject.SetActive(false);

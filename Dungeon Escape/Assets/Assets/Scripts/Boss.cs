@@ -45,7 +45,7 @@ public class Boss : MonoBehaviour, IDamageable
         ShieldOn = false;
         _originalColor = _spriteRenderer.color;
         maxHealth = 9;
-        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "Health Bars", 1) == 1)
+        if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "Health Bars", 0) == 1)
             Slider.gameObject.SetActive(true);
         else
             Slider.gameObject.SetActive(false);
