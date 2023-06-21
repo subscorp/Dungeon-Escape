@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
     public bool InstantiatedChest { get; set; }
     public bool DidBigJump { get; set; }
     public bool PlayerAtShop { get; set; }
+    public bool PlayerWearsBootsOfFlight { get; set; }
+    public bool DisplayedBootsInstructions { get; set; }
 
 
     private float _elapsedTime;
@@ -144,6 +146,8 @@ public class GameManager : MonoBehaviour
         StartedBossFight = false;
         BossDead = false;
         PlayerAtShop = false;
+        PlayerWearsBootsOfFlight = false;
+        DisplayedBootsInstructions = false;
     }
 
     private void Start()
@@ -165,7 +169,7 @@ public class GameManager : MonoBehaviour
         if (BossMode)
         {
             UIManager.Instance.HandleBossMode();
-            player.WearBootsOfFlight();
+            player.WearBootsOfFlightAtStartOfBossMode();
             GameManager.Instance.HasKeyToCastle = true;
             player.transform.position = new Vector3(110.040001f, -8.35999966f, 0);
             DisableOrEnableTiles(_floorTilemap, _leftWall1, false);
@@ -562,5 +566,10 @@ public class GameManager : MonoBehaviour
                 }
             });
         }
+    }
+
+    public void EnableOrDisableBootsOfFlight()
+    {
+        player.WearOrRemoveBootsOfFlight();
     }
 }

@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image _fadeOutImage;
     [SerializeField]
+    private GameObject _fadeFromBlack;
+    [SerializeField]
     private Image _homeButtonImage;
     [SerializeField]
     private Image _aButtonImage, _bButtonImage, _JoystickImage, _upArrowImage, _rightArrowImage, _downArrowImage, _leftArrowImage, _objectiveImage;
@@ -67,6 +69,8 @@ public class UIManager : MonoBehaviour
     private Text _subtitles;
     [SerializeField]
     private Text _winText, _beatTimeText;
+    [SerializeField]
+    private GameObject _bootsOfFlightInstructionsPrefab;
 
     private void Awake()
     {
@@ -387,12 +391,14 @@ public class UIManager : MonoBehaviour
     {
         _aButtonImage.enabled = false;
         _bButtonImage.enabled = false;
+        _bootsImage.GetComponent<Button>().enabled = false;
     }
 
     public void EnableButtons()
     {
         _aButtonImage.enabled = true;
         _bButtonImage.enabled = true;
+        _bootsImage.GetComponent<Button>().enabled = true;
     }
 
     public void HandleBossMode()
@@ -413,8 +419,34 @@ public class UIManager : MonoBehaviour
         _bigJumpPanel.SetActive(val);
     }
 
-    public void DestroyObjectivePanel()
+    public void DestroyLevelStartPanels()
     {
         Destroy(_objectivePanel.gameObject);
+        Destroy(_fadeFromBlack.gameObject);
+    }
+
+    public void DisplayBootsOfFlightInstructions()
+    {
+        _bootsOfFlightInstructionsPrefab.SetActive(true);
+        _anim.SetTrigger("Boots_Instructions");
+    }
+
+    public void DisableBootsOfFlightInstructions()
+    {
+        Debug.Log("in disable boots of flight instructions");
+        _bootsOfFlightInstructionsPrefab.SetActive(false);
+    }
+
+    public void DisplayWearingBoots()
+    {
+        Color wearColor = new Color(255, 255, 255);
+        _bootsImage.color = wearColor;
+    }
+
+    public void DisplayRemovingBoots()
+    {
+        Debug.Log("Removing Boots");
+        Color removeColor = new Color(128f / 255f, 128f / 255f, 128f / 255f);
+        _bootsImage.color = removeColor;
     }
 }

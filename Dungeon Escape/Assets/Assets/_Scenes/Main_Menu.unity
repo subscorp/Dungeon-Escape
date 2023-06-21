@@ -2020,7 +2020,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 40
+    m_MaxSize: 50
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2741,7 +2741,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 35.349274, y: 38}
+  m_AnchoredPosition: {x: 35.349365, y: 38}
   m_SizeDelta: {x: 33.65625, y: 53.34375}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &650133747
@@ -5956,7 +5956,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Version 0.991
+  m_Text: Version 0.992
 --- !u!222 &1797962903
 CanvasRenderer:
   m_ObjectHideFlags: 0

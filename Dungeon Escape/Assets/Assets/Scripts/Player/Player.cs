@@ -360,13 +360,39 @@ public class Player : MonoBehaviour, IDamageable
         PlayerPrefs.SetInt(GameManager.Instance.UserIdentifier + "_" + "DeathCount", PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "DeathCount", 0) + 1);
     }
 
-    public void WearBootsOfFlight()
+    public void WearOrRemoveBootsOfFlight()
     {
-        _jumpForce += 2.5f;
-        if (GameManager.Instance.GotKonamiCode)
-            _speed += 1f;
+        if (!GameManager.Instance.PlayerWearsBootsOfFlight)
+        {
+            GameManager.Instance.PlayerWearsBootsOfFlight = true;
+            _jumpForce += 2.5f;
+            if (GameManager.Instance.GotKonamiCode)
+                _speed += 1f;
+            else
+                _speed += 4f;
+
+            UIManager.Instance.DisplayWearingBoots();
+        }
         else
-            _speed += 4f;
+        {
+            GameManager.Instance.PlayerWearsBootsOfFlight = false;
+            _jumpForce -= 2.5f;
+            if (GameManager.Instance.GotKonamiCode)
+                _speed -= 1f;
+            else
+                _speed -= 4f;
+
+            UIManager.Instance.DisplayRemovingBoots();
+        }
+        AudioManager.Instance.PlayBootsSFX();
+    }
+
+    public void WearBootsOfFlightAtStartOfBossMode()
+    {
+        GameManager.Instance.PlayerWearsBootsOfFlight = true;
+        _jumpForce += 2.5f;
+        _speed += 4f;
+        UIManager.Instance.DisplayWearingBoots();
     }
 
     public void KonamiCodeSpeed()

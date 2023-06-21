@@ -114,6 +114,8 @@ public class AudioManager : MonoBehaviour
     private AudioSource _kingAttack2SFX;
     [SerializeField]
     private AudioSource _kingAttack3SFX;
+    [SerializeField]
+    private AudioSource _bootsSFX;
 
     // Konami Code related
     [SerializeField]
@@ -225,6 +227,8 @@ public class AudioManager : MonoBehaviour
         _kingAttack1SFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _kingAttack2SFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
         _kingAttack3SFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+        _bootsSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
+
 
         // Konami Code Related
         _konamiCorrectSFX.volume = PlayerPrefs.GetFloat(GameManager.Instance.UserIdentifier + "_" + "SFX", 0.6f);
@@ -644,6 +648,11 @@ public class AudioManager : MonoBehaviour
             audioSource.volume = 1f;
         else if (tempVol == 0)
             audioSource.volume = 0;
+    }
+
+    public void PlayBootsSFX()
+    {
+        _bootsSFX.Play();
     }
 
 }

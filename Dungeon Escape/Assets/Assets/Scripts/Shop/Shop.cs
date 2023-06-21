@@ -100,6 +100,13 @@ public class Shop : MonoBehaviour
                     }
                     AudioManager.Instance.FadeStopKonamiCodeHint();
                 }
+
+                if(GameManager.Instance.HasBootsOfFlight && !GameManager.Instance.DisplayedBootsInstructions)
+                {
+                    GameManager.Instance.DisplayedBootsInstructions = true;
+                    UIManager.Instance.DisplayBootsOfFlightInstructions();
+                    GameManager.Instance.EnableOrDisableBootsOfFlight();
+                }
             }
         }
     }
@@ -167,7 +174,6 @@ public class Shop : MonoBehaviour
         else if(_currentItemSelected == 1)
         {
             UIManager.Instance.UpdateBootsSoldOut();
-            _player.WearBootsOfFlight();
             AudioManager.Instance.PlaySoldOutSFX();
             GameManager.Instance.HasBootsOfFlight = true;
             GameManager.Instance.boughtBootsInCurrentVisit = true;
