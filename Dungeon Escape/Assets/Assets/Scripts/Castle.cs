@@ -16,7 +16,7 @@ public class Castle : MonoBehaviour
 
         if (GameManager.Instance.HasKeyToCastle)
         {
-            Debug.Log("Beat the game!"); // Achievement 1
+            //Debug.Log("Beat the game!"); // Achievement 1
 
             AudioManager.Instance.PlayWinMusic();
 
@@ -35,7 +35,7 @@ public class Castle : MonoBehaviour
 
             if(GameManager.Instance.NoHitRun && !GameManager.Instance.GotKonamiCode)
             {
-                Debug.Log("You beat the game without getting hit!"); // Achievement 4
+                //Debug.Log("You beat the game without getting hit!"); // Achievement 4
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_no_hit_run, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)
@@ -62,7 +62,7 @@ public class Castle : MonoBehaviour
                 });
             }*/
 
-            Debug.Log("Beat the game in: " + GameManager.Instance.ElapsedTime);
+            //Debug.Log("Beat the game in: " + GameManager.Instance.ElapsedTime);
             long score = (long)Mathf.RoundToInt(GameManager.Instance.ElapsedTime * 1000f);
 
             // Get the number of whole minutes
@@ -75,11 +75,11 @@ public class Castle : MonoBehaviour
             GameManager.Instance.CurrentBeatTime = string.Format("{0:00}:{1:00.00}", minutes, seconds);
             GameManager.Instance.GameComplete = true;
 
-            Debug.Log("Which is: " + GameManager.Instance.CurrentBeatTime);
+            //Debug.Log("Which is: " + GameManager.Instance.CurrentBeatTime);
             _BeatTime.text = "Time: " + GameManager.Instance.CurrentBeatTime;
             if (GameManager.Instance.ElapsedTime < 100f)
             {
-                Debug.Log("Beat the game in under 1:40"); // Achievement 6
+                //Debug.Log("Beat the game in under 1:40"); // Achievement 6
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_speed_runner, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)

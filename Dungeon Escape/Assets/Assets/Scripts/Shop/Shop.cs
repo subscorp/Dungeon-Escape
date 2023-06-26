@@ -63,7 +63,7 @@ public class Shop : MonoBehaviour
                     GameManager.Instance.boughtBootsInCurrentVisit &&
                     GameManager.Instance.boughtKeyInCurrentVisit)
                 {
-                    Debug.Log("Shopoholic!");
+                    //Debug.Log("Shopoholic!");
                     GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_shopaholic, (bool achievementUnlocked) =>
                     {
                         if (achievementUnlocked)
@@ -86,7 +86,7 @@ public class Shop : MonoBehaviour
                 {
                     if(!AudioManager.Instance.IsHintStillPlaying())
                     {
-                        Debug.Log("Its Dangerous Out There achievement");
+                        //Debug.Log("Its Dangerous Out There achievement");
                         GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_its_dangerous_out_there, (bool achievementUnlocked) =>
                         {
                             if (achievementUnlocked)
@@ -155,7 +155,7 @@ public class Shop : MonoBehaviour
             if (!GameManager.Instance.RefillHealth())
                 return;
 
-            Debug.Log("An apple a day keeps the doctor away!"); // Achievement 8
+            //Debug.Log("An apple a day keeps the doctor away!"); // Achievement 8
             GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_an_apple_a_day_keeps_the_doctor_away, (bool achievementUnlocked) =>
             {
                 if (achievementUnlocked)

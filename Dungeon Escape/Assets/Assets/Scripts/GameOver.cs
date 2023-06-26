@@ -23,11 +23,11 @@ public class GameOver : MonoBehaviour
     {
         if (signInStatus == SignInStatus.Success)
         {
-            Debug.Log("Authenticated. Hello, " + Social.localUser.userName + " (" + Social.localUser.id + ")");
+            //Debug.Log("Authenticated. Hello, " + Social.localUser.userName + " (" + Social.localUser.id + ")");
         }
         else
         {
-            Debug.Log("*** Failed to authenticate with " + signInStatus);
+            //Debug.Log("*** Failed to authenticate with " + signInStatus);
         }
     }
 
@@ -45,7 +45,7 @@ public class GameOver : MonoBehaviour
         {
             if (PlayerPrefs.GetInt(GameManager.Instance.UserIdentifier + "_" + "DeathCount", 0) >= 5 && !GameManager.Instance.BossMode)
             {
-                Debug.Log("You died more than 5 times and didn't give up!");
+                //Debug.Log("You died more than 5 times and didn't give up!");
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_persistent, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)
@@ -60,7 +60,7 @@ public class GameOver : MonoBehaviour
         }
         catch (Exception)
         {
-            Debug.LogError("There was an error regarding checking for number of deaths");
+            //Debug.LogError("There was an error regarding checking for number of deaths");
         }
         finally
         {

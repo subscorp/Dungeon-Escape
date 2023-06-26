@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
         {
             if(_instance == null)
             {
-                Debug.LogError("Instance is NULL");
+                //Debug.LogError("Instance is NULL");
             }
             return _instance;
         }

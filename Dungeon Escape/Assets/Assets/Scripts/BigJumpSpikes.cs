@@ -10,7 +10,7 @@ public class BigJumpSpikes : MonoBehaviour
         {
             if (!GameManager.Instance.HasBootsOfFlight && !GameManager.Instance.GotKonamiCode)
             {
-                Debug.Log("I Told You Not To Do This achievement");
+                //Debug.Log("I Told You Not To Do This achievement");
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_i_told_you_not_to_do_this, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)

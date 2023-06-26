@@ -19,13 +19,13 @@ public class Moon : MonoBehaviour
 
         if (other.name == "Hit_Box")
         {
-            Debug.Log("Player cut the moon");
             Vector3Int moonPos = GameManager.Instance.GetCellPosition(_tilemap, _moonTile);
             GameManager.Instance.SetCellAtPosition(_tilemap, _starsTile, moonPos);
             Instantiate(_moonPrefab, transform.position, Quaternion.identity);
             AudioManager.Instance.PlayObjectBreakSFX();
 
             // Moon Cutter
+            //Debug.Log("Moon Cutter");
             GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_moon_cutter, (bool achievementUnlocked) =>
             {
                 if (achievementUnlocked)

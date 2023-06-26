@@ -110,7 +110,7 @@ public class Boss : MonoBehaviour, IDamageable
             GameManager.Instance.numEnemiesKilled += 1;
             if (GameManager.Instance.numEnemiesKilled == GameManager.Instance.NumEnemiesInGAme)
             {
-                Debug.Log("Killed all enemies!"); // Achivement 2
+                //Debug.Log("Killed all enemies!"); // Achivement 2
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_fighter, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)
@@ -143,7 +143,7 @@ public class Boss : MonoBehaviour, IDamageable
         // Store the original Time.timeScale value
         //originalTimeScale = Time.timeScale;
         originalTimeScale = Time.unscaledDeltaTime;
-        Debug.Log("originalTimeScale (shuold be 0.4f): " + originalTimeScale);
+        //Debug.Log("originalTimeScale (shuold be 0.4f): " + originalTimeScale);
 
         // Gradually reduce Time.timeScale over the specified duration
         float currentTime = 0f;
@@ -157,7 +157,7 @@ public class Boss : MonoBehaviour, IDamageable
 
         // Ensure that Time.timeScale is set to the desired value
         Time.timeScale = _endTimeScaleValue;
-        Debug.Log("Time.timeScale at end (should be 1): " + Time.timeScale);
+        //Debug.Log("Time.timeScale at end (should be 1): " + Time.timeScale);
         _gateAnim.SetTrigger("Gate_Open");
         AudioManager.Instance.PlayCastleGateOpen();
     }    

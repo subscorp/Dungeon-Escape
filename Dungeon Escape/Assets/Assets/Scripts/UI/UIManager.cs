@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
         {
             if(_instance == null)
             {
-                Debug.LogError("UI Manager is NULL");
+                //Debug.LogError("UI Manager is NULL");
             }
 
             return _instance;
@@ -87,7 +87,6 @@ public class UIManager : MonoBehaviour
         clockPos.x = (float)Screen.width / 2;
         Vector3 objectivePanelPos = _objectivePanel.gameObject.transform.position;
         objectivePanelPos.x = (float)Screen.width / 2;
-        Debug.Log("objectivePanelPos.x: " + objectivePanelPos.x);
         _objectivePanel.gameObject.transform.position = objectivePanelPos;
         _clock.gameObject.transform.position = clockPos;
         _anim.SetTrigger("Start");
@@ -433,7 +432,6 @@ public class UIManager : MonoBehaviour
 
     public void DisableBootsOfFlightInstructions()
     {
-        Debug.Log("in disable boots of flight instructions");
         _bootsOfFlightInstructionsPrefab.SetActive(false);
     }
 
@@ -445,7 +443,6 @@ public class UIManager : MonoBehaviour
 
     public void DisplayRemovingBoots()
     {
-        Debug.Log("Removing Boots");
         Color removeColor = new Color(128f / 255f, 128f / 255f, 128f / 255f);
         _bootsImage.color = removeColor;
     }

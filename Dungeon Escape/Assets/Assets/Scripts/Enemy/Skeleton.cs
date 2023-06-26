@@ -33,7 +33,7 @@ public class Skeleton : Enemy, IDamageable
             GameManager.Instance.numEnemiesKilled += 1;
             if (GameManager.Instance.numEnemiesKilled == GameManager.Instance.NumEnemiesInGAme)
             {
-                Debug.Log("Killed all enemies!"); // Achivement 2
+                //Debug.Log("Killed all enemies!"); // Achivement 2
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_fighter, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)

@@ -14,7 +14,7 @@ public class AfterBigJump : MonoBehaviour
             if (!GameManager.Instance.HasBootsOfFlight && !GameManager.Instance.BossMode)
             {
                 GameManager.Instance.DidBigJump = true;
-                Debug.Log("But It Is Possible achievement");
+                //Debug.Log("But It Is Possible achievement");
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_but_it_is_possible, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)

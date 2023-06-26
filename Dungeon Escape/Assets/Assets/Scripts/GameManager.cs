@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                Debug.LogError("GamaManager is NULL");
+                //Debug.LogError("GamaManager is NULL");
             }
             return _instance;
         }
@@ -231,15 +231,15 @@ public class GameManager : MonoBehaviour
     {
         if (signInStatus == SignInStatus.Success)
         {
-            Debug.Log("Authenticated. Hello, " + Social.localUser.userName + " (" + Social.localUser.id + ")");
+            //Debug.Log("Authenticated. Hello, " + Social.localUser.userName + " (" + Social.localUser.id + ")");
             UserIdentifier = Social.localUser.userName;
-            Debug.Log("In GameManager::Start, UserIdentifier: " + UserIdentifier);
+            //Debug.Log("In GameManager::Start, UserIdentifier: " + UserIdentifier);
             if (UserIdentifier == null || UserIdentifier == "")
                 UserIdentifier = "temp";
         }
         else
         {
-            Debug.Log("*** Failed to authenticate with " + signInStatus);
+            //Debug.Log("*** Failed to authenticate with " + signInStatus);
             UserIdentifier = "temp";
         }
 
@@ -305,7 +305,7 @@ public class GameManager : MonoBehaviour
             bool alreadyUnlocked = false;
             if (achievements == null)
             {
-                Debug.Log("achievements is NULL");
+                //Debug.Log("achievements is NULL");
                 return;
             }
 
@@ -343,18 +343,18 @@ public class GameManager : MonoBehaviour
         {
             if (success)
             {
-                Debug.Log("Achievement incremented: " + achievementId);
+                //Debug.Log("Achievement incremented: " + achievementId);
             }
             else
             {
-                Debug.LogWarning("Failed to increment achievement: " + achievementId);
+                //Debug.LogWarning("Failed to increment achievement: " + achievementId);
             }
         });
     }
 
     public void SubmitScore(string leaderboardId, long score, Action<bool> callback)
     {
-        Debug.Log("Score in SubmitScore: " + score);
+        //Debug.Log("Score in SubmitScore: " + score);
         PlayGamesPlatform.Instance.ReportScore(score, leaderboardId, null);
     }
 

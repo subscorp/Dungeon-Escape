@@ -54,7 +54,7 @@ public class MainMenu : MonoBehaviour
     {
         if (signInStatus == SignInStatus.Success)
         {
-            Debug.Log("Authenticated. Hello, " + Social.localUser.userName + " (" + Social.localUser.id + ")");
+            //Debug.Log("Authenticated. Hello, " + Social.localUser.userName + " (" + Social.localUser.id + ")");
             UserIdentifier = Social.localUser.userName;
             if (UserIdentifier == null || UserIdentifier == "")
                 UserIdentifier = "temp";
@@ -62,11 +62,11 @@ public class MainMenu : MonoBehaviour
         else
         {
             UserIdentifier = "temp";
-            Debug.Log("*** Failed to authenticate with " + signInStatus);
+            //Debug.Log("*** Failed to authenticate with " + signInStatus);
         }
 
         // Set up volume
-        Debug.Log("In MainMenu::Start, UserIdentifier: " + UserIdentifier);
+        //Debug.Log("In MainMenu::Start, UserIdentifier: " + UserIdentifier);
         _music.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "Music", 0.6f);
         _sfx.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
         _sfxAlternate.volume = PlayerPrefs.GetFloat(UserIdentifier + "_" + "SFX", 0.6f);
@@ -152,7 +152,7 @@ public class MainMenu : MonoBehaviour
         
         catch (Exception)
         {
-            Debug.LogError("There was an error regarding checking for number of times the player beat the game");
+            //Debug.LogError("There was an error regarding checking for number of times the player beat the game");
         }
         finally
         {
@@ -361,7 +361,7 @@ public class MainMenu : MonoBehaviour
             bool alreadyUnlocked = false;
             if (achievements == null)
             {
-                Debug.Log("achievements is NULL");
+                //Debug.Log("achievements is NULL");
                 return;
             }
 
@@ -399,11 +399,11 @@ public class MainMenu : MonoBehaviour
         {
             if (success)
             {
-                Debug.Log("Achievement incremented: " + achievementId);
+                //Debug.Log("Achievement incremented: " + achievementId);
             }
             else
             {
-                Debug.LogWarning("Failed to increment achievement: " + achievementId);
+                //Debug.LogWarning("Failed to increment achievement: " + achievementId);
             }
         });
     }

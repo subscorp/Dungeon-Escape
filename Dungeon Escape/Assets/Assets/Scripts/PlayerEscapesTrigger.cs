@@ -17,7 +17,7 @@ public class PlayerEscapesTrigger : MonoBehaviour
                 _bossAnimator.SetTrigger("Player_Escapes");
 
                 // Nope
-                Debug.Log("Nope");
+                //Debug.Log("Nope");
                 GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_nope, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)
