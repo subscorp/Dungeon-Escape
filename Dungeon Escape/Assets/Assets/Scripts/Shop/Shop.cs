@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Shop : MonoBehaviour
@@ -64,14 +62,14 @@ public class Shop : MonoBehaviour
                     GameManager.Instance.boughtKeyInCurrentVisit)
                 {
                     //Debug.Log("Shopoholic!");
-                    GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_shopaholic, (bool achievementUnlocked) =>
+                    GameManager.Instance.DoAchievementUnlock(Achievements.AchievementsIDs.achievement_shopaholic, (bool achievementUnlocked) =>
                     {
                         if (achievementUnlocked)
                         {
                             // The achievement was unlocked, so increment the Completionist achievement
-                            GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
-                            GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
-                            GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                            GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_on_track_to_completion);
+                            GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_still_on_track_to_completion);
+                            GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_completionist);
                         }
                     });
                 }
@@ -87,14 +85,14 @@ public class Shop : MonoBehaviour
                     if(!AudioManager.Instance.IsHintStillPlaying())
                     {
                         //Debug.Log("Its Dangerous Out There achievement");
-                        GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_its_dangerous_out_there, (bool achievementUnlocked) =>
+                        GameManager.Instance.DoAchievementUnlock(Achievements.AchievementsIDs.achievement_its_dangerous_out_there, (bool achievementUnlocked) =>
                         {
                             if (achievementUnlocked)
                             {
                                 // The achievement was unlocked, so increment the Completionist achievement
-                                GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
-                                GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
-                                GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                                GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_on_track_to_completion);
+                                GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_still_on_track_to_completion);
+                                GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_completionist);
                             }
                         });
                     }
@@ -156,14 +154,14 @@ public class Shop : MonoBehaviour
                 return;
 
             //Debug.Log("An apple a day keeps the doctor away!"); // Achievement 8
-            GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_an_apple_a_day_keeps_the_doctor_away, (bool achievementUnlocked) =>
+            GameManager.Instance.DoAchievementUnlock(Achievements.AchievementsIDs.achievement_an_apple_a_day_keeps_the_doctor_away, (bool achievementUnlocked) =>
             {
                 if (achievementUnlocked)
                 {
                     // The achievement was unlocked, so increment the Completionist achievement
-                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
-                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
-                    GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                    GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_on_track_to_completion);
+                    GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_still_on_track_to_completion);
+                    GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_completionist);
                 }
             });
             bool canBuyAnother = _player.getNumDiamonds() >= _currentItemCost * 2;

@@ -51,14 +51,14 @@ public class Moss_Giant : Enemy, IDamageable
             if (GameManager.Instance.numEnemiesKilled == GameManager.Instance.NumEnemiesInGAme)
             {
                 //Debug.Log("Killed all enemies!"); // Achivement 2
-                GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_fighter, (bool achievementUnlocked) =>
+                GameManager.Instance.DoAchievementUnlock(Achievements.AchievementsIDs.achievement_fighter, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)
                     {
                         // The achievement was unlocked, so increment the Completionist achievement
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                        GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_still_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_completionist);
                     }
                 });
             }

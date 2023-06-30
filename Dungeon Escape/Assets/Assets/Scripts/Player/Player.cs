@@ -327,14 +327,14 @@ public class Player : MonoBehaviour, IDamageable
             if (GameManager.Instance.numDiamondsCollected == GameManager.Instance.NumDiamondsInGame) //310)
             {
                 //Debug.Log("Collected all diamonds!"); // Achievement 3
-                GameManager.Instance.DoAchievementUnlock(SmokeTest.GPGSIds.achievement_gem_hunter, (bool achievementUnlocked) =>
+                GameManager.Instance.DoAchievementUnlock(Achievements.AchievementsIDs.achievement_gem_hunter, (bool achievementUnlocked) =>
                 {
                     if (achievementUnlocked)
                     {
                         // The achievement was unlocked, so increment the Completionist achievement
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_on_track_to_completion);
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_still_on_track_to_completion);
-                        GameManager.Instance.DoAchievementIncrement(SmokeTest.GPGSIds.achievement_completionist);
+                        GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_still_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_completionist);
                     }
                 });
                 GameManager.Instance.CollectedAllDiamonds = true;
