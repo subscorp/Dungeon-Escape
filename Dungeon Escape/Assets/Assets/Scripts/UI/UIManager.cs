@@ -390,6 +390,7 @@ public class UIManager : MonoBehaviour
     {
         _aButtonImage.enabled = false;
         _bButtonImage.enabled = false;
+        _homeButtonImage.enabled = false;
         _bootsImage.GetComponent<Button>().enabled = false;
     }
 
@@ -397,6 +398,7 @@ public class UIManager : MonoBehaviour
     {
         _aButtonImage.enabled = true;
         _bButtonImage.enabled = true;
+        _homeButtonImage.enabled = true;
         _bootsImage.GetComponent<Button>().enabled = true;
     }
 
@@ -422,6 +424,7 @@ public class UIManager : MonoBehaviour
     {
         Destroy(_objectivePanel.gameObject);
         Destroy(_fadeFromBlack.gameObject);
+        _homeButtonImage.gameObject.GetComponent<Button>().interactable = true; 
     }
 
     public void DisplayBootsOfFlightInstructions()

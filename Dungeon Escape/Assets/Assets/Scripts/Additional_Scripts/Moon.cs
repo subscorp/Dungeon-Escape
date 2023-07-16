@@ -14,11 +14,12 @@ public class Moon : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name != "Player" && other.name != "Hit_Box")
+        if ((other.name != "Player" && other.name != "Hit_Box") || GameManager.Instance.IsMoonCut)
             return;
 
         if (other.name == "Hit_Box")
         {
+            Debug.Log("GameManager.Instance.IsMoonCut: " + GameManager.Instance.IsMoonCut);
             Vector3Int moonPos = GameManager.Instance.GetCellPosition(_tilemap, _moonTile);
             GameManager.Instance.SetCellAtPosition(_tilemap, _starsTile, moonPos);
             Instantiate(_moonPrefab, transform.position, Quaternion.identity);
@@ -26,6 +27,7 @@ public class Moon : MonoBehaviour
 
             // Moon Cutter
             //Debug.Log("Moon Cutter");
+            GameManager.Instance.IsMoonCut = true;
             GameManager.Instance.DoAchievementUnlock(Achievements.AchievementsIDs.achievement_moon_cutter, (bool achievementUnlocked) =>
             {
                 if (achievementUnlocked)

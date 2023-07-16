@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     public bool PlayerAtShop { get; set; }
     public bool PlayerWearsBootsOfFlight { get; set; }
     public bool DisplayedBootsInstructions { get; set; }
+    public bool IsMoonCut { get; set; }
 
 
     private float _elapsedTime;
@@ -147,6 +148,7 @@ public class GameManager : MonoBehaviour
         PlayerAtShop = false;
         PlayerWearsBootsOfFlight = false;
         DisplayedBootsInstructions = false;
+        IsMoonCut = false;
     }
 
     private void Start()
@@ -279,6 +281,9 @@ public class GameManager : MonoBehaviour
 
     public void HomeButton()
     {
+        if (GameManager.Instance.PlayerAtShop)
+            return;
+
         AudioManager.Instance.PlayHomeButtonSFX();
         SceneManager.LoadScene("Main_Menu");
     }

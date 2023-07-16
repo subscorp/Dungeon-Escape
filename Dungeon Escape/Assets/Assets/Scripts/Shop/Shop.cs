@@ -47,22 +47,52 @@ public class Shop : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
+            CloseShop();
             GameManager.Instance.PlayerAtShop = false;
             UIManager.Instance.EnableButtons();
             UIManager.Instance.DisableSubtitles();
-            if(_shopPanel != null)
+        }
+    }
+
+
+    private void CloseShop()
+    {
+        if (_shopPanel != null)
+        {
+            GameManager.Instance.PlayerInShop = false;
+            _shopPanel.SetActive(false);
+            if
+            (GameManager.Instance.boughtAppleInCurrentVisit &&
+                GameManager.Instance.boughtBootsInCurrentVisit &&
+                GameManager.Instance.boughtKeyInCurrentVisit)
             {
-                GameManager.Instance.PlayerInShop = false;
-                _shopPanel.SetActive(false);
-                if
-                (GameManager.Instance.boughtAppleInCurrentVisit &&
-                    GameManager.Instance.boughtBootsInCurrentVisit &&
-                    GameManager.Instance.boughtKeyInCurrentVisit)
+                //Debug.Log("Shopoholic!");
+                GameManager.Instance.DoAchievementUnlock(Achievements.AchievementsIDs.achievement_shopaholic, (bool achievementUnlocked) =>
                 {
-                    //Debug.Log("Shopoholic!");
-                    GameManager.Instance.DoAchievementUnlock(Achievements.AchievementsIDs.achievement_shopaholic, (bool achievementUnlocked) =>
+                    if (achievementUnlocked)
+                    {
+                        // The achievement was unlocked, so increment the Completionist achievement
+                        GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_still_on_track_to_completion);
+                        GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_completionist);
+                    }
+                });
+            }
+            else
+            {
+                GameManager.Instance.boughtAppleInCurrentVisit = false;
+                GameManager.Instance.boughtBootsInCurrentVisit = false;
+                GameManager.Instance.boughtKeyInCurrentVisit = false;
+            }
+
+            if (justPlayedHint)
+            {
+                if (!AudioManager.Instance.IsHintStillPlaying())
+                {
+                    //Debug.Log("Its Dangerous Out There achievement");
+                    GameManager.Instance.DoAchievementUnlock(Achievements.AchievementsIDs.achievement_its_dangerous_out_there, (bool achievementUnlocked) =>
                     {
                         if (achievementUnlocked)
                         {
@@ -73,40 +103,22 @@ public class Shop : MonoBehaviour
                         }
                     });
                 }
-                else
-                {
-                    GameManager.Instance.boughtAppleInCurrentVisit = false;
-                    GameManager.Instance.boughtBootsInCurrentVisit = false;
-                    GameManager.Instance.boughtKeyInCurrentVisit = false;
-                }
+                AudioManager.Instance.FadeStopKonamiCodeHint();
+            }
 
-                if (justPlayedHint)
-                {
-                    if(!AudioManager.Instance.IsHintStillPlaying())
-                    {
-                        //Debug.Log("Its Dangerous Out There achievement");
-                        GameManager.Instance.DoAchievementUnlock(Achievements.AchievementsIDs.achievement_its_dangerous_out_there, (bool achievementUnlocked) =>
-                        {
-                            if (achievementUnlocked)
-                            {
-                                // The achievement was unlocked, so increment the Completionist achievement
-                                GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_on_track_to_completion);
-                                GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_still_on_track_to_completion);
-                                GameManager.Instance.DoAchievementIncrement(Achievements.AchievementsIDs.achievement_completionist);
-                            }
-                        });
-                    }
-                    AudioManager.Instance.FadeStopKonamiCodeHint();
-                }
-
-                if(GameManager.Instance.HasBootsOfFlight && !GameManager.Instance.DisplayedBootsInstructions)
-                {
-                    GameManager.Instance.DisplayedBootsInstructions = true;
-                    UIManager.Instance.DisplayBootsOfFlightInstructions();
-                    GameManager.Instance.EnableOrDisableBootsOfFlight();
-                }
+            if (GameManager.Instance.HasBootsOfFlight && !GameManager.Instance.DisplayedBootsInstructions)
+            {
+                GameManager.Instance.DisplayedBootsInstructions = true;
+                UIManager.Instance.DisplayBootsOfFlightInstructions();
+                GameManager.Instance.EnableOrDisableBootsOfFlight();
             }
         }
+    }
+
+    public void CloseShopButton()
+    {
+        CloseShop();
+        AudioManager.Instance.PlayHomeButtonSFX();
     }
 
     public void SelectItem(int item)
