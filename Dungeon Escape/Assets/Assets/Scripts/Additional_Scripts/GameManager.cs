@@ -77,18 +77,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject _gameOverManager;
     [SerializeField]
+    private GameObject _quitScreen;
+    [SerializeField]
     private Image _joystickImage;
     [SerializeField] Button _upArrowButton, _rightArrowButton, _downArrowButton, _leftArrowButton;
 
     public bool GotKonamiCode { get; set; }
     public bool DuringKonamiCode { get; set; }
     private bool shouldWait = false;
-    [SerializeField]
-    private int targetFPSMin;
-    [SerializeField]
-    private int targetFPSMax;
-    public float DeltaTime { get; set; }
-    public float SmoothedFPS { get; set; }
     [SerializeField]
     private Boss _bossPrefab;
     [SerializeField]
@@ -133,8 +129,6 @@ public class GameManager : MonoBehaviour
         GameComplete = false;
         CurrentBeatTime = "";
         DisplayTime = "";
-        DeltaTime = 0.0f;
-        SmoothedFPS = 0.0f;
         NumDiamondsInGame = 310;
         NumEnemiesInGAme = 9;
         FirstCaveSpiderDead = false;
@@ -156,11 +150,9 @@ public class GameManager : MonoBehaviour
         ResetTime();
         DisplayWinScreen(false);
         DisplayGameOverScreen(false);
+        DisplayReturnToGame(false);
         _playerAnimation = player.GetPlayerAnimation();
-        targetFPSMin = 30;
-        targetFPSMax = 40;
-        //targetFPSMax = -1;//Screen.currentResolution.refreshRate;  // 40
-        Application.targetFrameRate = targetFPSMax;
+        
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
         BossMode = PlayerPrefs.GetInt("Boss Mode", 0) == 1 ? true : false;
@@ -195,24 +187,6 @@ public class GameManager : MonoBehaviour
         ElapsedMinutes = (int)(_elapsedTime / 60);
         ElapsedSeconds = _elapsedTime % 60;
         DisplayTime = string.Format("{0:00}:{1:00.00}", ElapsedMinutes, ElapsedSeconds);
-
-        // Update FPS
-        DeltaTime += (Time.deltaTime - DeltaTime) * 0.1f;
-        float fps = 1.0f / DeltaTime;
-        SmoothedFPS = Mathf.Lerp(SmoothedFPS, fps, 0.1f);
-
-        // Check if the smoothed FPS is outside the target range
-        Application.targetFrameRate = targetFPSMax;
-       /* if (SmoothedFPS < targetFPSMin)
-        {
-            // Set the target frame rate to the minimum FPS
-            Application.targetFrameRate = targetFPSMin;
-        }
-        else if (SmoothedFPS > targetFPSMax)
-        {
-            // Set the target frame rate to the maximum FPS
-            Application.targetFrameRate = targetFPSMax;
-        }*/
 
         if (Vector3.Distance(_pointD, player.transform.position) < 4.5f && !ClosedGate && GameManager.Instance.HasKeyToCastle)
         {
@@ -285,7 +259,8 @@ public class GameManager : MonoBehaviour
             return;
 
         AudioManager.Instance.PlayHomeButtonSFX();
-        SceneManager.LoadScene("Main_Menu");
+        GameManager.Instance.DisplayReturnToGame(true);
+        Time.timeScale = 0;
     }
 
     public bool RefillHealth()
@@ -377,6 +352,11 @@ public class GameManager : MonoBehaviour
     internal void DisplayGameOverScreen(bool val)
     {
         _gameOverManager.SetActive(val);
+    }
+
+    internal void DisplayReturnToGame(bool val)
+    {
+        _quitScreen.SetActive(val);
     }
 
     public void HandleKonamiCode()

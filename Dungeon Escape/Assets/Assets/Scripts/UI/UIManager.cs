@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
     private Image _homeButtonImage;
     [SerializeField]
     private Image _aButtonImage, _bButtonImage, _JoystickImage, _upArrowImage, _rightArrowImage, _downArrowImage, _leftArrowImage, _objectiveImage;
+
     [SerializeField] Text _bootsPrice, _keyPrice, _objectiveText;
     [SerializeField]
     private Button _buyItemButton;
@@ -105,10 +106,10 @@ public class UIManager : MonoBehaviour
             _clock.text = GameManager.Instance.CurrentBeatTime;
         }
 
-        // Only display FPS if deltaTime is greater than zero
-        if (GameManager.Instance.DeltaTime > 0.0f)
+        // Only display FPS if CurrentFrameRate is greater than zero
+        if (FrameRateManager.Instance.CurrentFrameRate > 0.0f)
         {
-            _fps.text = "FPS: " + Mathf.Round(GameManager.Instance.SmoothedFPS).ToString();
+            _fps.text = "FPS: " + Mathf.Round(FrameRateManager.Instance.CurrentFrameRate).ToString();
         }
     }
 

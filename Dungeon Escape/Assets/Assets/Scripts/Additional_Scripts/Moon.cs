@@ -40,7 +40,5 @@ public class Moon : MonoBehaviour
             });
 
         }
-
-        //Destroy(gameObject);
     }
 }

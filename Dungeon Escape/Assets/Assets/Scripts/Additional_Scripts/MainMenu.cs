@@ -41,6 +41,8 @@ public class MainMenu : MonoBehaviour
     private Toggle _subtitlesToggle;
     [SerializeField]
     Button _bossModeButton;
+    [SerializeField]
+    private GameObject _logInPanel;
     private bool _pressedStart = false;
     public string UserIdentifier { get; set; }
 
@@ -194,12 +196,18 @@ public class MainMenu : MonoBehaviour
     // Options related methods
     public void ShowAchievements()
     {
-        PlayGamesPlatform.Instance.ShowAchievementsUI();
+        if (UserIdentifier != "temp")
+            PlayGamesPlatform.Instance.ShowAchievementsUI();
+        else
+            _logInPanel.SetActive(true);
     }
 
     public void ShowLeaderBoard()
     {
-        PlayGamesPlatform.Instance.ShowLeaderboardUI(Achievements.AchievementsIDs.leaderboard_hall_of_fame);
+        if (UserIdentifier != "temp")
+            PlayGamesPlatform.Instance.ShowLeaderboardUI(Achievements.AchievementsIDs.leaderboard_hall_of_fame);
+        else
+            _logInPanel.SetActive(true);
     }
 
     public void BackButton()
@@ -444,5 +452,15 @@ public class MainMenu : MonoBehaviour
         _startButtonSFX.Play();
         _anim.SetTrigger("Start");
         StartCoroutine(FadeMusicOut());
+    }
+
+    public void OkButton()
+    {
+        if (PlayerPrefs.GetInt(UserIdentifier + "_" + "alternateSFXToggle", 0) == 1)
+            _sfxAlternate.Play();
+        else
+            _sfx.Play();
+
+        _logInPanel.SetActive(false);
     }
 }
