@@ -19,6 +19,11 @@ public class PlayerAnimation : MonoBehaviour
         _animator.SetFloat("Move", Mathf.Abs(move));
     }
 
+    public void SetIsMidFall(bool isMidFall)
+    {
+        _animator.SetBool("IsMidFall", isMidFall);
+    }
+
     public void Jump(bool jump)
     {
         _animator.SetBool("Jumping", jump);

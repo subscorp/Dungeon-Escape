@@ -33,10 +33,12 @@ public class Player : MonoBehaviour, IDamageable
     private bool _canEnterDoor = true;
     private float arrowsHorizontal;
     private float arrowsVertical;
-    
-
     public bool IsHit { get; set; }
-    
+    [SerializeField]
+    private float _coyoteTime; // Adjust this value as needed
+    [SerializeField]
+    private float _coyoteTimer;
+    private bool _coyoteIsBeingUsed;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +50,9 @@ public class Player : MonoBehaviour, IDamageable
         Health = 4;
         arrowsHorizontal = 0f;
         arrowsVertical = 0f;
+        _coyoteTime = 0.55f;
+        _coyoteTimer = 0f;
+        _coyoteIsBeingUsed = false;
     }
 
     // Update is called once per frame
@@ -65,16 +70,16 @@ public class Player : MonoBehaviour, IDamageable
         {
             float attackDuration;
             bool isFireAttack = GameManager.Instance.GotKonamiCode;
-            if (_grounded)
+            if(!_grounded || _coyoteIsBeingUsed)
+            {
+                attackDuration = isFireAttack ? 0.36f : 0.32f;
+                _playerAnimation.JumpAttack();
+            }
+            else
             {
                 //attackDuration = isFireAttack ? 0.8f : 0.84f;
                 attackDuration = 0.6f;
                 _playerAnimation.Attack();
-            }
-            else
-            {
-                attackDuration = isFireAttack ? 0.36f : 0.32f;
-                _playerAnimation.JumpAttack();
             }
             StartCoroutine(ResetAttackRoutine(attackDuration));
             AudioManager.Instance.PlayAttackSound();
@@ -115,12 +120,18 @@ public class Player : MonoBehaviour, IDamageable
         }
         GameManager.Instance.HandleKonamiCodeDirections(move, moveUpDown);
 
-        _grounded = IsGrounded();
+        _grounded = IsGrounded(move);
+        _coyoteTimer -= Time.deltaTime;
         _playerAnimation.SetGrounded(_grounded);
+
+        float verticalVelocity = _rigidBody.velocity.y;
+
+        _playerAnimation.SetIsMidFall((!_grounded || _coyoteIsBeingUsed) && verticalVelocity < 0.0f);
+
 
         SetRunningDirection(move);
         _rigidBody.velocity = new Vector2(move * _speed, _rigidBody.velocity.y);
-        if ((Input.GetKeyDown(KeyCode.Space) || CrossPlatformInputManager.GetButtonDown("B_Button")) && IsGrounded() && !GameManager.Instance.PlayerAtShop)
+        if ((Input.GetKeyDown(KeyCode.Space) || CrossPlatformInputManager.GetButtonDown("B_Button")) && IsGrounded(move) && !GameManager.Instance.PlayerAtShop)
         {
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
             StartCoroutine(ResetJumpRoutine());
@@ -138,18 +149,32 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
-    private bool IsGrounded()
+    private bool IsGrounded(float move)
     {
-        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down, 0.85f, 1 << 8);
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down, 0.95f, 1 << 8);
         Debug.DrawRay(transform.position, Vector3.down, Color.green);
-        if(hitInfo.collider != null)
+
+        if (hitInfo.collider != null)
         {
+            // Reset the coyote timer when grounded
+            _coyoteTimer = _coyoteTime;
+
             if (!_resetJump)
             {
                 _playerAnimation.Jump(false);
+                _coyoteIsBeingUsed = false;
                 return true;
             }
         }
+        else if (_coyoteTimer > 0 && !_resetJump)
+        {
+            // Allow jumping during coyote time
+            _coyoteTimer -= Time.deltaTime;
+            _coyoteIsBeingUsed = true;
+            return true;
+        }
+
+        _coyoteIsBeingUsed = false;
         return false;
     }
 
@@ -180,7 +205,7 @@ public class Player : MonoBehaviour, IDamageable
     IEnumerator ResetJumpRoutine()
     {
         _resetJump = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         _resetJump = false;
     }
 
@@ -367,10 +392,15 @@ public class Player : MonoBehaviour, IDamageable
             GameManager.Instance.PlayerWearsBootsOfFlight = true;
             _jumpForce += 2.5f;
             if (GameManager.Instance.GotKonamiCode)
+            {
                 _speed += 1f;
+            }
             else
+            {
                 _speed += 4f;
+            }
 
+            _coyoteTime = 0.4f;
             UIManager.Instance.DisplayWearingBoots();
         }
         else
@@ -378,9 +408,15 @@ public class Player : MonoBehaviour, IDamageable
             GameManager.Instance.PlayerWearsBootsOfFlight = false;
             _jumpForce -= 2.5f;
             if (GameManager.Instance.GotKonamiCode)
+            {
                 _speed -= 1f;
+                _coyoteTime = 0.4f;
+            }
             else
+            {
                 _speed -= 4f;
+                _coyoteTime = 0.55f;
+            }
 
             UIManager.Instance.DisplayRemovingBoots();
         }
@@ -397,8 +433,11 @@ public class Player : MonoBehaviour, IDamageable
 
     public void KonamiCodeSpeed()
     {
-        if(!GameManager.Instance.HasBootsOfFlight)
+        if (!GameManager.Instance.HasBootsOfFlight)
+        {
             _speed += 3f;
+            _coyoteTime = 0.4f;
+        }
     }
 
     
